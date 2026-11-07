@@ -30,7 +30,13 @@
         "*.copilotmd": "vscode.markdown.preview.editor",
         "*.MP4": "videoPreviewXD.videoPlayer"
     },
-    "workbench.colorTheme": "Ares Rice",
+    "workbench.colorTheme": "Rice",
+    "editor.fontFamily": "'JetBrains Mono', 'Symbols Nerd Font Mono', monospace",
+    "editor.fontLigatures": true,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.cursorBlinking": "phase",
+    "terminal.integrated.fontFamily": "'JetBrains Mono', 'Symbols Nerd Font Mono'",
+    "terminal.integrated.cursorStyle": "line",
     "security.promptForLocalFileProtocolHandling": false,
     "security.promptForRemoteFileProtocolHandling": false,
     "animations.Install-Method": "Apc Customize UI++"

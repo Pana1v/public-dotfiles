@@ -1,0 +1,2 @@
+# Animated rain behind new tab pages: frames (Pillow, katakana font), WebP loop (ffmpeg).
+python3-pil fonts-noto-cjk ffmpeg

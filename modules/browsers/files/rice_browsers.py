@@ -24,6 +24,7 @@ exit, so edits made while it runs are lost. The first run keeps a backup next
 to each file it changes (Preferences.pre-rice, user.js.pre-rice).
 """
 import json
+import os
 import re
 import struct
 import sys
@@ -37,6 +38,7 @@ WALLPAPERS = ROOT / "modules" / "rice" / "files" / "wallpaper"
 CSS_ROLES = {
     "bg": "bg", "bg2": "bg2", "cell": "card", "surface": "surface",
     "select": "select", "dim": "dim", "dim2": "dim2", "fg": "fg", "green": "green",
+    "accent": "accent",
 }
 
 
@@ -69,9 +71,14 @@ def solid_png(hexcolour, size=64):
             + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
 
 
-def wallpaper(pal_path, pal):
+def wallpaper(pal_path, pal, newtab=False):
     """(file name, bytes) of the palette wallpaper. The name changes with the
-    image, so a browser never shows a cached one after a theme switch."""
+    image, so a browser never shows a cached one after a theme switch.
+    newtab=True prefers the animated rain loop that apply.sh rendered
+    (RICE_NEWTAB_IMAGE), for new tab pages that cannot run scripts."""
+    loop = os.environ.get("RICE_NEWTAB_IMAGE", "")
+    if newtab and loop and Path(loop).is_file():
+        return "rice-" + Path(loop).name, Path(loop).read_bytes()
     wp = setting(pal_path, "wallpaper")
     if wp.startswith("image:") and (WALLPAPERS / wp[6:]).is_file():
         return "rice-" + wp[6:], (WALLPAPERS / wp[6:]).read_bytes()
@@ -112,7 +119,8 @@ def write_css(pal_path, pal, out):
     lines = [f"  --{var}: {pal[role]};" for var, role in CSS_ROLES.items() if role in pal]
     out.write_text(
         "/* Generated from the active rice palette by the browsers module. */\n"
-        ":root {\n" + "\n".join(lines) + "\n}\n"
+        ":root {\n" + "\n".join(lines)
+        + f'\n  --ascii: {os.environ.get("RICE_ASCII", "rain")};\n}}\n'
         f'html {{ background: {pal["bg"]} url("{name}") center / cover no-repeat fixed; }}\n'
         "body { background: transparent; }\n")
 
@@ -183,7 +191,7 @@ def chromium(root, pal_path, pal, start):
                 if p.parent.name == "Default" or p.parent.name.startswith("Profile ")]
     if not profiles:
         sys.exit(f"no profiles under {root}")
-    name, data = wallpaper(pal_path, pal)
+    name, data = wallpaper(pal_path, pal, newtab=True)
     for prof in profiles:
         prefs_path = prof / "Preferences"
         prefs = json.loads(prefs_path.read_text())
@@ -245,7 +253,7 @@ def firefox(profile, pal_path, pal, start):
 #urlbar-background {{ border-radius: 0 !important; }}
 """
     chrome = profile / "chrome"
-    name, data = wallpaper(pal_path, pal)
+    name, data = wallpaper(pal_path, pal, newtab=True)
     place(chrome, name, data)
     user_content = header + f"""@-moz-document url("about:newtab"), url("about:home") {{
   :root {{

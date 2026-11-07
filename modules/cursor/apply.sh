@@ -7,6 +7,8 @@ F="$MOD/files"
 link_file "$F/settings.json" "$HOME/.config/Cursor/User/settings.json"
 link_file "$F/mcp.json" "$HOME/.cursor/mcp.json"
 link_file "$F/cli-config.json" "$HOME/.cursor/cli-config.json"
+# Same generated "Rice" colour theme as VS Code.
+rice_vscode_theme cursor "$HOME/.cursor/extensions"
 for f in "$F"/rules/*.mdc; do
     link_file "$f" "$HOME/.cursor/rules/$(basename "$f")"
 done

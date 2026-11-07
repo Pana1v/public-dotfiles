@@ -9,6 +9,8 @@ MOD="$DOTFILES/modules/browsers"
 RICE="$DOTFILES/modules/rice"
 PY="$MOD/files/rice_browsers.py"
 
+apt_install "$MOD/packages.apt"
+
 # Active palette: the runtime copy switch-theme.sh writes, else the saved or
 # current theme.
 PALETTE="$HOME/.config/rice/palette"
@@ -17,6 +19,42 @@ if [ ! -f "$PALETTE" ]; then
     PALETTE="$RICE/themes/${THEME:-$(cat "$RICE/current-theme")}.palette"
 fi
 log "palette $(sed -n '1s/^# role[[:space:]]*hex[[:space:]]*//p' "$PALETTE" | cut -d. -f1)"
+
+# Background: BROWSER_BG in local.env, "rain" (default, animated digital rain
+# in the palette colours) or "static" (the palette wallpaper). The start page
+# draws the rain live (startpage/rain.js). Native new tab pages cannot run
+# scripts, so they get a seamless animated WebP loop rendered by the lock
+# screen's rain.py, cached per palette in ~/.cache/rice.
+BG_MODE="$(conf_get BROWSER_BG)"
+BG_MODE="${BG_MODE:-rain}"
+export RICE_ASCII=none RICE_NEWTAB_IMAGE=""
+if [ "$BG_MODE" = rain ]; then
+    RICE_ASCII=rain
+    LOOP="$HOME/.cache/rice/newtab-rain-$(sha1sum "$PALETTE" | cut -c1-10).webp"
+    if [ -s "$LOOP" ]; then
+        log "ok      new tab rain loop"
+        RICE_NEWTAB_IMAGE="$LOOP"
+    elif ! python3 -c 'import PIL' 2>/dev/null ||
+        [[ "$(ffmpeg -hide_banner -encoders 2>/dev/null)" != *libwebp_anim* ]]; then
+        warn "new tab rain needs python3-pil and ffmpeg with libwebp: using the static wallpaper"
+    elif [ "$DRY_RUN" = 1 ]; then
+        log "[dry] render new tab rain loop to $LOOP"
+    else
+        frames="$(mktemp -d)"
+        mkdir -p "$(dirname "$LOOP")"
+        rm -f "$HOME"/.cache/rice/newtab-rain-*.webp
+        if RICE_PALETTE="$PALETTE" python3 -I "$RICE/tools/rain.py" frames "$frames" 1280 800 120 &&
+            ffmpeg -loglevel error -y -framerate 20 -i "$frames/f%03d.png" -c:v libwebp_anim \
+                -lossless 0 -q:v 50 -compression_level 4 -loop 0 "$LOOP"; then
+            log "render  new tab rain loop ($(du -h "$LOOP" | cut -f1))"
+            RICE_NEWTAB_IMAGE="$LOOP"
+        else
+            warn "rain loop render failed: using the static wallpaper"
+        fi
+        rm -rf "$frames"
+    fi
+fi
+log "bg      $BG_MODE"
 
 SHARE="$HOME/.local/share/rice"
 link_file "$MOD/files/startpage" "$SHARE/startpage"

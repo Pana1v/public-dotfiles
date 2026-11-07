@@ -92,7 +92,7 @@ A preset is a small file in `presets/`. Copy one to make your own: `DESC`, `PROF
 ## Colour themes
 
 One palette recolours the whole desktop: GTK, GNOME Shell, icons, cursor, wallpaper, terminals
-(kitty, Terminator, Ptyxis), tmux, starship, fzf, btop, rofi, Qt apps, VS Code, Obsidian,
+(kitty, Terminator, Ptyxis), tmux, starship, fzf, btop, rofi, Qt apps, VS Code and Cursor, Obsidian,
 Claude Code, conky, lock and login screens, and every browser.
 
 | Theme | Look |
@@ -153,16 +153,28 @@ theme colour seeded from the palette accent. Firefox, LibreWolf and Zen get a ge
 `userChrome.css` and `userContent.css` (toolbar, tabs, menus, new tab page) plus a marked block
 in `user.js`. All get the palette start page as home.
 
-The new tab page shows the palette wallpaper (or a solid fill for colour-only palettes):
+Backgrounds are animated digital rain in the palette colours, the same look as the rain lock
+screen. The start page (home button and startup) draws it live on a canvas; it stops in hidden
+tabs and stays off when the system asks for reduced motion. Native new tab pages cannot run
+scripts, so they get a seamless looping animated WebP of the same rain, rendered once per
+palette (about 8 s, under 2 MB) into `~/.cache/rice`.
 
 | Browser | New tab |
 |---|---|
-| Chrome, Chromium | wallpaper as the custom background, toolbar tinted from the accent |
-| Brave | wallpaper as a custom image; sponsored images off. Your own uploaded images are kept |
-| Firefox, LibreWolf, Zen | wallpaper behind search and shortcuts, both in palette colours; sponsored stories off |
+| Chrome, Chromium | rain loop as the custom background, toolbar tinted from the accent |
+| Brave | rain loop as a custom image; sponsored images off. Your own uploaded images are kept |
+| Firefox, LibreWolf, Zen | rain loop behind search and shortcuts, both in palette colours; sponsored stories off |
 | Edge, Vivaldi | own new tab page, colours only |
 
-The start page (home button and startup) uses the same wallpaper. Deb, flatpak and snap installs are all found. Close a browser before
+`BROWSER_BG=static` in `local.env` swaps the rain for the palette wallpaper (a solid fill for
+colour-only palettes) everywhere.
+
+**VS Code and Cursor.** Both use one generated theme, "Rice". The hand-tuned Tron theme is the
+template: each of its 591 UI colours and every syntax colour is mapped to its palette role
+(keeping the shade's offset for in-between colours) and redrawn in the active palette, so every
+palette, including new ones, gets the full theme. It is installed as a proper extension
+(`local.rice`) in both editors and rewritten in place by `switch-theme.sh`; reload the window to
+see a new palette. Editor and terminal use JetBrains Mono with ligatures. Deb, flatpak and snap installs are all found. Close a browser before
 applying, or it overwrites the change on exit; the module tells you which ones were open.
 `switch-theme.sh` re-runs it so browsers follow a theme change.
 

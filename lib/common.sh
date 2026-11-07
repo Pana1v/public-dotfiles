@@ -206,3 +206,43 @@ spawn_wait() {
     SPAWN_PIDS=() SPAWN_NAMES=() SPAWN_LOGS=()
     return "$rc"
 }
+
+# Palette file in use: the runtime copy switch-theme.sh writes, else the saved
+# RICE_THEME, else whatever the repo files hold (current-theme).
+active_palette() {
+    local rice="$DOTFILES/modules/rice" theme
+    if [ -f "$HOME/.config/rice/palette" ]; then
+        printf '%s' "$HOME/.config/rice/palette"
+        return 0
+    fi
+    theme="$(conf_get RICE_THEME)"
+    printf '%s' "$rice/themes/${theme:-$(cat "$rice/current-theme")}.palette"
+}
+
+# The "Rice" VS Code / Cursor theme, generated from the active palette.
+#   rice_vscode_theme <cli> <extensions dir>     e.g. code ~/.vscode/extensions
+# First run packages it as a .vsix and installs it with the editor's CLI, so
+# the editor registers it. Later runs (and switch-theme.sh) rewrite the
+# installed copy in place; reload the editor window to see a new palette.
+RICE_VSCODE_THEME="$HOME/.local/share/rice/vscode-rice"
+rice_vscode_theme() {
+    local cli="$1" installed="$2/local.rice-0.1.0" vsix
+    if [ "$DRY_RUN" = 1 ]; then
+        log "[dry] generate Rice editor theme for $cli"
+        return 0
+    fi
+    vsix="$(mktemp --suffix=.vsix)"
+    python3 -I "$DOTFILES/modules/rice/tools/vscode-theme.py" "$(active_palette)" "$RICE_VSCODE_THEME" "$vsix"
+    # An older setup symlinked the theme here; the editor ignores unregistered links.
+    [ -L "$installed" ] && rm -f "$installed"
+    if [ -d "$installed" ] && "$cli" --list-extensions 2>/dev/null | grep -qx local.rice; then
+        rsync -a --delete "$RICE_VSCODE_THEME/" "$installed/"
+        log "update  $cli Rice theme"
+    elif command -v "$cli" >/dev/null; then
+        "$cli" --install-extension "$vsix" --force >/dev/null 2>&1 &&
+            log "install $cli Rice theme" || warn "$cli could not install the Rice theme"
+    else
+        warn "$cli not installed: Rice theme skipped"
+    fi
+    rm -f "$vsix"
+}

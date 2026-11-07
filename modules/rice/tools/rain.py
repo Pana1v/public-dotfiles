@@ -27,7 +27,7 @@ SEED = 1999
 
 def palette():
     cols = {"accent": "#00ff41", "bg": "#000000", "fg": "#b6ffb6"}
-    path = os.path.expanduser("~/.config/rice/palette")
+    path = os.environ.get("RICE_PALETTE") or os.path.expanduser("~/.config/rice/palette")
     if os.path.exists(path):
         for line in open(path):
             p = line.split()

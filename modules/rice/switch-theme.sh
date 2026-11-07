@@ -185,9 +185,18 @@ done
 # replace the link with a copy.
 BTOP_CONF="$HOME/.config/btop/btop.conf"
 [ -f "$BTOP_CONF" ] && sed -i "s/^color_theme = .*/color_theme = \"$(setting btop)\"/" "$BTOP_CONF"
-VSCODE_SETTINGS="$HOME/.config/Code/User/settings.json"
-[ -f "$VSCODE_SETTINGS" ] && sed -i --follow-symlinks \
-    "s/\"workbench.colorTheme\": \"[^\"]*\"/\"workbench.colorTheme\": \"$(setting vscode)\"/" "$VSCODE_SETTINGS"
+# Editors: regenerate the "Rice" theme from the new palette, then point VS Code
+# and Cursor at @vscode (Rice for every palette). Reload the window to see it.
+if [ -e "$HOME/.local/share/rice/vscode-rice" ]; then
+    python3 -I "$MOD/tools/vscode-theme.py" "$MOD/themes/$TARGET.palette" "$HOME/.local/share/rice/vscode-rice"
+    for d in "$HOME/.vscode/extensions/local.rice-0.1.0" "$HOME/.cursor/extensions/local.rice-0.1.0"; do
+        [ -d "$d" ] && [ ! -L "$d" ] && rsync -a --delete "$HOME/.local/share/rice/vscode-rice/" "$d/"
+    done
+fi
+for EDITOR_SETTINGS in "$HOME/.config/Code/User/settings.json" "$HOME/.config/Cursor/User/settings.json"; do
+    [ -f "$EDITOR_SETTINGS" ] && sed -i --follow-symlinks \
+        "s/\"workbench.colorTheme\": \"[^\"]*\"/\"workbench.colorTheme\": \"$(setting vscode)\"/" "$EDITOR_SETTINGS"
+done
 
 # Obsidian: the vault syncs through git (phone included), so the theme is
 # copied in, not symlinked. Obsidian reloads a changed theme.css live.

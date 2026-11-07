@@ -6,8 +6,10 @@ U="$HOME/.config/Code/User"
 
 link_file "$MOD/files/settings.json" "$U/settings.json"
 link_file "$MOD/files/mcp.json" "$U/mcp.json"
-# Local "Mono Rice", "Tron Rice" and "Ares Rice" colour themes (used by those rice palettes). Symlinked so
-# edits land in the repo; VS Code finds it by scanning the extensions folder.
+# "Rice": generated from the active palette (switch-theme.sh regenerates it).
+# The hand-made Tron theme is its template; Mono, Tron and Ares Rice stay
+# installed as fixed alternatives. VS Code finds them by scanning the folder.
+rice_vscode_theme code "$HOME/.vscode/extensions"
 link_file "$MOD/files/mono-rice-theme" "$HOME/.vscode/extensions/local.mono-rice-0.1.0"
 link_file "$MOD/files/tron-rice-theme" "$HOME/.vscode/extensions/local.tron-rice-0.1.0"
 link_file "$MOD/files/ares-rice-theme" "$HOME/.vscode/extensions/local.ares-rice-0.1.0"

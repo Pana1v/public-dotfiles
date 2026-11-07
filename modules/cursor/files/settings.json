@@ -4,6 +4,10 @@
         "ws": "linux",
         "p3": "linux"
     },
-    "workbench.preferredDarkColorTheme": "Gruvbox Light Soft",
+    "workbench.colorTheme": "Rice",
+    "workbench.preferredDarkColorTheme": "Rice",
+    "editor.fontFamily": "'JetBrains Mono', 'Symbols Nerd Font Mono', monospace",
+    "editor.fontLigatures": true,
+    "terminal.integrated.fontFamily": "'JetBrains Mono', 'Symbols Nerd Font Mono'",
     "security.promptForRemoteFileProtocolHandling": false
 }

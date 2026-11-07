@@ -30,7 +30,7 @@ diff_del_word    #55292e
 
 @gtk             ZorinGrey-Dark
 @shell           Rice
-@vscode          Mono Rice
+@vscode          Rice
 @btop            mono
 @wallpaper       color:#000000
 @taskbar_border  rgba(230,232,235,0.15)
