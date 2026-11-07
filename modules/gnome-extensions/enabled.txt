@@ -1,0 +1,34 @@
+# Extensions to turn on. Zorin UUIDs are swapped for their stand-ins on other
+# distros (zorin-deps.txt); ones that do not list the running GNOME are skipped.
+extension-list@tu.berry
+volumeBoosr@octane-laurel
+boostvolume@shaquib.dev
+dynamic-music-pill@andbal
+clipboard-history@alexsaveau.dev
+spotify-deck@pan.local
+sysmon-flair@pan.local
+sp-tray@sp-tray.esenliyim.github.com
+gnome-clipboard@b00f.github.io
+live-lockscreen@nick-redwill
+space-bar@luchrioh
+rofi-focus@pan.local
+pop-shell@system76.com
+ws-numbers@pan.local
+grid-live@pan.local
+conky-glass@pan.local
+power-extras@pan.local
+drive-menu@gnome-shell-extensions.gcampax.github.com
+native-window-placement@gnome-shell-extensions.gcampax.github.com
+user-theme@gnome-shell-extensions.gcampax.github.com
+zorin-appindicator@zorinos.com
+zorin-connect@zorinos.com
+zorin-desktop-cube@zorinos.com
+zorin-desktop-icons@zorinos.com
+zorin-magic-lamp-effect@zorinos.com
+zorin-menu@zorinos.com
+zorin-printers@zorinos.com
+zorin-spatial-window-switcher@zorinos.com
+zorin-window-move-effect@zorinos.com
+zorin-dash@zorinos.com
+blur-my-shell@aunetx
+term-landscape@pan.local

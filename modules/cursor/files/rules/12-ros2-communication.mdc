@@ -1,0 +1,128 @@
+---
+description: ROS2 communication standards - topic naming, QoS profiles, msg/srv/action definitions, TF2
+globs: **/*.py,**/*.cpp,**/*.hpp,**/*.msg,**/*.srv,**/*.action,**/CMakeLists.txt,**/package.xml
+alwaysApply: false
+---
+
+# ROS2 Communication Standards
+
+## Topic Naming
+
+Format: `/<namespace>/<category>/<specific>`, e.g. `/robot/sensors/lidar/scan`, `/robot/control/cmd_vel`, `/robot/state/odometry`.
+
+| Rule | Example |
+|------|---------|
+| Use lowercase | `/robot/cmd_vel` |
+| Underscores for multi-word | `/joint_states` |
+| Avoid abbreviations | `/camera/image` not `/cam/img` |
+| Use namespaces | `/robot1/cmd_vel` |
+| Be descriptive | `/laser_scan` not `/ls` |
+
+## QoS Profiles
+
+```python
+SENSOR_QOS = QoSProfile(reliability=QoSReliabilityPolicy.BEST_EFFORT,
+                         durability=QoSDurabilityPolicy.VOLATILE,
+                         history=QoSHistoryPolicy.KEEP_LAST, depth=5)
+
+CONTROL_QOS = QoSProfile(reliability=QoSReliabilityPolicy.RELIABLE,
+                          durability=QoSDurabilityPolicy.VOLATILE,
+                          history=QoSHistoryPolicy.KEEP_LAST, depth=10)
+
+STATE_QOS = QoSProfile(reliability=QoSReliabilityPolicy.RELIABLE,
+                        durability=QoSDurabilityPolicy.TRANSIENT_LOCAL,
+                        history=QoSHistoryPolicy.KEEP_LAST, depth=1)
+```
+
+| Data Type | Reliability | Durability | Depth | Example |
+|-----------|-------------|------------|-------|---------|
+| Sensor (high freq) | BEST_EFFORT | VOLATILE | 1-5 | LiDAR, Camera |
+| Commands | RELIABLE | VOLATILE | 10 | cmd_vel |
+| State/Config | RELIABLE | TRANSIENT_LOCAL | 1 | robot_description |
+| Transforms | RELIABLE | VOLATILE | 100 | tf |
+| Map | RELIABLE | TRANSIENT_LOCAL | 1 | occupancy_grid |
+
+QoS compatibility: a RELIABLE publisher and a BEST_EFFORT subscriber (or vice versa) do not connect, this fails silently (no error, no crash), just no data on the topic. Check both ends with `ros2 topic info <topic> --verbose` when a subscription looks correctly wired but never receives anything.
+
+## Custom Message / Service / Action
+
+```
+# msg/RobotState.msg
+std_msgs/Header header
+geometry_msgs/Point position
+geometry_msgs/Quaternion orientation
+geometry_msgs/Twist velocity
+uint8 STATUS_IDLE = 0
+uint8 STATUS_MOVING = 1
+uint8 STATUS_ERROR = 2
+uint8 status
+float32 battery_level
+float64[] sensor_readings
+```
+
+```
+# srv/SetRobotMode.srv
+---
+uint8 MODE_MANUAL = 0
+uint8 MODE_AUTO = 1
+uint8 MODE_EMERGENCY = 2
+uint8 mode
+string[] parameters
+---
+bool success
+string message
+float64 transition_time
+```
+
+```
+# action/NavigateToGoal.action
+---
+geometry_msgs/PoseStamped target_pose
+float32 max_velocity
+bool allow_replanning
+---
+bool success
+string message
+float64 total_time
+float64 total_distance
+---
+geometry_msgs/PoseStamped current_pose
+float32 distance_remaining
+float32 estimated_time_remaining
+uint8 recovery_count
+```
+
+## Message Package CMakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.8)
+project(robot_interfaces)
+
+find_package(ament_cmake REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(action_msgs REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/RobotState.msg"
+  "srv/SetRobotMode.srv"
+  "action/NavigateToGoal.action"
+  DEPENDENCIES std_msgs geometry_msgs action_msgs
+)
+
+ament_export_dependencies(rosidl_default_runtime)
+ament_package()
+```
+
+## TF2 Transform Broadcasting
+
+```python
+import tf2_ros
+
+class TransformPublisher:
+    def __init__(self, node):
+        self._node = node
+        self._static_broadcaster = tf2_ros.StaticTransformBroadcaster(node)
+        self._dynamic_broadcaster = tf2_ros.TransformBroadcaster(node)
+```

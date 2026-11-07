@@ -1,0 +1,20 @@
+.spotify-controls-box {
+     gap: 8px;    
+}
+
+.spotify-hbox {
+    gap: 6px; 
+}
+
+.spotify-status-icon {
+    padding: 4px;
+}
+
+.spotify-status-icon > StIcon {
+    icon-size: 16px;
+}
+
+.spotify-icon {
+    icon-size: 16px; 
+    color: inherit; 
+}

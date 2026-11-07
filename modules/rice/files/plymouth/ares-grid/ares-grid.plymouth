@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Ares Grid
+Description=Tron: Ares grid sliding toward the viewer (dotfiles rice)
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/ares-grid
+ScriptFile=/usr/share/plymouth/themes/ares-grid/ares-grid.script

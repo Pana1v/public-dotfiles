@@ -1,0 +1,13 @@
+# build
+build-essential cmake ninja-build make pkg-config ccache gdb
+astyle cppcheck lcov shellcheck pre-commit
+git git-lfs gh
+python3-dev python3-pip python3-venv
+# containers + gpu
+docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+nvidia-container-toolkit nvtop distrobox
+# terminal
+tmux tmuxinator fzf ripgrep fd-find jq tree btop htop ranger fastfetch
+curl wget rsync zip unzip socat netcat-openbsd net-tools iperf3
+# network
+tailscale openssh-server

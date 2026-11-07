@@ -1,0 +1,39 @@
+# role           hex       Tron: Ares. Black and red program glow; cyan kept for "good" states as the old grid.
+bg               #0a0506
+bg2              #050203
+black            #020101
+bg3              #120809
+card             #1a0b0d
+surface          #2a1013
+select           #4a161b
+bright_black     #5e1f25
+tab_fg           #73303a
+dim              #8a3a44
+dim2             #b86a72
+fg2              #f2c4c8
+fg               #ffe9eb
+accent           #ff1f3d
+cyan             #ff6b7d
+teal             #e0283f
+magenta          #ff4f8b
+purple2          #ffa3b0
+green            #52e5ff
+yellow           #ffc14d
+orange           #ff7a29
+red              #ff3b1f
+diff_add         #08262c
+diff_del         #3a0a0e
+diff_add_dim     #061a1e
+diff_del_dim     #240709
+diff_add_word    #0e4752
+diff_del_word    #6b1219
+
+@gtk             ZorinGrey-Dark
+@shell           Rice
+@vscode          Ares Rice
+@btop            ares
+@wallpaper       image:ares-grid.png
+@taskbar_border  rgba(255,31,61,0.35)
+@cursor          Adwaita
+@accent          red
+@conky_accent    accent

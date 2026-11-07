@@ -1,0 +1,19 @@
+# ble.sh: Tokyo Night faces for syntax highlighting and inline suggestions.
+bleopt term_true_colors=semicolon
+bleopt complete_auto_delay=100
+
+ble-face -s auto_complete           fg=#8a3a44,italic
+ble-face -s syntax_command          fg=#ff1f3d
+ble-face -s command_builtin         fg=#ff4f8b
+ble-face -s command_alias           fg=#ff6b7d
+ble-face -s command_function        fg=#ff6b7d
+ble-face -s command_file            fg=#ff1f3d
+ble-face -s syntax_error            fg=#ff3b1f,bold
+ble-face -s syntax_quoted           fg=#52e5ff
+ble-face -s syntax_quotation        fg=#52e5ff
+ble-face -s syntax_varname          fg=#ffc14d
+ble-face -s syntax_param_expansion  fg=#ffc14d
+ble-face -s syntax_comment          fg=#8a3a44
+ble-face -s filename_directory      fg=#ff1f3d,underline
+ble-face -s region_insert           bg=#2a1013
+ble-face -s region                  bg=#4a161b

@@ -1,0 +1,16 @@
+{
+  "uuid": "grid-live@pan.local",
+  "name": "Grid Live",
+  "description": "Animated Tron grid over the wallpaper and behind the GDM login dialog, drawn by a GPU shader. Pauses under maximised or fullscreen windows.",
+  "shell-version": [
+    "46",
+    "47",
+    "48",
+    "49",
+    "50"
+  ],
+  "session-modes": [
+    "user",
+    "gdm"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "uuid": "sysmon-flair@pan.local",
+  "name": "System Monitor Flair",
+  "description": "CPU, memory, swap, network, temperature and NVIDIA GPU in the panel, each with a rolling one-minute sparkline and a continuous load-colour ramp. Click for per-core load, GPU detail and top processes.",
+  "shell-version": ["45", "46", "47", "48", "49", "50"],
+  "version": 1
+}

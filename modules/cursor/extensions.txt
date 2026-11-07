@@ -1,0 +1,6 @@
+anthropic.claude-code
+anysphere.remote-containers
+anysphere.remote-ssh
+brainmetrix.claude-statusline
+jdinhlife.gruvbox
+xscriptor.xglass

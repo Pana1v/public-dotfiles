@@ -1,0 +1,30 @@
+{
+  "name": "rice",
+  "base": "dark",
+  "overrides": {
+    "claude": "#ff4f8b",
+    "text": "#ffe9eb",
+    "inactive": "#8a3a44",
+    "subtle": "#5e1f25",
+    "suggestion": "#ff6b7d",
+    "permission": "#ff1f3d",
+    "remember": "#ff1f3d",
+    "success": "#52e5ff",
+    "error": "#ff3b1f",
+    "warning": "#ffc14d",
+    "merged": "#ff4f8b",
+    "promptBorder": "#8a3a44",
+    "planMode": "#ff6b7d",
+    "autoAccept": "#52e5ff",
+    "bashBorder": "#ff7a29",
+    "ide": "#ff1f3d",
+    "diffAdded": "#08262c",
+    "diffRemoved": "#3a0a0e",
+    "diffAddedDimmed": "#061a1e",
+    "diffRemovedDimmed": "#240709",
+    "diffAddedWord": "#0e4752",
+    "diffRemovedWord": "#6b1219",
+    "userMessageBackground": "#1a0b0d",
+    "selectionBg": "#4a161b"
+  }
+}

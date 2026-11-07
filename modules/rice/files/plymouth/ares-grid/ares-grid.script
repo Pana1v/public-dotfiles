@@ -1,0 +1,99 @@
+# Ares grid boot splash. grid.png holds the sky, horizon and the vertical lines;
+# the horizontal lines are clones of hline.png moved every frame with the same
+# perspective as modules/rice/tools/grid.py (camera 1 unit up, horizon at 55%).
+
+Window.SetBackgroundTopColor(0.04, 0.02, 0.024);
+Window.SetBackgroundBottomColor(0.04, 0.02, 0.024);
+
+W = Window.GetWidth();
+H = Window.GetHeight();
+HZ = H * 0.55;
+F = H - HZ;
+CELL = 0.42;
+SPEED = 0.5 / 50;     # cells per refresh (refresh runs at 50 Hz)
+N = 26;
+
+bg = Sprite(Image("grid.png").Scale(W, H));
+bg.SetZ(-100);
+
+line_img = Image("hline.png").Scale(W, 24 * H / 1200);
+LH = line_img.GetHeight();
+for (i = 0; i < N; i++) {
+    lines[i] = Sprite(line_img);
+    lines[i].SetZ(-50);
+    lines[i].SetX(0);
+}
+
+# Progress: a thin accent bar just above the horizon, growing from the centre.
+bar_img = Image("bar.png");
+BAR_W = W * 0.22;
+BAR_Y = HZ - 28;
+bar = Sprite();
+bar.SetZ(10);
+progress = 0;
+
+phase = 0;
+
+fun refresh_callback() {
+    global.phase = global.phase + SPEED;
+    if (global.phase >= 1) global.phase = global.phase - 1;
+    for (i = 0; i < N; i++) {
+        z = 1 + (i - global.phase) * CELL;
+        y = HZ + F / z;
+        gap = CELL * F / (z * z);              # pixels to the next line
+        t = (y - HZ) / F;
+        o = Math.Clamp(0.05 + 1.1 * Math.Sqrt(t), 0, 1) * Math.Clamp((gap - 2) / 8, 0, 1);
+        lines[i].SetY(y - LH / 2);
+        lines[i].SetOpacity(o);
+    }
+}
+Plymouth.SetRefreshFunction(refresh_callback);
+
+fun progress_callback(duration, p) {
+    w = Math.Int(BAR_W * p);
+    if (w < 2) w = 2;
+    bar.SetImage(bar_img.Scale(w, 2));
+    bar.SetX(W / 2 - w / 2);
+    bar.SetY(BAR_Y);
+}
+Plymouth.SetBootProgressFunction(progress_callback);
+
+# ---- password prompt (disk unlock) -------------------------------------------
+prompt_img = Image("prompt.png");
+dot_img = Image("dot.png");
+prompt = Sprite();
+prompt.SetZ(20);
+
+fun display_normal_callback() {
+    prompt.SetOpacity(0);
+    for (i = 0; dots[i]; i++) dots[i].SetOpacity(0);
+}
+
+fun display_password_callback(text, count) {
+    prompt.SetImage(prompt_img);
+    prompt.SetX(W / 2 - prompt_img.GetWidth() / 2);
+    prompt.SetY(HZ - 120);
+    prompt.SetOpacity(1);
+    for (i = 0; dots[i]; i++) dots[i].SetOpacity(0);
+    n = count;
+    if (n > 24) n = 24;
+    for (i = 0; i < n; i++) {
+        if (!dots[i]) { dots[i] = Sprite(dot_img); dots[i].SetZ(20); }
+        dots[i].SetX(W / 2 - n * 9 + i * 18);
+        dots[i].SetY(HZ - 60);
+        dots[i].SetOpacity(1);
+    }
+}
+Plymouth.SetDisplayNormalFunction(display_normal_callback);
+Plymouth.SetDisplayPasswordFunction(display_password_callback);
+
+# ---- messages -----------------------------------------------------------------
+message = Sprite();
+message.SetZ(20);
+fun message_callback(text) {
+    img = Image.Text(text, 1, 0.91, 0.92);
+    message.SetImage(img);
+    message.SetX(W / 2 - img.GetWidth() / 2);
+    message.SetY(H - 40);
+}
+Plymouth.SetMessageFunction(message_callback);

@@ -1,0 +1,82 @@
+/* Panel indicators get default horizontal padding that would waste space on a
+   strip this dense; we reclaim it and manage spacing per element instead. */
+.spotify-deck-indicator {
+  -natural-hpadding: 5px;
+  -minimum-hpadding: 4px;
+}
+
+.spotify-deck-strip {
+  border-radius: 8px;
+  transition-duration: 180ms;
+}
+
+/* The content row. Spacing lives here, not on the strip, because the strip is
+   a vertical box whose only job is to stack the row above the progress bar. */
+.spotify-deck-row {
+  spacing: 6px;
+  padding: 0 3px;
+}
+
+.spotify-deck-strip:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.spotify-deck-art {
+  border-radius: 4px;
+  background-size: cover;
+  /* No background-position: St only takes lengths here, and "center" logged a
+     warning on every progress tick. St already centres the image when unset. */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+/* Fixed width is what makes the marquee meaningful: without a bound the label
+   would simply grow and push the rest of the taskbar around on every track. */
+.spotify-deck-text {
+  width: 140px;
+  spacing: 0;
+}
+
+.spotify-deck-title {
+  width: 140px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Deliberate hierarchy rather than a mismatch: the title is what you read,
+   the artist is context. Two steps apart is enough to rank them without the
+   smaller line becoming unreadable. */
+.spotify-deck-artist {
+  width: 140px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.spotify-deck-spectrum {
+  min-height: 16px;
+}
+
+.spotify-deck-controls {
+  spacing: 1px;
+}
+
+.spotify-deck-button {
+  border-radius: 999px;
+  padding: 2px;
+  transition-duration: 120ms;
+}
+
+.spotify-deck-button:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+.spotify-deck-button:active {
+  background-color: rgba(255, 255, 255, 0.24);
+}
+
+.spotify-deck-button-icon {
+  icon-size: 15px;
+}
+
+.spotify-deck-progress {
+  border-radius: 1px;
+}

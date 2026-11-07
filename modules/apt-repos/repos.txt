@@ -1,0 +1,12 @@
+# Third-party apt sources copied from /etc/apt/sources.list.d by snapshot.sh.
+# format: <file> [key to inject as signed-by, for sources that lack one]
+brave-browser-release.list
+claude-desktop.list
+cursor.sources
+docker-archive-keyring.list
+foxglove-studio.list                    /etc/apt/trusted.gpg.d/foxglove.gpg
+github-cli.list
+nvidia-container-toolkit-keyring.list
+tailscale.list                          /usr/share/keyrings/tailscale-archive-keyring.gpg
+vscode.sources
+zhangsongcui3371-ubuntu-fastfetch-noble.sources

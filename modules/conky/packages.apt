@@ -1,0 +1,2 @@
+conky-all python3 x11-xserver-utils playerctl
+gir1.2-ecal-2.0 gir1.2-ical-3.0   # agenda widget: Google Calendar via GNOME Online Accounts

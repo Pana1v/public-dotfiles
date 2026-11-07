@@ -1,0 +1,10 @@
+[Unit]
+Description=Conky right-column feeds (weather, calendar, GitHub PRs, now playing)
+
+[Service]
+ExecStart=/usr/bin/python3 %h/.config/conky/Common/feeds.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target

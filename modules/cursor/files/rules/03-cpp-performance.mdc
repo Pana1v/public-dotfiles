@@ -1,0 +1,15 @@
+---
+description: C++ performance topics to consult for performance-critical code
+globs: **/*.cpp,**/*.hpp,**/*.h,**/*.cc
+alwaysApply: false
+---
+
+# C++ Performance
+
+Consult these topics when writing performance-critical C++:
+
+- Vector reserve (avoid repeated reallocations on growth).
+- Small string optimization.
+- Avoid `std::list` / `std::map` where a contiguous container or `unordered_map` fits better.
+- PCL (Point Cloud Library) optimization.
+- Cache-friendly iteration order.

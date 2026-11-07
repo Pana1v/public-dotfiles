@@ -1,0 +1,62 @@
+/* Rice additions for the GDM login screen, appended to the distro's GDM theme
+ * by system-rice.sh. Grid background and the same look as the lock screen. */
+#lockDialogGroup {
+  background: #0a0506 url("resource:///org/gnome/shell/theme/rice-grid.png");
+  background-size: cover;
+  background-position: center;
+}
+.login-dialog { background-color: transparent; }
+.login-dialog-logo-bin { width: 0; height: 0; padding: 0; }
+.login-dialog .user-icon {
+  border-radius: 0;
+  border: 1px solid #ff1f3d;
+  box-shadow: 0 0 28px #ff1f3d77;
+  background-color: #0a0506;
+}
+.login-dialog .user-widget-label,
+.login-dialog .login-dialog-user-list-item .user-widget-label {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffe9eb;
+}
+.login-dialog .login-dialog-user-list-item:focus .user-icon,
+.login-dialog .login-dialog-user-list-item:hover .user-icon {
+  box-shadow: 0 0 36px #ff1f3daa;
+}
+.login-dialog-user-list-item { border-radius: 0; }
+
+/* Wider prompt column: the name is Orbitron caps with letter spacing, so
+ * GNOME's default ~23em width cut long names (pan-navigator) with an ellipsis. */
+.unlock-dialog .login-dialog-prompt-layout,
+.login-dialog .login-dialog-prompt-layout { width: 34em; }
+.login-dialog-user-list { width: 34em; }
+.unlock-dialog .user-widget.vertical .user-widget-label,
+.login-dialog .user-widget.vertical .user-widget-label { min-width: 30em; text-align: center; }
+.login-dialog-user-list-item:focus,
+.login-dialog-user-list-item:hover { background-color: #2a101399; }
+.login-dialog .login-dialog-prompt-entry {
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 3px;
+  border-radius: 0;
+  background-color: #1a0b0dcc;
+  color: #ffe9eb;
+  border: 1px solid #2a1013;
+  box-shadow: none;
+  caret-color: #ff1f3d;
+}
+.login-dialog .login-dialog-prompt-entry:focus {
+  border-color: #ff1f3d;
+  box-shadow: 0 0 14px #ff1f3d66;
+}
+.login-dialog-button,
+.login-dialog .button {
+  border-radius: 0;
+  background-color: #2a1013;
+  color: #ffe9eb;
+}
+.login-dialog-button:hover,
+.login-dialog .button:hover { background-color: #4a161b; }
+.login-dialog-message-error { color: #ff3b1f; }
+#panel, #panel.login-screen { background-color: transparent; }
+#panel .clock { font-family: "Orbitron", sans-serif; letter-spacing: 2px; color: #ffe9eb; }

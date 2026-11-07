@@ -1,0 +1,35 @@
+---
+description: Code quality, error handling, debugging, and verification standards (ported from Claude CLAUDE.md)
+alwaysApply: true
+---
+
+# Code Quality
+
+- Keep comments focused on why, not how, aim for self-explanatory code.
+- When refactoring, remove old comments, never add comments about what changed.
+- Never document old behavior or behavior changes in code.
+
+# Error Handling
+
+Follow Ousterhout's "A Philosophy of Software Design", minimize exceptions.
+
+- Define errors out of existence where possible.
+- Crash on genuinely unexpected errors.
+- Don't catch-and-recover from internal errors, fix the bug.
+- Validate at system boundaries only.
+- try-finally for resource cleanup is fine.
+
+# Debugging
+
+- Find the root cause. Never fix symptoms or add workarounds.
+- Read error messages carefully.
+- Reproduce consistently before investigating.
+- Form a single hypothesis, test minimally, verify before continuing.
+- If a fix doesn't work, stop and re-analyze.
+
+# Verifying a Change
+
+- Vary one thing. A different machine/GPU shifts float output and reads as a regression, so re-run the OLD code on the SAME machine before believing the change caused a number to move.
+- A comparator that cannot fail proves nothing. Perturb one field of one record by 1e-9 and confirm the comparator reports it, then trust "outputs are identical".
+- Diffing JSON outputs: NaN != NaN, so a plain `x != y` walk flags every NaN column. Records can also carry different key sets, so walk `set(a) | set(b)` with `.get(k, sentinel)`.
+- A threshold calibrated at one span is not span-free. Control: IQR over N randomly drawn samples stays flat as N grows, IQR over a contiguous window of the same N rises. If those two diverge the quantity is autocorrelated and the threshold owns a span.

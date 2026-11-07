@@ -1,0 +1,9 @@
+# SSH hosts now live in ~/.ssh/config (p1, p2, p3)
+
+# VS Code: update + launch (local only)
+alias code-update='sudo apt update && sudo apt install --only-upgrade -y code && code &'
+
+# Isaac Sim 5.0 launchers
+alias isaacsim='~/isaac-sim/isaac-sim.selector.sh'
+alias isaacsim-gui='~/isaac-sim/isaac-sim.sh'
+alias isaacsim-docker='cd ~/isaac-sim && ACCEPT_EULA=Y PRIVACY_CONSENT=Y ./isaac-sim.docker.gui.sh'

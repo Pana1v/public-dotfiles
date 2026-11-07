@@ -1,0 +1,45 @@
+configuration {
+    /* Script modes live in scripts/, linked to ~/.config/rofi/scripts */
+    modes: "drun,windows:~/.config/rofi/scripts/windows.py,run,calc:~/.config/rofi/scripts/calc.sh,ssh,filebrowser,cheatsheet:~/.config/rofi/scripts/keys.sh,power:~/.config/rofi/scripts/power.sh";
+    font: "Exo 2 11";
+    show-icons: true;
+    icon-theme: "Rice";
+    terminal: "terminator";
+
+    display-drun: "APPS";
+    display-windows: "WINDOWS";
+    display-run: "RUN";
+    display-calc: "CALC";
+    display-cheatsheet: "KEYS";
+    display-power: "POWER";
+    display-ssh: "SSH";
+    display-filebrowser: "FILES";
+    /* Generic name on a second, smaller line ("Web Browser" under "Brave");
+       [] drops the line for apps that don't set one. */
+    drun-display-format: "{name}[<span size='small' alpha='55%'>&#10;{generic}</span>]";
+
+    /* Fuzzy matching ranked by fzf's scorer. With an empty query drun still
+       lists by launch history, so frequent apps stay on top. */
+    matching: "fuzzy";
+    sort: true;
+    sorting-method: "fzf";
+
+    /* Tab cycles modes instead of rows (arrows already move rows). The
+       element bindings have to be cleared or rofi rejects the duplicate key. */
+    kb-element-next: "";
+    kb-element-prev: "";
+    kb-mode-next: "Tab,Control+Tab,Alt+l";
+    kb-mode-previous: "ISO_Left_Tab,Control+ISO_Left_Tab,Alt+h";
+
+    /* Rofi's default accepts on double click, so a single click only
+       highlights. Hover selects, one click launches. */
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+
+    /* terminator runs a command with -x, not -e */
+    run-shell-command: "{terminal} -x {cmd}";
+    ssh-command: "{terminal} -x {ssh-client} {host} [-p {port}]";
+}
+
+@import "rice.rasi"

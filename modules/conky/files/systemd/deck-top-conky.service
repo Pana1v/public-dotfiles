@@ -1,0 +1,12 @@
+[Unit]
+Description=Ops deck, top strip (Fleet)
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.config/conky/Common/start-widget.sh %h/.config/conky/Deck/deck_top.conf
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

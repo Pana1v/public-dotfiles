@@ -1,0 +1,12 @@
+{
+  "uuid": "power-extras@pan.local",
+  "name": "Power Extras",
+  "description": "Battery time left (or time to full) under the Quick Settings battery, and Restart to UEFI Setup / Restart to Windows in the power menu.",
+  "shell-version": [
+    "46",
+    "47",
+    "48",
+    "49",
+    "50"
+  ]
+}

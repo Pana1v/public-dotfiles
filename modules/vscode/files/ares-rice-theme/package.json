@@ -1,0 +1,18 @@
+{
+  "name": "ares-rice",
+  "displayName": "Ares Rice",
+  "description": "Tron: Ares theme from the dotfiles rice. Red program glow on black.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "engines": { "vscode": "^1.60.0" },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Ares Rice",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ares-rice-color-theme.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "uuid": "term-landscape@pan.local",
+  "name": "Terminal Landscape",
+  "description": "Animated Tron loss landscape behind Terminator windows: a retraining 3D surface drawn in ASCII glyphs, with a genetic-algorithm population hunting its minima. Only the focused terminal animates.",
+  "shell-version": ["46", "47", "48", "49", "50"]
+}

@@ -1,0 +1,39 @@
+# role           hex       Tron grid: near-black blue, light-cycle cyan, CLU orange for warnings.
+bg               #05080c
+bg2              #020407
+black            #010204
+bg3              #08101a
+card             #0b1622
+surface          #0f2233
+select           #123a52
+bright_black     #1d4a66
+tab_fg           #2a5d7a
+dim              #36708f
+dim2             #5c9bbd
+fg2              #a9dff2
+fg               #dff9ff
+accent           #18e6ff
+cyan             #6ff3ff
+teal             #00c2d9
+magenta          #3d9cff
+purple2          #8fd8ff
+green            #3dffc9
+yellow           #ffd24a
+orange           #ff8a1f
+red              #ff4a3d
+diff_add         #082a2c
+diff_del         #2e1408
+diff_add_dim     #061c1f
+diff_del_dim     #1f0e06
+diff_add_word    #0f4e52
+diff_del_word    #5a2a0e
+
+@gtk             ZorinGrey-Dark
+@shell           Rice
+@vscode          Tron Rice
+@btop            tron
+@wallpaper       image:tron-grid.png
+@taskbar_border  rgba(24,230,255,0.35)
+@cursor          Adwaita
+@accent          teal
+@conky_accent    accent

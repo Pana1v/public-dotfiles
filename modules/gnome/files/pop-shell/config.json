@@ -1,0 +1,12 @@
+{
+  "float": [
+    {
+      "class": "Rofi"
+    },
+    {
+      "title": "^@!.*;BDHF$"
+    }
+  ],
+  "skiptaskbarhidden": [],
+  "log_on_focus": false
+}

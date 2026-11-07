@@ -1,0 +1,6 @@
+# dconf sections that go to the private repo (private/gnome/dconf/<name>.ini)
+# instead of the public dump. One Python regex per line, matched against the
+# [section] name: paired phones and their certificates, this computer's name,
+# the home weather location.
+^extensions/(zorin-connect|gsconnect)(/|$)
+^weather$

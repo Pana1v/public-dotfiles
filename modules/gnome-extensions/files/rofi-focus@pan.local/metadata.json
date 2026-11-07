@@ -1,0 +1,6 @@
+{
+  "uuid": "rofi-focus@pan.local",
+  "name": "Rofi Focus",
+  "description": "Raises and focuses rofi when it opens and closes it when it loses focus. Rofi is an XWayland client launched from a shortcut with no activation token, so mutter's focus-stealing prevention would otherwise place it behind other windows. Also lists windows over D-Bus for the rofi window switcher.",
+  "shell-version": ["46", "47", "48", "49", "50"]
+}

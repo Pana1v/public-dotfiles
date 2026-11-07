@@ -1,0 +1,13 @@
+# dconf subtrees carried between machines. One dump file per line.
+# format: <file name>  <dconf path>
+shell            /org/gnome/shell/
+interface        /org/gnome/desktop/interface/
+wm               /org/gnome/desktop/wm/
+peripherals      /org/gnome/desktop/peripherals/
+background       /org/gnome/desktop/background/
+app-folders      /org/gnome/desktop/app-folders/
+mutter           /org/gnome/mutter/
+media-keys       /org/gnome/settings-daemon/plugins/media-keys/
+terminal         /org/gnome/terminal/legacy/profiles:/
+zorin            /com/zorin/
+resource-monitor /com/github/Ory0n/Resource_Monitor/

@@ -1,0 +1,640 @@
+/* Rice shell theme: the distro's dark shell theme (base.css, written by
+ * apply.sh: ZorinGrey-Dark or Yaru-dark) with the conky HUD look on
+ * notification banners and the clock drawer (calendar + message list).
+ * Square cards, corner brackets, Orbitron headers, mono times,
+ * green only for "today" and live state. */
+@import url("base.css");
+
+/* ── Cards: banners and the drawer popover ─────────────────────────── */
+.notification-banner,
+.datemenu-popover,
+.popup-menu-content,
+.candidate-popup-content,
+.quick-settings {
+  background-color: #0a0506 !important;
+  border-radius: 0 !important;
+  /* Hide the border, don't zero it: a 0px border collapses the banner's
+   * text column to a few pixels, so notifications read as blank. */
+  border-color: transparent !important;
+  border-image: url("brackets.svg") 12;
+  /* St skips border-image when a box-shadow is set. */
+  box-shadow: none !important;
+}
+
+/* Popup menu rows are square, flat and grey. */
+.popup-menu-item { border-radius: 0; }
+.popup-menu-item:hover,
+.popup-menu-item:focus,
+.popup-menu-item:selected { background-color: #2a1013; }
+.popup-separator-menu-item { height: 1px; background-color: #2a1013; }
+
+/* ── Messages (banner body and list entries) ───────────────────────── */
+.message {
+  border-radius: 0;
+  background-color: #1a0b0d;
+}
+.message:hover { background-color: #2a1013; }
+.message:active, .message:focus { background-color: #4a161b; }
+
+.notification-banner .message { background-color: transparent; }
+.notification-banner .message:hover { background-color: #2a1013; }
+
+.message .message-header { color: #b86a72; }
+.message .message-header .message-header-content .event-time {
+  font-family: "JetBrains Mono";
+  color: #8a3a44;
+}
+.message .message-header .message-expand-button,
+.message .message-header .message-close-button { border-radius: 0; }
+.message .message-box .message-content .message-title { color: #ffe9eb; }
+.message .message-box .message-content .message-body { color: #f2c4c8; }
+.message .message-box .message-icon.message-themed-icon { border-radius: 0; }
+
+/* ── Message list chrome ───────────────────────────────────────────── */
+.message-list { border-color: #2a1013; }
+.message-list .message-list-placeholder { color: #8a3a44; }
+.message-list-controls .button,
+.message-list-controls .dnd-button { border-radius: 0; }
+.message-media-control { border-radius: 0; }
+
+/* ── Calendar column ───────────────────────────────────────────────── */
+.datemenu-today-button,
+.events-button,
+.world-clocks-button,
+.weather-button { border-radius: 0; }
+
+.events-button,
+.world-clocks-button,
+.weather-button { background-color: #1a0b0d; }
+
+.events-button:hover,
+.world-clocks-button:hover,
+.weather-button:hover,
+.datemenu-today-button:hover { background-color: #2a1013; }
+
+.datemenu-today-button .date-label {
+  font-family: "Orbitron";
+  font-weight: 600;
+  color: #ffe9eb;
+}
+
+/* Header grammar: Orbitron 11px bold, 2px tracking, grey. */
+.message .message-header .message-header-content .message-source-title,
+.datemenu-today-button .day-label,
+.events-button .events-box .events-title,
+.world-clocks-button .world-clocks-header,
+.weather-button .weather-box .weather-header-box .weather-header {
+  font-family: "Orbitron";
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #b86a72;
+}
+.events-button .events-box .events-title,
+.world-clocks-button .world-clocks-header,
+.weather-button .weather-box .weather-header-box .weather-header {
+  border-bottom: 1px solid #2a1013;
+  padding-bottom: 8px;
+}
+
+.events-button .events-box .events-list .event-box .event-time,
+.world-clocks-button .world-clocks-grid .world-clocks-time,
+.weather-button .weather-box .weather-grid .weather-forecast-time {
+  font-family: "JetBrains Mono";
+}
+
+.calendar .calendar-month-header .calendar-month-label {
+  font-family: "Orbitron";
+  letter-spacing: 2px;
+  border-radius: 0;
+}
+.calendar .calendar-month-header .pager-button { border-radius: 0; }
+.calendar .calendar-day-heading { color: #8a3a44; border-radius: 0; }
+.calendar .calendar-day {
+  font-family: "JetBrains Mono";
+  font-weight: normal;
+  border-radius: 0;
+}
+.calendar .calendar-day.calendar-weekend { color: #b86a72; }
+.calendar .calendar-day.calendar-other-month { color: #5e1f25; }
+.calendar .calendar-day.calendar-today,
+.calendar .calendar-day.calendar-today:hover {
+  background-color: #52e5ff !important;
+  color: #0a0506 !important;
+  font-weight: bold;
+}
+
+/* ── Top panel ─────────────────────────────────────────────────────── */
+#panel {
+  background-color: #0a0506;
+  box-shadow: inset 0 -1px 0 #2a1013;
+  font-weight: normal;
+}
+#panel .panel-button,
+#panel .panel-button.clock-display .clock { border-radius: 0; }
+
+/* Clock reads like a conky card title: spaced Orbitron, green unread dot. */
+#panel .panel-button.clock-display .clock {
+  font-family: "Orbitron";
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffe9eb;
+}
+#panel .panel-button.clock-display .messages-indicator { color: #52e5ff; }
+
+/* Tray: each button is a small bracketed cell. */
+#panel #panelRight .panel-button {
+  background-color: #1a0b0d;
+  border-image: url("brackets-sm.svg") 6;
+  margin: 3px 2px;
+  box-shadow: none;
+}
+/* Music strip: same bracketed cell as the tray, which only styles
+ * #panelRight. No vertical margin: two text lines plus the progress bar
+ * need the full panel height. */
+#panel .spotify-deck-indicator {
+  background-color: #1a0b0d;
+  border-image: url("brackets-sm.svg") 6;
+  box-shadow: none;
+  margin: 0 2px;
+}
+
+/* Hover lifts the fill; an open menu gets a white underline, not a grey fill. */
+#panel .panel-button:hover,
+#panel .panel-button:focus,
+#panel .panel-button.clock-display:hover .clock {
+  box-shadow: none;
+  background-color: #2a1013;
+}
+#panel .panel-button:active,
+#panel .panel-button:checked,
+#panel .panel-button:active:hover,
+#panel .panel-button:checked:hover,
+#panel .panel-button.clock-display:checked .clock,
+#panel .panel-button.clock-display:checked .clock:hover {
+  box-shadow: inset 0 -2px 0 #ff1f3d;
+  background-color: #2a1013;
+}
+
+/* ── Dock ──────────────────────────────────────────────────────────── */
+/* Fill and alpha come from zorin-dash gsettings (inline style); the
+ * extension never sets border-image, so the brackets apply from here. */
+#dashtodockContainer #dash .dash-background {
+  border-image: url("brackets.svg") 12;
+}
+
+/* ── Music pill ────────────────────────────────────────────────────── */
+/* Fill, text and radius come from dynamic-music-pill gsettings. */
+.pill-body,
+.music-pill-expanded {
+  border-image: url("brackets.svg") 12;
+}
+.music-pill-expanded .expanded-title { font-family: "Orbitron"; letter-spacing: 1px; }
+.music-pill-expanded .progress-time { font-family: "JetBrains Mono"; }
+
+/* ── Workspace numbers (ws-numbers@pan.local) ──────────────────────── */
+/* Same bracketed cells as the tray; the active one is a solid white cell. */
+.ws-numbers { spacing: 4px; padding: 0 6px; }
+.ws-number {
+  font-family: "Orbitron";
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #b86a72;
+  min-width: 24px;
+  padding: 2px 6px;
+  margin: 3px 0;
+  text-align: center;
+  border-image: url("brackets-sm.svg") 6;
+}
+.ws-number:hover { color: #ffe9eb; }
+.ws-number:checked {
+  border-image: none;
+  background-color: #ffe9eb;
+  color: #0a0506;
+}
+
+/* Motion: 120ms linear, colour only, hover cells and rows. None on popups. */
+.message,
+.events-button,
+.world-clocks-button,
+.weather-button,
+.datemenu-today-button,
+.ws-number,
+#panel .panel-button,
+.popup-menu-item { transition-duration: 120ms; }
+
+/* Pop-shell focus outline. Two classes outrank pop-shell's own 3px rule. */
+.pop-shell-active-hint.pop-shell-border-normal,
+.pop-shell-active-hint.pop-shell-border-maximize {
+  border-width: 1px;
+}
+
+/* ── Lock screen ───────────────────────────────────────────────────── */
+/* Big mono clock, Orbitron caps date, square entry and buttons.
+ * The live-lockscreen extension draws a video behind it; the clock and
+ * focused entry glow in the accent like a Tron program. */
+.unlock-dialog-clock .unlock-dialog-clock-time {
+  font-family: "Orbitron", sans-serif;
+  font-size: 104px;
+  font-weight: 700;
+  font-feature-settings: "tnum";
+  letter-spacing: 4px;
+  color: #ffe9eb;
+  /* program glow; 8-digit hex so switch-theme.sh still recolours it */
+  text-shadow: 0 0 24px #ff1f3daa;
+}
+.unlock-dialog-clock .unlock-dialog-clock-date {
+  font-family: "Orbitron", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #ff1f3d;
+  text-shadow: 0 0 10px #ff1f3d88;
+}
+.unlock-dialog-clock .unlock-dialog-clock-hint {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: #8a3a44;
+}
+
+/* Name above the entry, avatar squared off */
+.unlock-dialog .user-widget.vertical .user-widget-label,
+.login-dialog .user-widget.vertical .user-widget-label {
+  font-family: "Orbitron", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffe9eb;
+}
+.unlock-dialog .user-icon,
+.login-dialog .user-icon {
+  border-radius: 0;
+  border: 1px solid #ff1f3d;
+  /* the X avatar runs out of its frame; the glow carries it past the edge */
+  box-shadow: 0 0 28px #ff1f3d77;
+  background-color: #0a0506;
+}
+.unlock-dialog .user-widget.vertical,
+.login-dialog .user-widget.vertical {
+  spacing: 18px;
+}
+
+/* Wider prompt column: the name is Orbitron caps with letter spacing, so
+ * GNOME's default ~23em width cut long names (pan-navigator) with an ellipsis. */
+.unlock-dialog .login-dialog-prompt-layout,
+.login-dialog .login-dialog-prompt-layout { width: 34em; }
+.login-dialog-user-list { width: 34em; }
+.unlock-dialog .user-widget.vertical .user-widget-label,
+.login-dialog .user-widget.vertical .user-widget-label { min-width: 30em; text-align: center; }
+
+/* Dim veil over the grid so the prompt reads; the clock floats on the horizon */
+.unlock-dialog .unlock-dialog-clock {
+  padding-bottom: 48px;
+}
+.unlock-dialog .unlock-dialog-notifications-container .notification-banner {
+  background-color: #1a0b0dee;
+  border-left: 2px solid #ff1f3d;
+}
+
+/* Password entry: flat cell, accent line and glow when focused */
+.unlock-dialog .login-dialog-prompt-entry,
+.login-dialog .login-dialog-prompt-entry {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 3px;
+  border-radius: 0;
+  background-color: #1a0b0dcc;
+  color: #ffe9eb;
+  border: 1px solid #2a1013;
+  box-shadow: none;
+  padding: 8px 16px;
+  caret-color: #ff1f3d;
+  selection-background-color: #4a161b;
+  selected-color: #ffe9eb;
+}
+.unlock-dialog .login-dialog-prompt-entry:focus,
+.login-dialog .login-dialog-prompt-entry:focus {
+  border-color: #ff1f3d;
+  box-shadow: 0 0 14px #ff1f3d66;
+}
+.unlock-dialog .login-dialog-prompt-label,
+.login-dialog .login-dialog-prompt-label {
+  font-family: "Exo 2", sans-serif;
+  color: #b86a72;
+}
+
+/* Status line: wrong password is an error, so red; the rest stays grey */
+.login-dialog-message {
+  font-family: "Exo 2", sans-serif;
+  color: #b86a72;
+}
+.login-dialog-message-warning,
+.login-dialog-message.login-dialog-message-warning {
+  color: #ffc14d;
+}
+.login-dialog-message-error { color: #ff3b1f; }
+
+/* Buttons and notification cards on the lock screen */
+.unlock-dialog .button,
+.unlock-dialog .icon-button,
+.login-dialog-button.cancel-button,
+.login-dialog-button.switch-user-button {
+  border-radius: 0;
+  background-color: #2a1013;
+  color: #ffe9eb;
+  box-shadow: none;
+  transition-duration: 120ms;
+}
+.unlock-dialog .button:hover,
+.unlock-dialog .icon-button:hover,
+.login-dialog-button.cancel-button:hover,
+.login-dialog-button.switch-user-button:hover {
+  background-color: #4a161b;
+}
+.unlock-dialog .message,
+.unlock-dialog .notification-banner {
+  border-radius: 0;
+}
+
+/* Popups hold text over whatever is behind them, so they are opaque
+ * (the 0.92 card is for banners and the dock). */
+.popup-menu-content,
+.candidate-popup-content,
+.quick-settings {
+  border-image: url("brackets-solid.svg") 12;
+  background-color: #0a0506;
+}
+
+/* ── OSD (brightness, volume, keyboard light) and sliders ──────────── */
+/* Square HUD card with brackets, accent bar with a glow. Hexes are palette
+ * roles, so switch-theme.sh recolours them; 8-digit ones carry alpha. */
+.osd-window {
+  background-color: #0a0506ee !important;
+  color: #ffe9eb;
+  border-radius: 0 !important;
+  border-color: transparent !important;
+  border-image: url("brackets-solid.svg") 12;
+  box-shadow: none !important;
+  padding: 14px 18px;
+  spacing: 12px;
+}
+.osd-window StIcon,
+.osd-window .osd-monitor-label { color: #ff1f3d; icon-shadow: 0 0 8px #ff1f3d88; }
+.osd-window .level,
+.osd-window .level-bar {
+  -barlevel-height: 4px;
+  -barlevel-border-radius: 0;
+  -barlevel-background-color: #2a1013;
+  -barlevel-active-background-color: #ff1f3d;
+  -barlevel-overdrive-color: #ffc14d;
+  -barlevel-overdrive-separator-width: 2px;
+  box-shadow: 0 0 10px #ff1f3d55;
+}
+.osd-window .number-label,
+.osd-window StLabel {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffe9eb;
+}
+
+/* Quick settings sliders and the OSD share the bar look. */
+.slider,
+.quick-slider .slider {
+  -barlevel-height: 4px;
+  -barlevel-border-radius: 0;
+  -barlevel-background-color: #2a1013;
+  -barlevel-active-background-color: #ff1f3d;
+  -barlevel-overdrive-color: #ffc14d;
+  -slider-handle-radius: 7px;
+  -slider-handle-border-width: 2px;
+  -slider-handle-border-color: #ff1f3d;
+  color: #0a0506;
+}
+.slider:hover,
+.slider:focus { -slider-handle-border-color: #ffe9eb; }
+
+/* Quick toggles: flat dark cells; on = accent outline and glow, not a fill. */
+.quick-toggle,
+.quick-menu-toggle .quick-toggle,
+.quick-toggle-menu .header .icon {
+  border-radius: 0 !important;
+}
+.quick-toggle {
+  background-color: #1a0b0d;
+  color: #f2c4c8;
+  border: 1px solid #2a1013;
+}
+.quick-toggle:hover { background-color: #2a1013; }
+.quick-toggle:checked,
+.quick-toggle:checked:hover,
+.quick-toggle:checked:focus {
+  background-color: #4a161b !important;
+  color: #ffe9eb !important;
+  border: 1px solid #ff1f3d;
+  box-shadow: 0 0 8px #ff1f3d55;
+}
+.quick-menu-toggle .quick-toggle-arrow,
+.quick-menu-toggle .quick-toggle-separator { border-radius: 0 !important; }
+.quick-toggle-menu {
+  background-color: #120809 !important;
+  border-radius: 0 !important;
+}
+.quick-toggle-menu .header .icon { background-color: #ff1f3d; color: #0a0506; }
+.quick-settings-system-item .icon-button,
+.quick-settings .icon-button { border-radius: 0 !important; }
+
+/* ── App grid, overview and search (the app menu) ──────────────────── */
+/* Square tiles. Hover lifts the fill, focus and selection get the accent
+ * edge and glow used by the quick toggles. Folders are bracketed cards. */
+.overview-tile,
+.grid-search-result,
+.app-folder-dialog .overview-tile,
+.app-folder-dialog .grid-search-result {
+  border-radius: 0;
+  color: #f2c4c8;
+  transition-duration: 120ms;
+}
+.overview-tile:hover,
+.grid-search-result:hover {
+  background-color: #2a1013;
+  color: #ffe9eb;
+}
+.overview-tile:active,
+.grid-search-result:active {
+  background-color: #4a161b;
+}
+.overview-tile:focus,
+.overview-tile:selected,
+.overview-tile:highlighted,
+.grid-search-result:focus,
+.grid-search-result:selected {
+  background-color: #4a161b !important;
+  color: #ffe9eb;
+  box-shadow: inset 0 0 0 1px #ff1f3d, 0 0 10px #ff1f3d44 !important;
+}
+.overview-tile:drop,
+.app-folder:drop {
+  background-color: #4a161b;
+  box-shadow: inset 0 0 0 1px #ff1f3d;
+}
+
+/* App names: Manrope, small caps feel without forcing caps. */
+.overview-tile .overview-icon.overview-icon-with-label StLabel,
+.grid-search-result .overview-icon.overview-icon-with-label StLabel {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Running dot: a short accent bar instead of a round dot. */
+.app-grid-running-dot {
+  width: 10px;
+  height: 2px;
+  border-radius: 0;
+  background-color: #ff1f3d;
+}
+
+/* Folder icon in the grid: a bracketed card. */
+.app-folder {
+  border-radius: 0;
+  background-color: #1a0b0d;
+  border-image: url("brackets-sm.svg") 6;
+  color: #f2c4c8;
+}
+.app-folder:hover { background-color: #2a1013; }
+.app-folder:focus,
+.app-folder:selected {
+  background-color: #4a161b !important;
+  box-shadow: inset 0 0 0 1px #ff1f3d !important;
+}
+
+/* Open folder: a square HUD panel with an Orbitron title. */
+.app-folder-dialog {
+  border-radius: 0;
+  background-color: #0a0506ee;
+  border-image: url("brackets-solid.svg") 12;
+  box-shadow: none;
+  color: #ffe9eb;
+}
+.app-folder-dialog .folder-name-container .folder-name-label,
+.app-folder-dialog .folder-name-container .folder-name-entry {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #ffe9eb;
+}
+.app-folder-dialog .folder-name-container .folder-name-entry,
+.app-folder-dialog .icon-button,
+.app-folder-dialog .page-navigation-arrow {
+  border-radius: 0;
+}
+.app-folder-dialog .page-navigation-arrow { background-color: #1a0b0d; }
+.app-folder-dialog .page-navigation-arrow:hover { background-color: #2a1013; }
+
+/* Page dots become short bars; the current page is lit. */
+.page-indicator .page-indicator-icon {
+  width: 18px;
+  height: 3px;
+  border-radius: 0;
+  background-color: #ff1f3d;
+}
+.page-navigation-arrow {
+  border-radius: 0;
+  background-color: #1a0b0d;
+  color: #f2c4c8;
+}
+.page-navigation-arrow:hover { background-color: #2a1013; color: #ffe9eb; }
+.page-navigation-hint.next:ltr,
+.page-navigation-hint.previous:rtl,
+.page-navigation-hint.previous:ltr,
+.page-navigation-hint.next:rtl { border-radius: 0; }
+
+/* Search entry: flat cell, accent edge and glow when focused, like the lock screen. */
+.search-entry {
+  border-radius: 0;
+  background-color: #1a0b0dcc;
+  color: #ffe9eb;
+  border: 1px solid #2a1013;
+  box-shadow: none;
+  caret-color: #ff1f3d;
+  selection-background-color: #4a161b;
+  selected-color: #ffe9eb;
+  font-family: "JetBrains Mono", monospace;
+}
+.search-entry:hover { background-color: #2a1013cc; }
+.search-entry:focus {
+  border-color: #ff1f3d;
+  box-shadow: 0 0 14px #ff1f3d55;
+}
+.search-entry StIcon { color: #b86a72; }
+.search-entry StLabel.hint-text { color: #8a3a44; }
+
+/* Search results: bracketed cards, square rows, mono status text. */
+.search-section-content {
+  border-radius: 0;
+  background-color: #0a0506ee;
+  border: none;
+  border-image: url("brackets-solid.svg") 12;
+}
+.list-search-result,
+.search-provider-icon { border-radius: 0; color: #f2c4c8; }
+.list-search-result:hover,
+.search-provider-icon:hover { background-color: #2a1013; }
+.list-search-result:focus,
+.list-search-result:selected,
+.search-provider-icon:focus,
+.search-provider-icon:selected {
+  background-color: #4a161b !important;
+  box-shadow: inset 2px 0 0 #ff1f3d !important;
+  color: #ffe9eb;
+}
+.list-search-result .list-search-result-title { color: #ffe9eb; }
+.list-search-result .list-search-result-description { color: #b86a72; }
+.search-statustext {
+  font-family: "JetBrains Mono", monospace;
+  color: #8a3a44;
+}
+
+/* Workspace previews and window labels in the overview. */
+.workspace-thumbnail-indicator {
+  border: 2px solid #ff1f3d;
+  border-radius: 0;
+}
+.workspace-background { border-radius: 0; }
+.window-caption,
+.dash-label {
+  border-radius: 0;
+  background-color: #0a0506ee;
+  color: #ffe9eb;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  border: 1px solid #2a1013;
+}
+
+/* Dock tiles and the Show Apps button: square, accent running bar. */
+#dash .dash-item-container .overview-tile .overview-icon,
+#dash .dash-item-container .show-apps .overview-icon,
+#dashtodockContainer .dash-item-container .overview-tile .overview-icon,
+#dashtodockContainer .dash-item-container .show-apps .overview-icon {
+  border-radius: 0;
+}
+#dash .dash-item-container .show-apps:checked .overview-icon,
+#dashtodockContainer .dash-item-container .show-apps:checked .overview-icon {
+  background-color: #4a161b;
+  box-shadow: inset 0 -2px 0 #ff1f3d;
+}
+#dashtodockContainer .dash-item-container .app-grid-running-dot,
+#dash .dash-item-container .app-grid-running-dot {
+  border-radius: 0;
+  background-color: #ff1f3d;
+}
+
+/* Battery estimate under the percentage (power-extras@pan.local). */
+.power-item .quick-toggle-subtitle {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: #b86a72;
+}

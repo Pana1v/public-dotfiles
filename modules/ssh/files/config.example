@@ -1,0 +1,6 @@
+# Public placeholder, linked to ~/.ssh/config on a clone without the private
+# repo. Replace the host below with your own. With the private repo checked
+# out, private/ssh/config is linked instead.
+Host example
+  HostName 192.0.2.10
+  User ubuntu

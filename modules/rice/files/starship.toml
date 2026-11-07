@@ -1,0 +1,33 @@
+# Mono prompt, greyscale with state colours. Glyphs come from Symbols Nerd Font (fonts-cursors module).
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = "$character"
+
+[directory]
+style = "fg:#050203 bg:#ff1f3d"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+style = "bg:#2a1013"
+format = '[[ $symbol $branch ](fg:#ff1f3d bg:#2a1013)]($style)'
+
+[git_status]
+style = "bg:#2a1013"
+format = '[[($all_status$ahead_behind )](fg:#ff1f3d bg:#2a1013)]($style)'
+
+[python]
+symbol = ""
+style = "bg:#120809"
+format = '[[ $symbol ($version) (\($virtualenv\)) ](fg:#f2c4c8 bg:#120809)]($style)'
+
+[cmd_duration]
+min_time = 2000
+style = "bg:#120809"
+format = '[[  $duration ](fg:#ffc14d bg:#120809)]($style)'
+
+[character]
+success_symbol = "[❯](bold #ff4f8b)"
+error_symbol = "[❯](bold #ff3b1f)"

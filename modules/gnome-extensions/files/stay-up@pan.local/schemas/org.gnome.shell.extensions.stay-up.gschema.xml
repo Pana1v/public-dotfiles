@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="stay-up">
+  <schema id="org.gnome.shell.extensions.stay-up"
+          path="/org/gnome/shell/extensions/stay-up/">
+    <key name="toggle-above" type="as">
+      <default><![CDATA[['<Super>t']]]></default>
+      <summary>Toggle always-on-top for the focused window</summary>
+      <description>Keyboard shortcut that pins/unpins the currently focused window above all others.</description>
+    </key>
+  </schema>
+</schemalist>

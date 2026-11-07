@@ -1,0 +1,12 @@
+[Unit]
+Description=Restart conky widgets on monitor plug/unplug
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.config/conky/reposition-on-monitor-change.sh
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

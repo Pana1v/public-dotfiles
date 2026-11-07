@@ -1,0 +1,12 @@
+{
+  "uuid": "conky-glass@pan.local",
+  "name": "Conky Glass",
+  "description": "Real background blur behind the conky widgets, shaped to their glass panels. Blur my Shell skips them because conky windows are desktop type.",
+  "shell-version": [
+    "46",
+    "47",
+    "48",
+    "49",
+    "50"
+  ]
+}

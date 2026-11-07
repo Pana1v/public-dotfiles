@@ -1,0 +1,12 @@
+[Unit]
+Description=Right instrument wing
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.config/conky/Common/start-widget.sh %h/.config/conky/Wings/wing_right.conf
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

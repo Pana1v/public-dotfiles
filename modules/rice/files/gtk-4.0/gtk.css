@@ -1,0 +1,253 @@
+/* Tokyo Night for libadwaita apps. These named colors are libadwaita's
+   public recoloring API; libadwaita ignores the gtk-theme setting. */
+@define-color accent_color #ff1f3d;
+@define-color accent_bg_color #ff1f3d;
+@define-color accent_fg_color #050203;
+@define-color destructive_color #ff3b1f;
+@define-color destructive_bg_color #ff3b1f;
+@define-color destructive_fg_color #050203;
+@define-color success_color #52e5ff;
+@define-color success_bg_color #52e5ff;
+@define-color success_fg_color #050203;
+@define-color warning_color #ffc14d;
+@define-color warning_bg_color #ffc14d;
+@define-color warning_fg_color #050203;
+@define-color error_color #ff3b1f;
+@define-color error_bg_color #ff3b1f;
+@define-color error_fg_color #050203;
+
+/* Frosted glass: the window itself is the only tinted layer, near black at
+   80% (cc), and Blur my Shell blurs what is behind it. View, header bar and
+   sidebar are transparent so the layers don't stack into an opaque block.
+   Apps get the blur only if their window class is in Blur my Shell's
+   application whitelist (gnome module, shell.ini). */
+@define-color window_bg_color #050203cc;
+@define-color window_fg_color #ffe9eb;
+@define-color view_bg_color transparent;
+@define-color view_fg_color #ffe9eb;
+@define-color headerbar_bg_color transparent;
+@define-color headerbar_fg_color #ffe9eb;
+@define-color headerbar_border_color #2a1013;
+@define-color headerbar_backdrop_color transparent;
+@define-color headerbar_shade_color rgba(0, 0, 0, 0.36);
+@define-color sidebar_bg_color transparent;
+@define-color sidebar_fg_color #f2c4c8;
+@define-color sidebar_backdrop_color transparent;
+@define-color sidebar_shade_color rgba(0, 0, 0, 0.36);
+@define-color secondary_sidebar_bg_color transparent;
+@define-color secondary_sidebar_backdrop_color transparent;
+@define-color card_bg_color #1a0b0d;
+@define-color card_fg_color #ffe9eb;
+@define-color card_shade_color rgba(0, 0, 0, 0.36);
+@define-color dialog_bg_color #050203ee;
+@define-color dialog_fg_color #ffe9eb;
+@define-color popover_bg_color #050203ee;
+@define-color popover_fg_color #ffe9eb;
+@define-color shade_color rgba(0, 0, 0, 0.36);
+@define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
+@define-color thumbnail_bg_color #1a0b0d;
+@define-color thumbnail_fg_color #ffe9eb;
+
+/* Titlebars: square and flat like the rest of the rice. Also styles the
+   frames mutter draws for X11 apps (VS Code, Brave), which use GTK4. */
+headerbar,
+.titlebar {
+  border-radius: 0;
+  box-shadow: inset 0 -1px #2a1013;
+}
+
+window.csd,
+window.csd > .titlebar,
+window.csd > headerbar {
+  border-radius: 0;
+}
+
+windowcontrols > button {
+  border-radius: 0;
+  color: #b86a72;
+}
+
+windowcontrols > button > image {
+  background: none;
+  box-shadow: none;
+}
+
+windowcontrols > button:hover {
+  color: #ffe9eb;
+}
+
+windowcontrols > button:hover > image {
+  background: #2a1013;
+}
+
+windowcontrols > button.close:hover > image {
+  background: #ff3b1f;
+  color: #050203;
+}
+
+/* ── Files (Nautilus) and other sidebars ─────────────────────────────
+   Square cells like the shell. Selection is a dark red fill with a thin
+   accent edge, not a solid accent block. 8-digit hexes carry alpha so
+   switch-theme.sh still recolours them. */
+.navigation-sidebar > row {
+  border-radius: 0;
+  margin: 1px 6px;
+}
+.navigation-sidebar > row:hover {
+  background-color: #2a1013;
+}
+.navigation-sidebar > row:selected {
+  background-color: #4a161b;
+  color: #ffe9eb;
+  box-shadow: inset 2px 0 #ff1f3d;
+}
+.navigation-sidebar > row:selected image {
+  color: #ff1f3d;
+}
+.navigation-sidebar .disk-space-used {
+  color: #ff1f3d;
+}
+
+/* Path bar: a flat strip, mono path, current folder in the accent. */
+.nautilus-pathbar {
+  border-radius: 0;
+  background-color: #1a0b0d;
+  box-shadow: inset 0 0 0 1px #2a1013;
+}
+.nautilus-pathbar > scrolledwindow undershoot.left,
+.nautilus-pathbar > scrolledwindow undershoot.right {
+  border-radius: 0;
+}
+.nautilus-path-button {
+  border-radius: 0;
+  font-family: "JetBrains Mono";
+}
+.nautilus-path-button:hover {
+  background-color: #2a1013;
+}
+.nautilus-path-button.current-dir label {
+  color: #ff1f3d;
+  font-weight: bold;
+}
+
+/* Search entry in the header. */
+.nautilus-query-editor,
+.nautilus-query-editor > text,
+.nautilus-query-editor > menubutton > button {
+  border-radius: 0;
+}
+.nautilus-query-editor:focus-within {
+  box-shadow: inset 0 0 0 1px #ff1f3d;
+}
+
+/* Grid and list views. */
+.nautilus-grid-view gridview > child,
+.nautilus-grid-view .nautilus-view-cell,
+.nautilus-list-view columnview > listview > row,
+.nautilus-network-view listview > row {
+  border-radius: 0;
+}
+.nautilus-grid-view gridview > child:hover,
+.nautilus-list-view columnview > listview > row:hover {
+  background-color: #1a0b0d;
+}
+.nautilus-grid-view gridview > child:selected,
+.nautilus-list-view columnview > listview > row:selected {
+  background-color: #4a161b;
+  color: #ffe9eb;
+  box-shadow: inset 0 0 0 1px #ff1f3d;
+}
+.nautilus-list-view columnview > header > button {
+  border-radius: 0;
+  font-family: "JetBrains Mono";
+  color: #b86a72;
+}
+.nautilus-grid-view .thumbnail,
+.nautilus-list-view .thumbnail {
+  border-radius: 0;
+}
+gridview > rubberband,
+columnview > listview > rubberband,
+listview > rubberband {
+  border-radius: 0;
+  border: 1px solid #ff1f3d;
+  background-color: #ff1f3d33;
+}
+
+/* Status bar that floats over the bottom right of the view. */
+.floating-bar {
+  border-radius: 0;
+  font-family: "JetBrains Mono";
+  background-color: #120809;
+  box-shadow: inset 0 0 0 1px #2a1013;
+}
+
+/* Starred marker and the free/used disk bars in Properties. */
+.nautilus-view-cell .star.starred,
+.star.starred {
+  color: #ff1f3d;
+}
+.disk-space-used {
+  color: #ff1f3d;
+}
+
+/* Tabs, popovers and toasts in libadwaita apps: square to match. */
+tabbar tab,
+popover > contents,
+popover > arrow,
+toast {
+  border-radius: 0;
+}
+tabbar tab:selected {
+  box-shadow: inset 0 -2px #ff1f3d;
+}
+
+/* ── Glass windows ───────────────────────────────────────────────────
+   libadwaita 1.9 reads CSS variables first; set them too so Ubuntu's
+   patched stylesheet can't put its grey sidebar back. */
+:root {
+  --window-bg-color: #050203cc;
+  --view-bg-color: transparent;
+  --headerbar-bg-color: transparent;
+  --headerbar-backdrop-color: transparent;
+  --sidebar-bg-color: transparent;
+  --sidebar-backdrop-color: transparent;
+  --secondary-sidebar-bg-color: transparent;
+  --secondary-sidebar-backdrop-color: transparent;
+  --dialog-bg-color: #050203ee;
+  --popover-bg-color: #050203ee;
+}
+window.background,
+window.view {
+  background-color: #050203cc;
+}
+.sidebar-pane,
+.sidebar-pane:backdrop,
+.navigation-sidebar,
+.content-pane,
+toolbarview,
+toolbarview > .top-bar,
+toolbarview > .bottom-bar,
+headerbar,
+headerbar:backdrop,
+.view,
+scrolledwindow > viewport,
+gridview,
+listview,
+columnview {
+  background-color: transparent;
+}
+/* A hairline instead of a fill marks the sidebar edge. */
+.sidebar-pane:dir(ltr) {
+  border-right: 1px solid #2a1013;
+}
+.sidebar-pane:dir(rtl) {
+  border-left: 1px solid #2a1013;
+}
+/* Preference rows and cards: a faint red-black tint so they still read as
+   groups on glass. */
+.boxed-list,
+.card,
+list.boxed-list > row {
+  background-color: #1a0b0d99;
+}

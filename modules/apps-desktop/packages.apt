@@ -1,0 +1,6 @@
+brave-browser foxglove-studio code cursor claude-desktop
+terminator alacritty flameshot gnome-screenshot mpv blueman
+gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+gstreamer1.0-plugins-ugly gstreamer1.0-libav
+libfuse2t64    # AppImages
+flatpak

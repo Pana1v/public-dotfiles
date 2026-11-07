@@ -1,0 +1,41 @@
+# lazygit 0.57+. Colour names are the terminal's ANSI slots, so they follow the
+# rice palette in Terminator; only the selected-line tone is a hex, and
+# rice/switch-theme.sh recolours it. In this palette "blue" is the accent red.
+gui:
+  nerdFontsVersion: "3"
+  border: rounded
+  showBottomLine: false
+  sidePanelWidth: 0.3
+  theme:
+    activeBorderColor:
+      - blue
+      - bold
+    inactiveBorderColor:
+      - "#5e1f25"
+    searchingActiveBorderColor:
+      - yellow
+      - bold
+    optionsTextColor:
+      - cyan
+    selectedLineBgColor:
+      - "#4a161b"
+    inactiveViewSelectedLineBgColor:
+      - bold
+    cherryPickedCommitFgColor:
+      - green
+    cherryPickedCommitBgColor:
+      - default
+    unstagedChangesColor:
+      - red
+    defaultFgColor:
+      - default
+git:
+  # delta renders the diffs; --line-numbers plus hyperlinks lets you click a
+  # line number to open the file at that line in your editor.
+  pagers:
+    - pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+  commit:
+    autoWrapCommitMessage: true
+    autoWrapWidth: 72
+os:
+  editPreset: vscode

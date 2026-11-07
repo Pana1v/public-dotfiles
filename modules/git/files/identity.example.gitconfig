@@ -1,0 +1,6 @@
+# Your git identity. Copied to ~/.config/git/identity.gitconfig on a public
+# clone; edit it there. With the private repo, private/git/identity.gitconfig
+# is linked instead.
+[user]
+	name = Your Name
+	email = you@example.com

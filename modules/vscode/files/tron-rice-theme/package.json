@@ -1,0 +1,18 @@
+{
+  "name": "tron-rice",
+  "displayName": "Tron Rice",
+  "description": "Tron grid theme from the dotfiles rice. Cyan on near-black, orange for warnings.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "engines": { "vscode": "^1.60.0" },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Tron Rice",
+        "uiTheme": "vs-dark",
+        "path": "./themes/tron-rice-color-theme.json"
+      }
+    ]
+  }
+}

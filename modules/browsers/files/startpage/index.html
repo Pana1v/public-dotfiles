@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start</title>
+<style>
+  /* Mono rice palette, same values as the conky cards */
+  :root {
+    --bg: #101114;
+    --bg2: #15171b;
+    --cell: #202328;
+    --surface: #2a2d33;
+    --dim: #565b64;
+    --dim2: #8a8f98;
+    --fg: #e6e8eb;
+    --green: #8fbf7f;
+    --select: #3a3e46;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font: 12px/1.4 "JetBrains Mono", ui-monospace, monospace;
+    display: grid;
+    place-items: center;
+  }
+  main { width: min(720px, 92vw); display: grid; gap: 24px; }
+
+  .hud { position: relative; background: var(--bg2); padding: 16px 20px; }
+  /* four corner brackets, 10px arms, same as the conky cards */
+  .hud {
+    --arm: 10px; --w: 1.5px;
+    background-image:
+      linear-gradient(var(--dim2), var(--dim2)), linear-gradient(var(--dim2), var(--dim2)),
+      linear-gradient(var(--dim2), var(--dim2)), linear-gradient(var(--dim2), var(--dim2)),
+      linear-gradient(var(--dim2), var(--dim2)), linear-gradient(var(--dim2), var(--dim2)),
+      linear-gradient(var(--dim2), var(--dim2)), linear-gradient(var(--dim2), var(--dim2));
+    background-repeat: no-repeat;
+    background-size:
+      var(--arm) var(--w), var(--w) var(--arm), var(--arm) var(--w), var(--w) var(--arm),
+      var(--arm) var(--w), var(--w) var(--arm), var(--arm) var(--w), var(--w) var(--arm);
+    background-position:
+      0 0, 0 0, 100% 0, 100% 0, 0 100%, 0 100%, 100% 100%, 100% 100%;
+  }
+
+  .head { display: flex; justify-content: space-between; align-items: baseline;
+          border-bottom: 1px solid var(--surface); padding-bottom: 12px; margin-bottom: 18px; }
+  .title { font: 700 11px Orbitron, sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+  .status { color: var(--dim); letter-spacing: .5px; text-transform: uppercase; font-size: 11px; }
+
+  .clock { font-feature-settings: "tnum"; font-size: 64px; font-weight: 300; letter-spacing: -2px; line-height: 1; }
+  .date  { color: var(--dim2); margin-top: 8px; }
+
+  form { display: flex; align-items: center; gap: 12px; }
+  form span { color: var(--fg); }
+  input {
+    flex: 1; background: none; border: 0; outline: 0;
+    color: var(--fg); font: inherit; font-size: 15px;
+  }
+  input::placeholder { color: var(--dim); }
+  .hint { color: var(--dim); font-size: 11px; }
+
+  .links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .links a {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 16px; background: var(--cell); color: var(--fg);
+    text-decoration: none; border-left: 2px solid var(--surface);
+    transition: border-color 120ms linear, background 120ms linear;
+  }
+  .links a:hover, .links a:focus-visible { border-color: var(--fg); background: var(--surface); outline: 0; }
+  .links kbd {
+    font: inherit; font-size: 11px; color: var(--dim2);
+    border: 1px solid var(--surface); padding: 0 6px;
+  }
+  @media (max-width: 560px) { .links { grid-template-columns: repeat(2, 1fr); } .clock { font-size: 48px; } }
+</style>
+<!-- Palette colours, written by the browsers module; overrides the defaults above. -->
+<link rel="stylesheet" href="../palette.css">
+</head>
+<body>
+<main>
+  <section class="hud">
+    <div class="head"><span class="title" id="greet">Hello</span><span class="status" id="week"></span></div>
+    <div class="clock" id="clock">--:--</div>
+    <div class="date" id="date"></div>
+  </section>
+
+  <section class="hud">
+    <form id="search" autocomplete="off">
+      <span>&gt;</span>
+      <input id="q" type="text" placeholder="search or paste a url">
+      <span class="hint">/ to focus</span>
+    </form>
+  </section>
+
+  <nav class="links" id="links"></nav>
+</main>
+
+<script src="startpage.js"></script>
+</body>
+</html>

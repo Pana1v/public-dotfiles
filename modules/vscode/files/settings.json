@@ -1,0 +1,37 @@
+{
+    "workbench.colorCustomizations": {
+        "terminal.background": "#00000000"
+    },
+    "workbench.settings.applyToAllProfiles": [
+        "workbench.colorCustomizations"
+    ],
+    "claudeCode.preferredLocation": "panel",
+    "githubPullRequests.pushBranch": "always",
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/**": true,
+        "**/build/**": true,
+        "**/install/**": true,
+        "**/log/**": true,
+        "**/.venv/**": true,
+        "**/__pycache__/**": true,
+        "**/dist/**": true,
+        "**/.cache/**": true
+    },
+    "githubPullRequests.pullBranch": "never",
+    "remote.autoForwardPortsSource": "hybrid",
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "claudeCode.hideOnboarding": true,
+    "git.replaceTagsWhenPull": true,
+    "workbench.iconTheme": "catppuccin-mocha",
+    "workbench.startupEditor": "none",
+    "workbench.editorAssociations": {
+        "*.copilotmd": "vscode.markdown.preview.editor",
+        "*.MP4": "videoPreviewXD.videoPlayer"
+    },
+    "workbench.colorTheme": "Ares Rice",
+    "security.promptForLocalFileProtocolHandling": false,
+    "security.promptForRemoteFileProtocolHandling": false,
+    "animations.Install-Method": "Apc Customize UI++"
+}

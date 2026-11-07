@@ -1,0 +1,9 @@
+{
+    "window.autoDetectColorScheme": true,
+    "remote.SSH.remotePlatform": {
+        "ws": "linux",
+        "p3": "linux"
+    },
+    "workbench.preferredDarkColorTheme": "Gruvbox Light Soft",
+    "security.promptForRemoteFileProtocolHandling": false
+}

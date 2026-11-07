@@ -1,0 +1,127 @@
+---
+description: Clean Architecture layering for robotics - domain, application, infrastructure, presentation
+globs: **/*.py,**/*.cpp,**/*.hpp
+alwaysApply: false
+---
+
+# Clean Architecture Rules
+
+## Layer Dependency Rules
+
+```
+PRESENTATION (CLI, GUI, API)
+       | depends on
+APPLICATION (Use Cases, Application Services)
+       | depends on
+DOMAIN (Entities, Value Objects, Domain Interfaces)
+       ^ implements
+INFRASTRUCTURE (ROS2 Adapters, Hardware, Persistence)
+```
+
+Critical rules:
+1. Domain layer must NOT depend on any outer layer.
+2. Application layer can only depend on Domain layer.
+3. Infrastructure layer implements Domain interfaces.
+4. Presentation layer can only depend on Application layer.
+
+## Domain Layer: Entities
+
+```python
+from dataclasses import dataclass
+from uuid import UUID, uuid4
+
+@dataclass
+class Entity:
+    id: UUID = None
+    def __post_init__(self):
+        if self.id is None:
+            self.id = uuid4()
+
+@dataclass
+class Robot(Entity):
+    name: str
+    max_velocity: float
+    max_acceleration: float
+```
+
+```cpp
+namespace domain::entities {
+struct Robot {
+    std::string id;
+    std::string name;
+    double max_velocity;
+    double max_acceleration;
+    bool operator==(const Robot& other) const { return id == other.id; }
+};
+}
+```
+
+## Domain Layer: Value Objects (immutable)
+
+```python
+@dataclass(frozen=True)
+class Position:
+    x: float
+    y: float
+    z: float = 0.0
+
+    def distance_to(self, other: 'Position') -> float:
+        return ((self.x - other.x)**2 + (self.y - other.y)**2 + (self.z - other.z)**2) ** 0.5
+```
+
+## Domain Interfaces (Ports)
+
+```python
+from abc import ABC, abstractmethod
+
+class RobotRepository(ABC):
+    @abstractmethod
+    def get_by_id(self, robot_id): ...
+    @abstractmethod
+    def save(self, robot): ...
+```
+
+## Application Layer: Use Cases
+
+```python
+class MoveRobotUseCase:
+    def __init__(self, motion_controller):
+        self._motion_controller = motion_controller
+
+    def execute(self, target) -> bool:
+        return self._motion_controller.move_to(target)
+```
+
+## Infrastructure Layer: ROS2 Adapters
+
+Implements the domain interface, never the reverse.
+
+```python
+class ROS2MotionController(MotionController):
+    """ROS2 adapter implementing MotionController port."""
+```
+
+## Anti-Patterns to Avoid
+
+```python
+# WRONG: Domain importing ROS2
+from rclpy.node import Node
+
+class Robot(Entity):
+    def __init__(self, node: Node):  # WRONG
+        self.node = node
+
+# WRONG: Business logic in infrastructure
+class ROS2MotionController:
+    def move_to(self, position):
+        if self.battery_level < 20:  # belongs in domain/application
+            return False
+```
+
+```cpp
+// WRONG: Domain header including ROS2
+#include <rclcpp/rclcpp.hpp>
+namespace domain::entities {
+    class Robot { rclcpp::Node::SharedPtr node_; }; // WRONG
+}
+```

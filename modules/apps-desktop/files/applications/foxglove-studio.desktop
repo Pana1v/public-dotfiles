@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Foxglove
+Exec=/opt/Foxglove/foxglove-studio --ignore-gpu-blocklist --enable-features=VaapiVideoDecoder %U
+Terminal=false
+Type=Application
+Icon=foxglove-studio
+StartupWMClass=Foxglove
+Comment=Integrated robotics visualization and debugging.
+MimeType=application/octet-stream;application/octet-stream;application/zip;x-scheme-handler/foxglove;
+Categories=Development;

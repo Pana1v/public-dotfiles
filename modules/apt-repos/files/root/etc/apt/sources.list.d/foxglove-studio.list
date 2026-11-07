@@ -1,0 +1,2 @@
+### THIS FILE IS AUTOMATICALLY CONFIGURED ###
+deb [signed-by=/etc/apt/trusted.gpg.d/foxglove.gpg arch=amd64,arm64] https://apt.foxglove.dev/studio stable main

@@ -1,0 +1,14 @@
+# Tokyo Night gradient, bottom (blue) to top (pink).
+[general]
+bar_width = 2
+bar_spacing = 1
+
+[color]
+gradient = 1
+gradient_count = 6
+gradient_color_1 = '#ff1f3d'
+gradient_color_2 = '#ff6b7d'
+gradient_color_3 = '#e0283f'
+gradient_color_4 = '#ff4f8b'
+gradient_color_5 = '#ffa3b0'
+gradient_color_6 = '#ff3b1f'

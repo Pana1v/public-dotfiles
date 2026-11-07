@@ -1,0 +1,12 @@
+[Unit]
+Description=Claude Usage Conky (cost/tokens + billing block)
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.config/conky/Common/start-widget.sh %h/.config/conky/ClaudeUsage/claude_usage.conf
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

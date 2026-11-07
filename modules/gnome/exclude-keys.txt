@@ -1,0 +1,4 @@
+# Keys dropped from dumps: private history or machine state, not preference.
+playback-history
+command-history
+looking-glass-history

@@ -1,0 +1,7 @@
+sassc   # Tokyonight GTK installer compiles SCSS
+papirus-icon-theme
+rofi
+qalc     # rofi calc mode
+xclip    # rofi calc copies results
+qt5ct
+node-typescript make   # pop-shell is built from source (no noble package)

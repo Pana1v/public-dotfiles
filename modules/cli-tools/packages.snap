@@ -1,0 +1,2 @@
+# Not in apt. Classic confinement so it can preview any file in $HOME.
+yazi --classic

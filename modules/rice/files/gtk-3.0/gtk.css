@@ -1,0 +1,86 @@
+/* Rice titlebars for GTK3 apps. Square, flat, palette colors; the close
+   button only turns red on hover. switch-theme.sh recolors the hexes. */
+headerbar,
+.titlebar:not(headerbar),
+.titlebar headerbar {
+  background: #050203;
+  color: #ffe9eb;
+  border-radius: 0;
+  border-bottom: 1px solid #2a1013;
+  box-shadow: none;
+}
+
+headerbar:backdrop,
+.titlebar:not(headerbar):backdrop {
+  background: #0a0506;
+  color: #b86a72;
+}
+
+headerbar .title {
+  font-weight: 700;
+}
+
+decoration {
+  border-radius: 0;
+  box-shadow: 0 3px 9px 1px rgba(0, 0, 0, 0.5), 0 0 0 1px #2a1013;
+}
+
+decoration:backdrop {
+  box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.35), 0 0 0 1px #1a0b0d;
+}
+
+headerbar button.titlebutton,
+.titlebar button.titlebutton {
+  border-radius: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+  color: #b86a72;
+  min-width: 20px;
+  min-height: 20px;
+  padding: 2px;
+}
+
+headerbar button.titlebutton:hover,
+.titlebar button.titlebutton:hover {
+  background: #2a1013;
+  color: #ffe9eb;
+}
+
+headerbar button.titlebutton.close:hover,
+.titlebar button.titlebutton.close:hover {
+  background: #ff3b1f;
+  color: #050203;
+}
+
+/* Terminator. Scoped to its window class so no other GTK app changes.
+   USER priority beats Terminator's own APPLICATION-priority CSS. */
+.terminator-terminal-window vte-terminal {
+  padding: 6px 10px;
+}
+
+.terminator-terminal-window .pane-separator {
+  background-color: #2a1013;
+}
+
+.terminator-terminal-window notebook header {
+  background-color: #050203;
+  border: none;
+}
+
+.terminator-terminal-window notebook tab {
+  padding: 2px 12px;
+  color: #8a3a44;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+
+.terminator-terminal-window notebook tab:checked {
+  color: #ffe9eb;
+  border-bottom: 2px solid #ff1f3d;
+}
+
+.terminator-terminal-window .terminator-terminal-searchbar {
+  background-color: #120809;
+  border-top: 1px solid #2a1013;
+}

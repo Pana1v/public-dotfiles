@@ -1,0 +1,7 @@
+{
+  "manifest_version": 3,
+  "name": "Rice start page",
+  "version": "1.0",
+  "description": "Mono start page as the new tab page",
+  "chrome_url_overrides": { "newtab": "index.html" }
+}

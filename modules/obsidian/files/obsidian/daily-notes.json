@@ -1,0 +1,5 @@
+{
+  "folder": "Monthly Log/Daily Log",
+  "format": "MMMM/YYYY-MM-DD ddd",
+  "template": "Templates/Daily Log"
+}

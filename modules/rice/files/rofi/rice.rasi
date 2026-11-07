@@ -1,0 +1,186 @@
+/* Hexes come from the rice palettes so switch-theme.sh can recolor this file.
+   bg carries an alpha byte (fa = 0.98). Lower lets the conky widgets behind
+   the launcher bleed through the list text. */
+* {
+    bg:        #0a0506fa;
+    bg-input:  #050203;
+    card:      #1a0b0d;
+    surface:   #2a1013;
+    select:    #4a161b;
+    fg:        #ffe9eb;
+    fg-soft:   #f2c4c8;
+    dim:       #b86a72;
+    faint:     #8a3a44;
+    accent:    #ff1f3d;
+    ok:        #52e5ff;
+    bad:       #ff3b1f;
+
+    background-color: transparent;
+    text-color:       @fg;
+    border-color:     @surface;
+    spacing:          0;
+}
+
+/* Square HUD card, same look as the shell banners and conky widgets */
+window {
+    location:         center;
+    anchor:           center;
+    width:            660px;
+    background-color: @bg;
+    border:           0;
+    border-radius:    0;
+    padding:          0;
+}
+
+/* Rofi has no border-image, so the corner brackets of brackets.svg are
+   rebuilt from empty boxes that draw a border on two sides only:
+
+     top-left  ┌─        ─┐  top-right
+               body
+     bot-left  └─        ─┘  bot-right
+*/
+mainbox {
+    children: [ top, body, bottom ];
+}
+top, bottom {
+    orientation: horizontal;
+    expand:      false;
+}
+top {
+    children: [ corner-tl, edge-top, corner-tr ];
+}
+bottom {
+    children: [ corner-bl, edge-bottom, corner-br ];
+}
+edge-top, edge-bottom {
+    expand: true;
+}
+corner-tl, corner-tr, corner-bl, corner-br {
+    expand:       false;
+    padding:      8px;
+    border-color: @dim;
+}
+corner-tl { border: 2px 0 0 2px; }
+corner-tr { border: 2px 2px 0 0; }
+corner-bl { border: 0 0 2px 2px; }
+corner-br { border: 0 2px 2px 0; }
+
+body {
+    children: [ inputbar, message, listview, mode-switcher ];
+    padding:  4px 18px;
+}
+
+/* Shell-style prompt: ❯ query ............ mode */
+inputbar {
+    children:  [ textbox-caret, entry, case-indicator, prompt ];
+    spacing:   12px;
+    padding:   6px 4px 14px 4px;
+    border:    0 0 1px 0;
+}
+textbox-caret {
+    str:        "󰅂";
+    font:       "Symbols Nerd Font Mono 14";
+    vertical-align: 0.5;
+    expand:     false;
+    text-color: @accent;
+}
+entry {
+    text-color:        @fg;
+    cursor:            text;
+    placeholder:       "type to search";
+    placeholder-color: @faint;
+}
+case-indicator {
+    text-color: @faint;
+}
+/* Orbitron for labels and headers, same as the shell's clock and drawer */
+prompt {
+    font:           "Orbitron Bold 9";
+    vertical-align: 0.5;
+    text-color:     @faint;
+}
+
+message {
+    margin:           10px 0 0 0;
+    padding:          8px 12px;
+    background-color: @card;
+    border:           0 0 0 2px;
+    border-color:     @dim;
+}
+textbox {
+    text-color: @fg-soft;
+}
+
+listview {
+    lines:     8;
+    columns:   1;
+    cycle:     true;
+    dynamic:   true;
+    scrollbar: false;
+    spacing:   2px;
+    padding:   10px 0;
+    border:    0;
+}
+
+/* Rows reserve a 2px left edge so the selection bar doesn't shift text */
+element {
+    padding:      7px 12px 7px 10px;
+    spacing:      14px;
+    border:       0 0 0 2px;
+    border-color: transparent;
+}
+element-icon {
+    size:           24px;
+    vertical-align: 0.5;
+}
+element-text {
+    vertical-align: 0.5;
+    highlight:      bold underline;
+    text-color:     inherit;
+}
+
+/* Every state sets both colors: rofi's default theme paints its own
+   cream backgrounds on normal/alternate rows otherwise. */
+element normal.normal,
+element alternate.normal {
+    background-color: transparent;
+    text-color:       @fg-soft;
+}
+element normal.active,
+element alternate.active {
+    background-color: transparent;
+    text-color:       @ok;
+}
+element normal.urgent,
+element alternate.urgent {
+    background-color: transparent;
+    text-color:       @bad;
+}
+element selected.normal,
+element selected.active,
+element selected.urgent {
+    background-color: @card;
+    border-color:     @accent;
+    text-color:       @accent;
+}
+
+/* Mode tabs: plain labels, the active one gets an underline like a TUI tab */
+mode-switcher {
+    padding: 10px 0 6px 0;
+    spacing: 18px;
+    border:  1px 0 0 0;
+}
+button {
+    padding:          4px 2px;
+    horizontal-align: 0.5;
+    expand:           false;
+    border:           0 0 2px 0;
+    border-color:     transparent;
+    font:             "Orbitron Bold 9";
+    text-color:       @faint;
+}
+button selected {
+    background-color: transparent;
+    border-color: @accent;
+    text-color:   @accent;
+}

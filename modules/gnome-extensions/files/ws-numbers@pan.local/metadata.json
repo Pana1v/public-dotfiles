@@ -1,0 +1,6 @@
+{
+  "uuid": "ws-numbers@pan.local",
+  "name": "Workspace Numbers",
+  "description": "Replace the Activities workspace dots with clickable workspace numbers.",
+  "shell-version": ["46", "47", "48", "49", "50"]
+}

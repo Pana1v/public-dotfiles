@@ -1,0 +1,140 @@
+---
+description: ROS2 node standards - base node class, publisher/subscriber/service/action/lifecycle patterns
+globs: **/*.py,**/*.cpp,**/*.hpp
+alwaysApply: false
+---
+
+# ROS2 Node Standards
+
+## Base Node Class (Python)
+
+```python
+import rclpy
+from rclpy.node import Node
+
+class BaseRobotNode(Node):
+    """Base class for all robot nodes following Clean Architecture."""
+
+    def __init__(self, node_name: str, **kwargs):
+        super().__init__(node_name, **kwargs)
+        self.declare_parameter('update_rate', 10.0)
+        self.declare_parameter('use_sim_time', False)
+        self._update_rate = self.get_parameter('update_rate').value
+        self.get_logger().info(f'{node_name} initialized')
+
+    def create_rate_timer(self, callback):
+        period = 1.0 / self._update_rate
+        return self.create_timer(period, callback)
+
+    def safe_destroy(self):
+        self.get_logger().info('Shutting down...')
+        self.destroy_node()
+```
+
+## Base Node Class (C++)
+
+```cpp
+#include <rclcpp/rclcpp.hpp>
+
+class BaseRobotNode : public rclcpp::Node {
+public:
+    BaseRobotNode(const std::string& node_name, const rclcpp::NodeOptions& options = rclcpp::NodeOptions())
+        : Node(node_name, options) {
+        this->declare_parameter("update_rate", 10.0);
+        this->declare_parameter("use_sim_time", false);
+        update_rate_ = this->get_parameter("update_rate").as_double();
+        RCLCPP_INFO(this->get_logger(), "%s initialized", node_name.c_str());
+    }
+protected:
+    rclcpp::TimerBase::SharedPtr create_rate_timer(std::function<void()> callback) {
+        auto period = std::chrono::duration<double>(1.0 / update_rate_);
+        return this->create_wall_timer(period, callback);
+    }
+    double update_rate_;
+};
+```
+
+## Publisher Pattern
+
+Use a reliable, transient-local QoS for critical data and a best-effort, volatile QoS for high-frequency sensor data (see `12-ros2-communication.mdc` for the QoS profile table).
+
+```python
+def create_reliable_publisher(self, msg_type, topic_name, queue_size=10):
+    qos = QoSProfile(reliability=ReliabilityPolicy.RELIABLE,
+                      durability=DurabilityPolicy.TRANSIENT_LOCAL, depth=queue_size)
+    return self.create_publisher(msg_type, topic_name, qos)
+
+def create_sensor_publisher(self, msg_type, topic_name, queue_size=10):
+    qos = QoSProfile(reliability=ReliabilityPolicy.BEST_EFFORT,
+                      durability=DurabilityPolicy.VOLATILE, depth=queue_size)
+    return self.create_publisher(msg_type, topic_name, qos)
+```
+
+## Subscriber Pattern
+
+```python
+def create_sensor_subscriber(self, msg_type, topic_name, callback):
+    return self.create_subscription(msg_type, topic_name, callback, qos_profile_sensor_data)
+
+def create_reliable_subscriber(self, msg_type, topic_name, callback):
+    return self.create_subscription(msg_type, topic_name, callback, qos_profile_system_default)
+```
+
+## Service Pattern
+
+```python
+class ServiceNode(BaseRobotNode):
+    def __init__(self):
+        super().__init__('service_node')
+        self._srv = self.create_service(SetBool, 'enable_feature', self._enable_callback)
+
+    def _enable_callback(self, request, response):
+        try:
+            self._feature_enabled = request.data
+            response.success = True
+            response.message = f"Feature {'enabled' if request.data else 'disabled'}"
+        except Exception as e:
+            response.success = False
+            response.message = str(e)
+        return response
+```
+
+## Action Server Pattern (C++)
+
+```cpp
+#include <rclcpp_action/rclcpp_action.hpp>
+
+class ActionServerNode : public BaseRobotNode {
+public:
+    using Fibonacci = action_tutorials_interfaces::action::Fibonacci;
+    using GoalHandle = rclcpp_action::ServerGoalHandle<Fibonacci>;
+
+    ActionServerNode() : BaseRobotNode("action_server") {
+        action_server_ = rclcpp_action::create_server<Fibonacci>(
+            this, "fibonacci",
+            std::bind(&ActionServerNode::handle_goal, this, std::placeholders::_1, std::placeholders::_2),
+            std::bind(&ActionServerNode::handle_cancel, this, std::placeholders::_1),
+            std::bind(&ActionServerNode::handle_accepted, this, std::placeholders::_1));
+    }
+private:
+    rclcpp_action::Server<Fibonacci>::SharedPtr action_server_;
+};
+```
+
+## Lifecycle Node Pattern (C++)
+
+```cpp
+#include <rclcpp_lifecycle/lifecycle_node.hpp>
+
+class ManagedRobotNode : public rclcpp_lifecycle::LifecycleNode {
+public:
+    ManagedRobotNode(const std::string& node_name) : LifecycleNode(node_name) {}
+
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+    on_configure(const rclcpp_lifecycle::State&) {
+        RCLCPP_INFO(get_logger(), "Configuring...");
+        return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+    }
+    // Implement on_activate, on_deactivate, on_cleanup...
+};
+```

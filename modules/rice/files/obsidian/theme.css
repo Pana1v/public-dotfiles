@@ -1,0 +1,142 @@
+/* Rice palette for Obsidian. Only palette hexes appear here, so
+   switch-theme.sh recolors this file like the rest of the rice.
+   Dark only: the rice has no light variant. */
+
+.theme-dark,
+.theme-light {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --color-base-00: #050203;
+  --color-base-05: #020101;
+  --color-base-10: #0a0506;
+  --color-base-20: #0a0506;
+  --color-base-25: #120809;
+  --color-base-30: #2a1013;
+  --color-base-35: #4a161b;
+  --color-base-40: #5e1f25;
+  --color-base-50: #8a3a44;
+  --color-base-60: #b86a72;
+  --color-base-70: #f2c4c8;
+  --color-base-100: #ffe9eb;
+
+  --background-primary: #050203;
+  --background-primary-alt: #0a0506;
+  --background-secondary: #0a0506;
+  --background-secondary-alt: #020101;
+  --background-modifier-border: #2a1013;
+  --background-modifier-border-hover: #4a161b;
+  --background-modifier-border-focus: #5e1f25;
+  --background-modifier-hover: rgba(230, 232, 235, 0.06);
+  --background-modifier-active-hover: rgba(230, 232, 235, 0.1);
+  --background-modifier-form-field: #120809;
+  --background-modifier-error: #ff3b1f;
+  --background-modifier-success: #52e5ff;
+  --titlebar-background: #020101;
+  --titlebar-background-focused: #020101;
+  --tab-container-background: #020101;
+  --ribbon-background: #020101;
+  --ribbon-background-collapsed: #020101;
+  --modal-background: #120809;
+  --menu-background: #120809;
+  --dropdown-background: #1a0b0d;
+  --interactive-normal: #1a0b0d;
+  --interactive-hover: #2a1013;
+  --code-background: #120809;
+  --blockquote-background-color: #0a0506;
+  --table-header-background: #0a0506;
+  --table-header-background-hover: #120809;
+
+  /* Text */
+  --text-normal: #ffe9eb;
+  --text-muted: #b86a72;
+  --text-faint: #8a3a44;
+  --text-on-accent: #050203;
+  --text-error: #ff3b1f;
+  --text-success: #52e5ff;
+  --text-warning: #ff7a29;
+  --text-highlight-bg: rgba(255, 225, 77, 0.22);
+  --text-selection: rgba(230, 232, 235, 0.16);
+
+  /* Accent: the palette's accent, drawn as text/lines, not big fills */
+  --accent-h: 220;
+  --accent-s: 10%;
+  --accent-l: 96%;
+  --interactive-accent: #ff1f3d;
+  --interactive-accent-hover: #ffe9eb;
+  --text-accent: #ff6b7d;
+  --text-accent-hover: #ff1f3d;
+  --link-color: #ff6b7d;
+  --link-color-hover: #ff1f3d;
+  --link-external-color: #e0283f;
+  --link-unresolved-color: #b86a72;
+  --link-unresolved-opacity: 1;
+  --checkbox-color: #52e5ff;
+  --checkbox-border-color: #8a3a44;
+  --tag-color: #f2c4c8;
+  --tag-background: #1a0b0d;
+  --tag-background-hover: #2a1013;
+  --nav-item-color-active: #ff1f3d;
+  --nav-item-background-active: #2a1013;
+
+  /* Headings: brightness steps, colour stays for state */
+  --h1-color: #ff1f3d;
+  --h2-color: #ffe9eb;
+  --h3-color: #ff4f8b;
+  --h4-color: #ff6b7d;
+  --h5-color: #ffa3b0;
+  --h6-color: #e0283f;
+
+  /* Code */
+  --code-normal: #ffe9eb;
+  --code-comment: #8a3a44;
+  --code-function: #ff1f3d;
+  --code-keyword: #ff4f8b;
+  --code-string: #52e5ff;
+  --code-value: #ff7a29;
+  --code-property: #ff6b7d;
+  --code-tag: #ff3b1f;
+  --code-punctuation: #b86a72;
+  --code-operator: #f2c4c8;
+  --code-important: #ffc14d;
+
+  /* Graph view */
+  --graph-line: #2a1013;
+  --graph-node: #b86a72;
+  --graph-node-focused: #ff1f3d;
+  --graph-node-tag: #52e5ff;
+  --graph-node-attachment: #ff7a29;
+  --graph-node-unresolved: #5e1f25;
+  --graph-text: #f2c4c8;
+
+  /* Status colours used by callouts, tasks and plugins */
+  --color-red: #ff3b1f;
+  --color-orange: #ff7a29;
+  --color-yellow: #ffc14d;
+  --color-green: #52e5ff;
+  --color-cyan: #ff6b7d;
+  --color-blue: #e0283f;
+  --color-purple: #ffa3b0;
+  --color-pink: #ff4f8b;
+
+  /* Same type as the rest of the rice */
+  --font-interface-theme: "Manrope", sans-serif;
+  --font-text-theme: "Manrope", sans-serif;
+  --font-monospace-theme: "JetBrains Mono", monospace;
+
+  /* Flat, near-square corners like the conky cards */
+  --radius-s: 2px;
+  --radius-m: 4px;
+  --radius-l: 6px;
+  --radius-xl: 8px;
+  --callout-radius: 4px;
+  --tab-radius-active: 4px 4px 0 0;
+}
+
+/* Active tab and file stand out by a bright edge, not a fill */
+.workspace-tab-header.is-active {
+  box-shadow: inset 0 -2px 0 #ff1f3d;
+}
+.nav-file-title.is-active {
+  box-shadow: inset 2px 0 0 #ff1f3d;
+}

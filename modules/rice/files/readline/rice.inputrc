@@ -1,0 +1,14 @@
+# Show every match on first Tab instead of beeping and waiting for a second.
+set show-all-if-ambiguous on
+# Color matches by file type (same scheme as ls), highlight the typed prefix.
+set colored-stats on
+set colored-completion-prefix on
+set visible-stats on
+set mark-symlinked-directories on
+# Treat - and _ as equal when completing: ros2_ws matches ros2-ws.
+set completion-map-case on
+# Up/Down search history for lines starting with what's typed.
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+# Shift-Tab cycles through matches in place.
+"\e[Z": menu-complete

@@ -1,0 +1,37 @@
+# role           hex       Matrix: phosphor green on black.
+bg               #050a05
+bg2              #000000
+black            #010301
+bg3              #071007
+card             #0a1a0b
+surface          #0f2a12
+select           #14451a
+bright_black     #1f5c25
+tab_fg           #2a6e30
+dim              #2e7d32
+dim2             #4caf50
+fg2              #8fdc8f
+fg               #b6ffb6
+accent           #00ff41
+cyan             #7cff9e
+teal             #5effa0
+magenta          #39d353
+purple2          #66ff99
+green            #00e639
+yellow           #c6ff00
+orange           #76ff03
+red              #ff3b3b
+diff_add         #0b2e10
+diff_del         #2e0b0b
+diff_add_dim     #071c09
+diff_del_dim     #1c0707
+diff_add_word    #145c1e
+diff_del_word    #5c1414
+
+@gtk             Tokyonight-Green-Dark
+@vscode          Matrix
+@btop            matrix
+@wallpaper       color:#000000
+@taskbar_border  rgba(0,255,65,0.35)
+@cursor          Rice-cursors
+@accent          green

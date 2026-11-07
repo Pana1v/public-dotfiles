@@ -1,0 +1,202 @@
+import Gio from 'gi://Gio';
+import Gtk from 'gi://Gtk';
+import Adw from 'gi://Adw';
+import Gdk from 'gi://Gdk';
+import { ExtensionPreferences } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import * as Settings from './settings.js';
+export default class GnomeClipboardPreferences extends ExtensionPreferences {
+    fillPreferencesWindow(window) {
+        this._loadPreferencesStyle();
+        const settings = this.getSettings(Settings.SCHEMA_ID);
+        const page = new Adw.PreferencesPage();
+        page.add_css_class('prefs-page');
+        window.add(page);
+        const group = new Adw.PreferencesGroup({
+            title: this.gettext('Preferences'),
+        });
+        page.add(group);
+        const historySizeRow = new Adw.ActionRow({
+            title: this.gettext('Maximum size of history:'),
+        });
+        const historySizeSpin = new Gtk.SpinButton({
+            valign: Gtk.Align.CENTER,
+            css_classes: ['pref-input'],
+            adjustment: new Gtk.Adjustment({
+                lower: 2,
+                upper: 1000,
+                step_increment: 1,
+            }),
+        });
+        settings.bind(Settings.HISTORY_SIZE, historySizeSpin, 'value', Gio.SettingsBindFlags.DEFAULT);
+        historySizeRow.add_suffix(historySizeSpin);
+        group.add(historySizeRow);
+        const historySortRow = new Adw.ActionRow({
+            title: this.gettext('Sort history by:'),
+        });
+        const historySortSpin = new Gtk.SpinButton({
+            valign: Gtk.Align.CENTER,
+            css_classes: ['pref-input'],
+            adjustment: new Gtk.Adjustment({
+                lower: 0,
+                upper: 2,
+                step_increment: 1,
+            }),
+        });
+        settings.bind(Settings.HISTORY_SORT, historySortSpin, 'value', Gio.SettingsBindFlags.DEFAULT);
+        historySortRow.add_suffix(historySortSpin);
+        group.add(historySortRow);
+        const timerRow = new Adw.ActionRow({
+            title: this.gettext('Read clipboard by timer:'),
+        });
+        const timerSwitch = new Gtk.Switch({
+            valign: Gtk.Align.CENTER,
+            css_classes: ['service-switch'],
+        });
+        settings.bind(Settings.CLIPBOARD_TIMER, timerSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        timerRow.add_suffix(timerSwitch);
+        group.add(timerRow);
+        const intervalRow = new Adw.ActionRow({
+            title: this.gettext('Timer interval (Millisecond):'),
+        });
+        const intervalSpin = new Gtk.SpinButton({
+            valign: Gtk.Align.CENTER,
+            css_classes: ['pref-input'],
+            adjustment: new Gtk.Adjustment({
+                lower: 100,
+                upper: 100000,
+                step_increment: 100,
+            }),
+        });
+        settings.bind(Settings.TIMER_INTERVAL, intervalSpin, 'value', Gio.SettingsBindFlags.DEFAULT);
+        intervalRow.add_suffix(intervalSpin);
+        group.add(intervalRow);
+        const savePinnedRow = new Adw.ActionRow({
+            title: this.gettext('Save only pinned items:'),
+        });
+        const savePinnedSwitch = new Gtk.Switch({
+            valign: Gtk.Align.CENTER,
+            css_classes: ['service-switch'],
+        });
+        settings.bind(Settings.SAVE_PINNED, savePinnedSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        savePinnedRow.add_suffix(savePinnedSwitch);
+        group.add(savePinnedRow);
+        const notificationsRow = new Adw.ActionRow({
+            title: this.gettext('Show notifications'),
+        });
+        const notificationsSwitch = new Gtk.Switch({
+            valign: Gtk.Align.CENTER,
+            css_classes: ['service-switch'],
+        });
+        settings.bind(Settings.SHOW_NOTIFICATIONS, notificationsSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        notificationsRow.add_suffix(notificationsSwitch);
+        group.add(notificationsRow);
+        const privacyGroup = new Adw.PreferencesGroup({
+            title: this.gettext('Privacy'),
+        });
+        page.add(privacyGroup);
+        const blacklistRow = new Adw.EntryRow({
+            title: this.gettext('Blacklisted App IDs'),
+            css_classes: ['pref-input'],
+        });
+        const blacklistSettings = settings.get_strv(Settings.BLACKLIST).join(', ');
+        blacklistRow.set_text(blacklistSettings);
+        blacklistRow.connect('changed', () => {
+            const list = blacklistRow.get_text().split(',').map((s) => s.trim()).filter((s) => s.length > 0);
+            settings.set_strv(Settings.BLACKLIST, list);
+        });
+        privacyGroup.add(blacklistRow);
+        const shortcutGroup = new Adw.PreferencesGroup({
+            title: this.gettext('Keyboard Shortcuts'),
+            description: this.gettext('Use formats like <Super>v, <Control><Alt>c, etc.'),
+        });
+        page.add(shortcutGroup);
+        const addShortcutRow = (key, title) => {
+            shortcutGroup.add(this._createShortcutRow(settings, key, title));
+        };
+        addShortcutRow(Settings.SHORTCUT_MENU, this.gettext('Toggle History Menu'));
+        addShortcutRow(Settings.SHORTCUT_CLEAR, this.gettext('Clear History'));
+        addShortcutRow(Settings.SHORTCUT_PRIVATE_MODE, this.gettext('Toggle Private Mode'));
+        addShortcutRow(Settings.SHORTCUT_NEXT, this.gettext('Select Next Item'));
+        addShortcutRow(Settings.SHORTCUT_PREV, this.gettext('Select Previous Item'));
+    }
+    _loadPreferencesStyle() {
+        try {
+            const cssPath = this.dir.get_child('stylesheet.css').get_path();
+            const provider = new Gtk.CssProvider();
+            provider.load_from_path(cssPath);
+            const display = Gdk.Display.get_default();
+            if (display) {
+                Gtk.StyleContext.add_provider_for_display(display, provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            }
+        }
+        catch (error) {
+            console.error('Failed to load preferences stylesheet:', error);
+        }
+    }
+    _createShortcutRow(settings, key, title) {
+        const row = new Adw.ActionRow({ title });
+        const button = new Gtk.Button({
+            valign: Gtk.Align.CENTER,
+            has_frame: true,
+            css_classes: ['pref-input'],
+        });
+        row.add_suffix(button);
+        const updateButtonLabel = () => {
+            const val = settings.get_strv(key);
+            button.set_label(val.length > 0 ? val[0] : this.gettext('None'));
+        };
+        updateButtonLabel();
+        const controller = new Gtk.EventControllerKey();
+        button.add_controller(controller);
+        let isRecording = false;
+        button.connect('clicked', () => {
+            isRecording = true;
+            button.set_label(this.gettext('New shortcut...'));
+            button.add_css_class('suggested-action');
+        });
+        controller.connect('key-pressed', (_controller, keyval, _keycode, state) => {
+            if (!isRecording)
+                return false;
+            if (keyval === Gdk.KEY_Escape) {
+                isRecording = false;
+                button.remove_css_class('suggested-action');
+                updateButtonLabel();
+                return true;
+            }
+            if (keyval === Gdk.KEY_BackSpace) {
+                isRecording = false;
+                button.remove_css_class('suggested-action');
+                settings.set_strv(key, []);
+                updateButtonLabel();
+                return true;
+            }
+            const mask = state & Gtk.accelerator_get_default_mod_mask();
+            const isModifier = [
+                Gdk.KEY_Shift_L, Gdk.KEY_Shift_R,
+                Gdk.KEY_Control_L, Gdk.KEY_Control_R,
+                Gdk.KEY_Alt_L, Gdk.KEY_Alt_R,
+                Gdk.KEY_Meta_L, Gdk.KEY_Meta_R,
+                Gdk.KEY_Super_L, Gdk.KEY_Super_R
+            ].includes(keyval);
+            if (isModifier)
+                return true;
+            const accel = Gtk.accelerator_name(keyval, mask);
+            if (accel) {
+                settings.set_strv(key, [accel]);
+                isRecording = false;
+                button.remove_css_class('suggested-action');
+                updateButtonLabel();
+                return true;
+            }
+            return false;
+        });
+        button.connect('state-flags-changed', () => {
+            if (isRecording && !button.has_focus) {
+                isRecording = false;
+                button.remove_css_class('suggested-action');
+                updateButtonLabel();
+            }
+        });
+        return row;
+    }
+}

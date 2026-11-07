@@ -1,0 +1,12 @@
+[Unit]
+Description=CMF Buds 2 Conky (left column)
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.config/conky/Common/start-widget.sh %h/.config/conky/CmfBuds/cmf_buds.conf
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

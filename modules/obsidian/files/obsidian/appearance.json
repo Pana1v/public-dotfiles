@@ -1,0 +1,8 @@
+{
+  "cssTheme": "",
+  "theme": "obsidian",
+  "accentColor": "#4bfbd8",
+  "enabledCssSnippets": [
+    "mermaid-fit"
+  ]
+}

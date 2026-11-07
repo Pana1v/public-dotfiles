@@ -1,0 +1,423 @@
+#!/usr/bin/env python3
+"""cmfbuds - control CMF Buds 2 from Linux.
+
+Talks the Nothing companion-app protocol over RFCOMM (service "NTAPP").
+Protocol reverse-engineered by Gadgetbridge (Ear1Support.java).
+
+Frame, little-endian:
+
+  +------+---------+---------+---------+--------+---------+-----------------+
+  | 0x55 | ctrl u16| cmd u16 | len u16 | seq u8 | payload | crc16 (ctrl&20) |
+  +------+---------+---------+---------+--------+---------+-----------------+
+
+Replies echo the request cmd with bit 15 cleared (0xc042 -> 0x4042).
+"""
+
+import argparse
+import errno
+import re
+import socket
+import struct
+import subprocess
+import sys
+import time
+from enum import IntEnum
+from pathlib import Path
+
+DEVICE_NAME = "CMF Buds 2"
+SERVICE_UUID = "aeac4a03-dff5-498f-843a-34487cf133eb"
+TIMEOUT_S = 3.0
+CONNECT_RETRIES = 15
+CONNECT_RETRY_DELAY_S = 0.2
+CACHE_DIR = Path.home() / ".cache" / "cmfbuds"
+
+SOF = 0x55
+HEADER = struct.Struct("<BHHHB")
+CRC = struct.Struct("<H")
+CTRL_DEFAULT = 0x0120
+CTRL_BATTERY = 0x5120
+CTRL_CRC_FLAG = 0x20
+CTRL_ERROR_MASK = 0x1F
+REQUEST_BIT = 0x8000
+
+
+class Cmd(IntEnum):
+    BATTERY = 0xC007
+    FIRMWARE = 0xC042
+    INEAR_GET = 0xC00E
+    ANC_GET = 0xC01E
+    EQ_GET = 0xC050
+    BASS_GET = 0xC04E
+    SPATIAL_GET = 0xC04F
+    LATENCY_GET = 0xC041
+    GESTURE_GET = 0xC018
+    GESTURE_SET = 0xF003
+    INEAR_SET = 0xF004
+    ANC_SET = 0xF00F
+    EQ_SET = 0xF01D
+    LATENCY_SET = 0xF040
+    BASS_SET = 0xF051
+    SPATIAL_SET = 0xF052
+
+
+ANC_MODES = {
+    "anc": 0x01,
+    "medium": 0x02,
+    "light": 0x03,
+    "adaptive": 0x04,
+    "off": 0x05,
+    "transparency": 0x07,
+}
+
+EQ_PRESETS = {
+    # Out-of-box value on fw 1.0.1.52. Gadgetbridge has no name for it.
+    "default": 0x00,
+    "rock": 0x01,
+    "electronic": 0x02,
+    "pop": 0x03,
+    "vocals": 0x04,
+    "classical": 0x05,
+    "custom": 0x06,
+    "dirac": 0x07,
+}
+
+BATTERY_SLOTS = {0x02: "left", 0x03: "right", 0x04: "case"}
+BATTERY_LEVEL_MASK = 0x7F
+BATTERY_CHARGING_MASK = 0x80
+
+SIDES = {"left": 0x02, "right": 0x03}
+TAPS = {"tap2": 0x02, "tap3": 0x03, "hold": 0x07, "tap2-hold": 0x09}
+TAP_ACTIONS = {
+    "none": 0x01,
+    "play-pause": 0x02,
+    "prev": 0x08,
+    "next": 0x09,
+    "assistant": 0x0B,
+    "vol-up": 0x12,
+    "vol-down": 0x13,
+    "cycle-anc-transp-off": 0x0A,
+    "cycle-anc-off": 0x14,
+    "cycle-transp-off": 0x15,
+    "cycle-anc-transp": 0x16,
+}
+
+BASS_LEVEL_MIN = 1
+BASS_LEVEL_MAX = 5
+
+# Low latency uses 1/2 instead of 1/0.
+LATENCY_ON = 0x01
+LATENCY_OFF = 0x02
+
+
+def crc16(data: bytes) -> int:
+    """CRC-16/MODBUS: init 0xffff, reflected poly 0xa001."""
+    crc = 0xFFFF
+    for byte in data:
+        crc ^= byte
+        for _ in range(8):
+            crc = (crc >> 1) ^ 0xA001 if crc & 1 else crc >> 1
+    return crc
+
+
+def name_of(table: dict, code: int) -> str:
+    for name, value in table.items():
+        if value == code:
+            return name
+    return f"unknown(0x{code:02x})"
+
+
+# ---------------------------------------------------------------- transport
+
+
+class Buds:
+    """One RFCOMM session. Each request waits for its matching reply."""
+
+    def __init__(self, addr: str, channel: int):
+        # RFCOMM teardown is async after close(), so a back-to-back run sees EBUSY briefly.
+        for _ in range(CONNECT_RETRIES):
+            self._sock = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
+            self._sock.settimeout(TIMEOUT_S)
+            try:
+                self._sock.connect((addr, channel))
+                return
+            except OSError as err:
+                self._sock.close()
+                if err.errno != errno.EBUSY:
+                    raise
+            time.sleep(CONNECT_RETRY_DELAY_S)
+        sys.exit("buds RFCOMM channel stayed busy. Is another app connected?")
+
+    def close(self):
+        self._sock.close()
+
+    def request(self, cmd: Cmd, payload: bytes = b"", ctrl: int = CTRL_DEFAULT) -> bytes:
+        frame = HEADER.pack(SOF, ctrl, cmd, len(payload), 0) + payload
+        frame += CRC.pack(crc16(frame))
+        self._sock.sendall(frame)
+
+        # Skip unsolicited pushes (battery, case lid, mode) until our reply shows up.
+        while True:
+            reply_ctrl, reply_cmd, reply_payload = self._read_frame()
+            if reply_cmd | REQUEST_BIT != cmd:
+                continue
+            if reply_ctrl & CTRL_ERROR_MASK:
+                sys.exit(f"buds rejected 0x{cmd:04x} (ctrl 0x{reply_ctrl:04x})")
+            return reply_payload
+
+    def _read_frame(self) -> tuple[int, int, bytes]:
+        header = self._read_exact(HEADER.size)
+        sof, ctrl, cmd, length, _seq = HEADER.unpack(header)
+        if sof != SOF:
+            sys.exit(f"bad start of frame: {header.hex(' ')}")
+
+        payload = self._read_exact(length)
+        if not ctrl & CTRL_CRC_FLAG:
+            return ctrl, cmd, payload
+
+        (crc,) = CRC.unpack(self._read_exact(CRC.size))
+        if crc != crc16(header + payload):
+            sys.exit(f"crc mismatch on frame 0x{cmd:04x}")
+        return ctrl, cmd, payload
+
+    def _read_exact(self, n: int) -> bytes:
+        buf = b""
+        while len(buf) < n:
+            try:
+                chunk = self._sock.recv(n - len(buf))
+            except socket.timeout:
+                sys.exit("timed out waiting for buds reply")
+            if not chunk:
+                sys.exit("buds closed the connection")
+            buf += chunk
+        return buf
+
+
+def find_address() -> str:
+    out = subprocess.run(["bluetoothctl", "devices"], capture_output=True, text=True, check=True).stdout
+    match = re.search(rf"Device (\S+) {re.escape(DEVICE_NAME)}$", out, re.MULTILINE)
+    if not match:
+        sys.exit(f"'{DEVICE_NAME}' not paired, pass --addr")
+    return match.group(1)
+
+
+def is_connected(addr: str) -> bool:
+    out = subprocess.run(["bluetoothctl", "info", addr], capture_output=True, text=True).stdout
+    return "Connected: yes" in out
+
+
+def cached_channel(addr: str) -> int:
+    path = CACHE_DIR / addr.replace(":", "")
+    if path.exists():
+        return int(path.read_text())
+
+    channel = find_channel(addr)
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    path.write_text(str(channel))
+    return channel
+
+
+def find_channel(addr: str) -> int:
+    """SDP lookup. sdptool can't search 128-bit UUIDs, so it walks every record (~1 min)."""
+    print("looking up NTAPP channel via SDP, takes about a minute...", file=sys.stderr)
+    out = subprocess.run(["sdptool", "records", addr], capture_output=True, text=True).stdout
+    for record in out.split("\n\n"):
+        if SERVICE_UUID not in record:
+            continue
+        match = re.search(r"Channel: (\d+)", record)
+        if match:
+            return int(match.group(1))
+    sys.exit("NTAPP service not found via SDP. Are the buds connected? Or pass --channel")
+
+
+# ---------------------------------------------------------------- readers
+
+
+def read_battery(buds: Buds) -> dict:
+    payload = buds.request(Cmd.BATTERY, ctrl=CTRL_BATTERY)
+    result = {}
+    for i in range(payload[0]):
+        slot, raw = payload[1 + 2 * i], payload[2 + 2 * i]
+        level = raw & BATTERY_LEVEL_MASK
+        charging = " (charging)" if raw & BATTERY_CHARGING_MASK else ""
+        result[BATTERY_SLOTS.get(slot, f"slot{slot}")] = f"{level}%{charging}"
+    return result
+
+
+def read_anc(buds: Buds) -> str:
+    # Only byte 1 is understood. The trailing bytes are kept raw.
+    payload = buds.request(Cmd.ANC_GET)
+    return name_of(ANC_MODES, payload[1])
+
+
+def read_eq(buds: Buds) -> str:
+    return name_of(EQ_PRESETS, buds.request(Cmd.EQ_GET)[0])
+
+
+def read_bass(buds: Buds) -> tuple[bool, int]:
+    enabled, raw_level = buds.request(Cmd.BASS_GET)[:2]
+    level = max(BASS_LEVEL_MIN, min(BASS_LEVEL_MAX, (raw_level + 1) // 2))
+    return enabled == 0x01, level
+
+
+def read_flag(buds: Buds, cmd: Cmd, index: int = 0, on_value: int = 0x01) -> bool:
+    return buds.request(cmd)[index] == on_value
+
+
+def read_gestures(buds: Buds) -> list[tuple[str, str, str]]:
+    payload = buds.request(Cmd.GESTURE_GET)
+    entries = []
+    for i in range(payload[0]):
+        side, _, tap, action = payload[1 + 4 * i : 5 + 4 * i]
+        entries.append((name_of(SIDES, side), name_of(TAPS, tap), name_of(TAP_ACTIONS, action)))
+    return entries
+
+
+def on_off(flag: bool) -> str:
+    return "on" if flag else "off"
+
+
+# ---------------------------------------------------------------- commands
+
+
+def cmd_status(buds: Buds, _args):
+    firmware = buds.request(Cmd.FIRMWARE).decode()
+    bass_on, bass_level = read_bass(buds)
+
+    rows = [("firmware", firmware)]
+    rows += [(f"battery {slot}", value) for slot, value in read_battery(buds).items()]
+    rows += [
+        ("anc", read_anc(buds)),
+        ("eq", read_eq(buds)),
+        ("ultra bass", f"{on_off(bass_on)}, level {bass_level}"),
+        ("spatial audio", on_off(read_flag(buds, Cmd.SPATIAL_GET))),
+        ("in-ear detect", on_off(read_flag(buds, Cmd.INEAR_GET, index=2))),
+        ("low latency *", on_off(read_flag(buds, Cmd.LATENCY_GET, on_value=LATENCY_ON))),
+    ]
+    for key, value in rows:
+        print(f"{key:<15} {value}")
+
+    print("gestures *")
+    for side, tap, action in read_gestures(buds):
+        print(f"  {side:<6} {tap:<10} {action}")
+    print("* experimental")
+
+
+def cmd_battery(buds: Buds, _args):
+    for slot, value in read_battery(buds).items():
+        print(f"{slot:<6} {value}")
+
+
+def cmd_anc(buds: Buds, args):
+    buds.request(Cmd.ANC_SET, bytes([0x01, ANC_MODES[args.mode], 0x00]))
+    print(f"anc: {read_anc(buds)}")
+
+
+def cmd_eq(buds: Buds, args):
+    buds.request(Cmd.EQ_SET, bytes([EQ_PRESETS[args.preset], 0x00]))
+    print(f"eq: {read_eq(buds)}")
+
+
+def cmd_bass(buds: Buds, args):
+    current_on, current_level = read_bass(buds)
+    enabled = current_on if args.state is None else args.state == "on"
+    level = current_level if args.level is None else args.level
+
+    buds.request(Cmd.BASS_SET, bytes([int(enabled), level * 2]))
+    new_on, new_level = read_bass(buds)
+    print(f"ultra bass: {on_off(new_on)}, level {new_level}")
+
+
+def cmd_spatial(buds: Buds, args):
+    buds.request(Cmd.SPATIAL_SET, bytes([int(args.state == "on")]))
+    print(f"spatial audio: {on_off(read_flag(buds, Cmd.SPATIAL_GET))}")
+
+
+def cmd_inear(buds: Buds, args):
+    buds.request(Cmd.INEAR_SET, bytes([0x01, 0x01, int(args.state == "on")]))
+    print(f"in-ear detect: {on_off(read_flag(buds, Cmd.INEAR_GET, index=2))}")
+
+
+def cmd_latency(buds: Buds, args):
+    buds.request(Cmd.LATENCY_SET, bytes([LATENCY_ON if args.state == "on" else LATENCY_OFF]))
+    print(f"low latency: {on_off(read_flag(buds, Cmd.LATENCY_GET, on_value=LATENCY_ON))}")
+
+
+def cmd_gesture(buds: Buds, args):
+    payload = bytes([0x01, SIDES[args.side], 0x01, TAPS[args.tap], TAP_ACTIONS[args.action]])
+    buds.request(Cmd.GESTURE_SET, payload)
+    for side, tap, action in read_gestures(buds):
+        if side == args.side and tap == args.tap:
+            print(f"{side} {tap}: {action}")
+
+
+# ---------------------------------------------------------------- cli
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="cmfbuds", description="Control CMF Buds 2 over Bluetooth.")
+    parser.add_argument("--addr", help="buds MAC (default: look up paired 'CMF Buds 2')")
+    parser.add_argument("--channel", type=int, help="RFCOMM channel (default: cached SDP lookup)")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    sub.add_parser("status", help="show everything").set_defaults(func=cmd_status)
+    sub.add_parser("battery", help="left/right/case battery").set_defaults(func=cmd_battery)
+
+    p = sub.add_parser("anc", help="noise control mode")
+    p.add_argument("mode", choices=ANC_MODES)
+    p.set_defaults(func=cmd_anc)
+
+    p = sub.add_parser("eq", help="equalizer preset")
+    p.add_argument("preset", choices=EQ_PRESETS)
+    p.set_defaults(func=cmd_eq)
+
+    p = sub.add_parser("bass", help="ultra bass, e.g. 'bass on 3' or 'bass off'")
+    p.add_argument("state", nargs="?", choices=["on", "off"])
+    p.add_argument("level", nargs="?", type=int, choices=range(BASS_LEVEL_MIN, BASS_LEVEL_MAX + 1))
+    p.set_defaults(func=cmd_bass)
+
+    for name, func, help_text in [
+        ("spatial", cmd_spatial, "spatial audio"),
+        ("inear", cmd_inear, "pause when removed from ear"),
+        ("latency", cmd_latency, "low latency mode (experimental)"),
+    ]:
+        p = sub.add_parser(name, help=help_text)
+        p.add_argument("state", choices=["on", "off"])
+        p.set_defaults(func=func)
+
+    p = sub.add_parser("gesture", help="touch control mapping (experimental)")
+    p.add_argument("side", choices=SIDES)
+    p.add_argument("tap", choices=TAPS)
+    p.add_argument("action", choices=TAP_ACTIONS)
+    p.set_defaults(func=cmd_gesture)
+
+    # No find/ring: buds ack 0xf002 and 0xf044 but stay silent, and the official app has no ring for this model.
+
+    return parser
+
+
+def connect(addr: str, channel: int | None = None) -> Buds:
+    # RFCOMM to a disconnected bud pages it, which can steal it from the phone.
+    if not is_connected(addr):
+        sys.exit(f"{DEVICE_NAME} not connected")
+
+    # A refused connect means the cached channel moved (e.g. firmware update).
+    try:
+        return Buds(addr, channel or cached_channel(addr))
+    except ConnectionRefusedError:
+        if channel:
+            raise
+        (CACHE_DIR / addr.replace(":", "")).unlink(missing_ok=True)
+        return Buds(addr, cached_channel(addr))
+
+
+def main():
+    args = build_parser().parse_args()
+    buds = connect(args.addr or find_address(), args.channel)
+    try:
+        args.func(buds, args)
+    finally:
+        buds.close()
+
+
+if __name__ == "__main__":
+    main()

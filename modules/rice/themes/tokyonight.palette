@@ -1,0 +1,36 @@
+# role           hex       Tokyo Night: deep navy with soft blue and purple.
+bg               #1a1b26
+bg2              #16161e
+black            #15161e
+bg3              #1f2335
+card             #24283b
+surface          #292e42
+select           #33467c
+bright_black     #414868
+tab_fg           #545c7e
+dim              #565f89
+dim2             #737aa2
+fg2              #a9b1d6
+fg               #c0caf5
+accent           #7aa2f7
+cyan             #7dcfff
+teal             #73daca
+magenta          #bb9af7
+purple2          #c099ff
+green            #9ece6a
+yellow           #e0af68
+orange           #ff9e64
+red              #f7768e
+diff_add         #20303b
+diff_del         #37222c
+diff_add_dim     #1b242c
+diff_del_dim     #261d25
+diff_add_word    #2f5240
+diff_del_word    #5c2a38
+
+@gtk             Tokyonight-Dark
+@vscode          Tokyo Night
+@btop            tokyo-night
+@wallpaper       image:tokyo-rain.jpg
+@taskbar_border  rgba(122,162,247,0.35)
+@cursor          oreo-pink-cursors

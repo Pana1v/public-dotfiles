@@ -1,0 +1,12 @@
+[Unit]
+Description=Devices battery Conky (left column)
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.config/conky/Common/start-widget.sh %h/.config/conky/Devices/devices.conf
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

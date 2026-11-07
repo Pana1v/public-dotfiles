@@ -1,0 +1,8 @@
+{
+  "uuid": "stay-up@pan.local",
+  "name": "Stay Up",
+  "description": "Toggle always-on-top on the focused window with a keyboard shortcut. Works on any window, including client-side-decorated apps like Spotify that have no titlebar 'Always on Top' menu.",
+  "shell-version": ["46", "47", "48", "49", "50"],
+  "settings-schema": "org.gnome.shell.extensions.stay-up",
+  "gettext-domain": "stay-up"
+}

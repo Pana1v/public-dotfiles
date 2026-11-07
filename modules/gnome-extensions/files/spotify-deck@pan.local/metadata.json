@@ -1,0 +1,7 @@
+{
+  "uuid": "spotify-deck@pan.local",
+  "name": "Spotify Deck",
+  "description": "Inline taskbar strip for Spotify: album art, scrolling title, live spectrum visualizer (cava-backed with animated fallback), and hover-reveal transport controls.",
+  "shell-version": ["45", "46", "47", "48", "49", "50"],
+  "version": 1
+}

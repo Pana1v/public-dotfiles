@@ -1,0 +1,35 @@
+# Zorin-only pieces the modules name, and what stands in for them elsewhere.
+# On Zorin the left name is used as is; on Ubuntu (any non-Zorin distro)
+# distro_name in lib/common.sh swaps in the right one. "-" means drop it.
+#
+# kind   zorin name                                 ubuntu name
+#
+# GTK, shell and icon theme names (dconf dumps, palettes, revert.sh)
+theme    ZorinGrey-Dark                             Yaru-dark
+theme    ZorinGrey-Light                            Yaru
+theme    ZorinYellow-Dark                           Yaru-dark
+theme    ZorinBlue-Dark                             Yaru-dark
+
+# Extension UUIDs (gnome-extensions/enabled.txt)
+ext      zorin-dash@zorinos.com                     ubuntu-dock@ubuntu.com
+ext      zorin-desktop-icons@zorinos.com            ding@rastersoft.com
+ext      zorin-appindicator@zorinos.com             ubuntu-appindicators@ubuntu.com
+ext      zorin-connect@zorinos.com                  gsconnect@andyholmes.github.io
+ext      zorin-desktop-cube@zorinos.com             desktop-cube@schneegans.github.com
+ext      zorin-magic-lamp-effect@zorinos.com        compiz-alike-magic-lamp-effect@hermes83.github.com
+ext      zorin-window-move-effect@zorinos.com       compiz-windows-effect@hermes83.github.com
+ext      zorin-menu@zorinos.com                     -    # layout was APP_GRID: the dock's app grid button
+ext      zorin-spatial-window-switcher@zorinos.com  -    # GNOME's Alt+Tab
+ext      zorin-printers@zorinos.com                 -
+ext      zorin-taskbar@zorinos.com                  -    # disabled on Zorin too
+
+# Settings dirs under /org/gnome/shell/extensions/ (and their schemas,
+# org.gnome.shell.extensions.<dir>). Same keys: these are forks.
+dconf    zorin-dash                                 dash-to-dock
+dconf    zorin-desktop-icons                        ding
+dconf    zorin-appindicator                         appindicator
+dconf    zorin-connect                              -    # pairing is tied to the Zorin machine's key, re-pair
+dconf    zorin-menu                                 -
+dconf    zorin-spatial-window-switcher              -
+dconf    zorin-taskbar                              -
+dconf    zorin-tiling-shell                         -

@@ -1,0 +1,3 @@
+[submodule "private"]
+	path = private
+	url = https://github.com/Pana1v/dotfiles-private.git

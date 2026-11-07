@@ -1,0 +1,4 @@
+/* Tall TD charts overflow the viewport; clamp height and let the viewBox scale the drawing down. Width is already capped by mermaid. */
+.mermaid svg {
+  max-height: 85vh;
+}

@@ -1,0 +1,37 @@
+# role           hex       Mono: greyscale, colour only for state.
+bg               #15171b
+bg2              #111316
+black            #0e0f12
+bg3              #1b1d22
+card             #202328
+surface          #2a2d33
+select           #3a3e46
+bright_black     #474b54
+tab_fg           #4f535b
+dim              #565b64
+dim2             #8a8f98
+fg2              #b4b8bf
+fg               #e6e8eb
+accent           #f4f5f7
+cyan             #c8ccd2
+teal             #a7acb4
+magenta          #d6d9de
+purple2          #bfc3c9
+green            #8fbf7f
+yellow           #ffe14d
+orange           #ffc857
+red              #e06c75
+diff_add         #1d2a20
+diff_del         #2e1d20
+diff_add_dim     #181f1a
+diff_del_dim     #221a1c
+diff_add_word    #2c4a32
+diff_del_word    #55292e
+
+@gtk             ZorinGrey-Dark
+@shell           Rice
+@vscode          Mono Rice
+@btop            mono
+@wallpaper       color:#000000
+@taskbar_border  rgba(230,232,235,0.15)
+@cursor          Adwaita
