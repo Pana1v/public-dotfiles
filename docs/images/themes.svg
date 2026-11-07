@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="648" height="254" viewBox="0 0 648 254">
+<rect x="0" y="0" width="648" height="46" fill="#0a0506"/>
+<text x="14" y="29" fill="#ffe9eb" font-family="monospace" font-size="15">ares</text>
+<rect x="120" y="8" width="38" height="30" fill="#0a0506"><title>bg #0a0506</title></rect>
+<rect x="164" y="8" width="38" height="30" fill="#1a0b0d"><title>card #1a0b0d</title></rect>
+<rect x="208" y="8" width="38" height="30" fill="#2a1013"><title>surface #2a1013</title></rect>
+<rect x="252" y="8" width="38" height="30" fill="#b86a72"><title>dim2 #b86a72</title></rect>
+<rect x="296" y="8" width="38" height="30" fill="#ffe9eb"><title>fg #ffe9eb</title></rect>
+<rect x="340" y="8" width="38" height="30" fill="#ff1f3d"><title>accent #ff1f3d</title></rect>
+<rect x="384" y="8" width="38" height="30" fill="#ff6b7d"><title>cyan #ff6b7d</title></rect>
+<rect x="428" y="8" width="38" height="30" fill="#52e5ff"><title>green #52e5ff</title></rect>
+<rect x="472" y="8" width="38" height="30" fill="#ffc14d"><title>yellow #ffc14d</title></rect>
+<rect x="516" y="8" width="38" height="30" fill="#ff7a29"><title>orange #ff7a29</title></rect>
+<rect x="560" y="8" width="38" height="30" fill="#ff3b1f"><title>red #ff3b1f</title></rect>
+<rect x="604" y="8" width="38" height="30" fill="#ff4f8b"><title>magenta #ff4f8b</title></rect>
+<rect x="0" y="52" width="648" height="46" fill="#050a05"/>
+<text x="14" y="81" fill="#b6ffb6" font-family="monospace" font-size="15">matrix</text>
+<rect x="120" y="60" width="38" height="30" fill="#050a05"><title>bg #050a05</title></rect>
+<rect x="164" y="60" width="38" height="30" fill="#0a1a0b"><title>card #0a1a0b</title></rect>
+<rect x="208" y="60" width="38" height="30" fill="#0f2a12"><title>surface #0f2a12</title></rect>
+<rect x="252" y="60" width="38" height="30" fill="#4caf50"><title>dim2 #4caf50</title></rect>
+<rect x="296" y="60" width="38" height="30" fill="#b6ffb6"><title>fg #b6ffb6</title></rect>
+<rect x="340" y="60" width="38" height="30" fill="#00ff41"><title>accent #00ff41</title></rect>
+<rect x="384" y="60" width="38" height="30" fill="#7cff9e"><title>cyan #7cff9e</title></rect>
+<rect x="428" y="60" width="38" height="30" fill="#00e639"><title>green #00e639</title></rect>
+<rect x="472" y="60" width="38" height="30" fill="#c6ff00"><title>yellow #c6ff00</title></rect>
+<rect x="516" y="60" width="38" height="30" fill="#76ff03"><title>orange #76ff03</title></rect>
+<rect x="560" y="60" width="38" height="30" fill="#ff3b3b"><title>red #ff3b3b</title></rect>
+<rect x="604" y="60" width="38" height="30" fill="#39d353"><title>magenta #39d353</title></rect>
+<rect x="0" y="104" width="648" height="46" fill="#15171b"/>
+<text x="14" y="133" fill="#e6e8eb" font-family="monospace" font-size="15">mono</text>
+<rect x="120" y="112" width="38" height="30" fill="#15171b"><title>bg #15171b</title></rect>
+<rect x="164" y="112" width="38" height="30" fill="#202328"><title>card #202328</title></rect>
+<rect x="208" y="112" width="38" height="30" fill="#2a2d33"><title>surface #2a2d33</title></rect>
+<rect x="252" y="112" width="38" height="30" fill="#8a8f98"><title>dim2 #8a8f98</title></rect>
+<rect x="296" y="112" width="38" height="30" fill="#e6e8eb"><title>fg #e6e8eb</title></rect>
+<rect x="340" y="112" width="38" height="30" fill="#f4f5f7"><title>accent #f4f5f7</title></rect>
+<rect x="384" y="112" width="38" height="30" fill="#c8ccd2"><title>cyan #c8ccd2</title></rect>
+<rect x="428" y="112" width="38" height="30" fill="#8fbf7f"><title>green #8fbf7f</title></rect>
+<rect x="472" y="112" width="38" height="30" fill="#ffe14d"><title>yellow #ffe14d</title></rect>
+<rect x="516" y="112" width="38" height="30" fill="#ffc857"><title>orange #ffc857</title></rect>
+<rect x="560" y="112" width="38" height="30" fill="#e06c75"><title>red #e06c75</title></rect>
+<rect x="604" y="112" width="38" height="30" fill="#d6d9de"><title>magenta #d6d9de</title></rect>
+<rect x="0" y="156" width="648" height="46" fill="#1a1b26"/>
+<text x="14" y="185" fill="#c0caf5" font-family="monospace" font-size="15">tokyonight</text>
+<rect x="120" y="164" width="38" height="30" fill="#1a1b26"><title>bg #1a1b26</title></rect>
+<rect x="164" y="164" width="38" height="30" fill="#24283b"><title>card #24283b</title></rect>
+<rect x="208" y="164" width="38" height="30" fill="#292e42"><title>surface #292e42</title></rect>
+<rect x="252" y="164" width="38" height="30" fill="#737aa2"><title>dim2 #737aa2</title></rect>
+<rect x="296" y="164" width="38" height="30" fill="#c0caf5"><title>fg #c0caf5</title></rect>
+<rect x="340" y="164" width="38" height="30" fill="#7aa2f7"><title>accent #7aa2f7</title></rect>
+<rect x="384" y="164" width="38" height="30" fill="#7dcfff"><title>cyan #7dcfff</title></rect>
+<rect x="428" y="164" width="38" height="30" fill="#9ece6a"><title>green #9ece6a</title></rect>
+<rect x="472" y="164" width="38" height="30" fill="#e0af68"><title>yellow #e0af68</title></rect>
+<rect x="516" y="164" width="38" height="30" fill="#ff9e64"><title>orange #ff9e64</title></rect>
+<rect x="560" y="164" width="38" height="30" fill="#f7768e"><title>red #f7768e</title></rect>
+<rect x="604" y="164" width="38" height="30" fill="#bb9af7"><title>magenta #bb9af7</title></rect>
+<rect x="0" y="208" width="648" height="46" fill="#05080c"/>
+<text x="14" y="237" fill="#dff9ff" font-family="monospace" font-size="15">tron</text>
+<rect x="120" y="216" width="38" height="30" fill="#05080c"><title>bg #05080c</title></rect>
+<rect x="164" y="216" width="38" height="30" fill="#0b1622"><title>card #0b1622</title></rect>
+<rect x="208" y="216" width="38" height="30" fill="#0f2233"><title>surface #0f2233</title></rect>
+<rect x="252" y="216" width="38" height="30" fill="#5c9bbd"><title>dim2 #5c9bbd</title></rect>
+<rect x="296" y="216" width="38" height="30" fill="#dff9ff"><title>fg #dff9ff</title></rect>
+<rect x="340" y="216" width="38" height="30" fill="#18e6ff"><title>accent #18e6ff</title></rect>
+<rect x="384" y="216" width="38" height="30" fill="#6ff3ff"><title>cyan #6ff3ff</title></rect>
+<rect x="428" y="216" width="38" height="30" fill="#3dffc9"><title>green #3dffc9</title></rect>
+<rect x="472" y="216" width="38" height="30" fill="#ffd24a"><title>yellow #ffd24a</title></rect>
+<rect x="516" y="216" width="38" height="30" fill="#ff8a1f"><title>orange #ff8a1f</title></rect>
+<rect x="560" y="216" width="38" height="30" fill="#ff4a3d"><title>red #ff4a3d</title></rect>
+<rect x="604" y="216" width="38" height="30" fill="#3d9cff"><title>magenta #3d9cff</title></rect>
+</svg>

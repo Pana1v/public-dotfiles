@@ -1,5 +1,7 @@
 # dotfiles
 
+![Desktop: conky instrument wings around the centre clock](docs/images/desktop.jpg)
+
 A modular Ubuntu desktop and terminal setup: themed GNOME (five colour palettes), conky
 instrument panels, browser theming, shell, git, tmux, editors and dev tools. You pick a
 preset, a colour theme and the modules you want; everything else is left alone.
@@ -101,6 +103,16 @@ Claude Code, conky, lock and login screens, and every browser.
 | `tokyonight` | deep navy with soft blue and purple |
 | `tron` | near-black blue, cyan, orange for warnings |
 
+![The five palettes: background, cards, text, accent and state colours](docs/images/themes.svg)
+
+| Tron | Ares |
+|---|---|
+| ![Centre clock in the tron palette over the grid wallpaper](docs/images/clock-tron.jpg) | ![Machine wing in the ares palette](docs/images/wing-ares.jpg) |
+| ![fastfetch in Terminator](docs/images/fastfetch.jpg) | ![Files with folder icons in the ares accent](docs/images/files-ares.jpg) |
+
+Screenshots have personal details (names, places, repos, addresses) blurred.
+`lib/palette-svg.py` redraws the palette strip after a palette changes.
+
 ```bash
 ./bootstrap.sh --theme matrix --only rice    # choose and apply in one go
 modules/rice/switch-theme.sh matrix          # switch live on a riced machine
@@ -138,8 +150,19 @@ Palettes are `modules/rice/themes/<name>.palette`, one `role #hex` per line.
 
 **Browsers.** Chrome, Brave, Chromium, Edge and Vivaldi (every profile) get dark mode with the
 theme colour seeded from the palette accent. Firefox, LibreWolf and Zen get a generated
-`userChrome.css` and `userContent.css` plus a marked block in `user.js`. All get the palette
-start page as home. Deb, flatpak and snap installs are all found. Close a browser before
+`userChrome.css` and `userContent.css` (toolbar, tabs, menus, new tab page) plus a marked block
+in `user.js`. All get the palette start page as home.
+
+The new tab page shows the palette wallpaper (or a solid fill for colour-only palettes):
+
+| Browser | New tab |
+|---|---|
+| Chrome, Chromium | wallpaper as the custom background, toolbar tinted from the accent |
+| Brave | wallpaper as a custom image; sponsored images off. Your own uploaded images are kept |
+| Firefox, LibreWolf, Zen | wallpaper behind search and shortcuts, both in palette colours; sponsored stories off |
+| Edge, Vivaldi | own new tab page, colours only |
+
+The start page (home button and startup) uses the same wallpaper. Deb, flatpak and snap installs are all found. Close a browser before
 applying, or it overwrites the change on exit; the module tells you which ones were open.
 `switch-theme.sh` re-runs it so browsers follow a theme change.
 

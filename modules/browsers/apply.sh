@@ -28,7 +28,9 @@ START_URL="file://$SHARE/startpage/index.html"
 snap_start_url() {
     local dir="$HOME/snap/$1/common/rice"
     copy_tree "$MOD/files/startpage" "$dir/startpage" --delete >&2
-    run cp "$SHARE/palette.css" "$dir/palette.css" >&2
+    # palette.css and the wallpaper it points at (rice-*); drop old wallpapers.
+    run find "$dir" -maxdepth 1 -name 'rice-*' -delete >&2
+    run cp "$SHARE/palette.css" "$SHARE"/rice-* "$dir/" >&2
     printf 'file://%s/startpage/index.html' "$dir"
 }
 
