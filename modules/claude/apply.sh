@@ -21,3 +21,10 @@ command -v claude >/dev/null || warn "claude CLI missing: apply apps-dev, then r
 # Status line script: also writes ~/.claude/rate-cache.json for the conky Claude panel.
 # Needs "statusLine": {"type": "command", "command": "~/.claude/statusline.sh"} in settings.json.
 link_file "$DOTFILES/modules/claude/files/statusline.sh" "$HOME/.claude/statusline.sh"
+
+# Mods (animated black hole backdrop in the Claude desktop app), installed
+# from the local marketplace in files/mods so every Claude surface loads them.
+if command -v claude >/dev/null; then
+    run claude plugin marketplace add "$DOTFILES/modules/claude/files/mods" || true
+    run claude plugin install blackhole-theme@pan-mods || true
+fi

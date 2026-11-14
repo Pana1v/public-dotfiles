@@ -58,20 +58,19 @@ local function draw(cr, w, h)
 
     local place = d.L and d.L[2] or ""
     local icon = weather_icon(d.N[4] or "")
-    flat.header(cr, w, "weather", place .. "  .  " .. status, nil, icon)
-    flat.icon(cr, w - PAD - 34, 92, icon, 34, theme.dim)
+    flat.header(cr, w, "weather", (place:match("^[^,]+") or place) .. "  /  " .. status, nil, icon)
+    flat.icon(cr, w - PAD - 34, 92, icon, 34, theme.faint)
 
     -- Now: big temperature, description and details to its right
     local _, temp, feels, desc, humidity, wind, rain = table.unpack(d.N)
-    flat.font(cr, "Exo 2", 40)
-    local temp_s = temp .. "°"
-    flat.text(cr, PAD, 90, temp_s, theme.text)
-    local x = PAD + flat.width(cr, temp_s) + 14
+    local x = PAD + 2 + flat.dm(cr, PAD + 2, 92, temp, 35, theme.text, 0.06) + 6
+    flat.dm(cr, x, 67, "°", 10, theme.accent)
+    x = x + 20
 
     flat.font(cr, "Exo 2", 14)
     flat.text(cr, x, 66, flat.fit(cr, desc, w - x - PAD - 44), theme.text)
     flat.font(cr, "Exo 2", 12)
-    flat.text(cr, x, 86, string.format("feels %s°  .  %s%%  .  %s km/h", feels, humidity, wind), theme.dim)
+    flat.text(cr, x, 86, string.format("feels %s° / %s%% / %s km/h", feels, humidity, wind), theme.dim)
 
     flat.font(cr, "Exo 2", 11)
     local rain_s = "rain " .. rain .. "%"

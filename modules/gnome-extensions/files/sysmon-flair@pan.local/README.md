@@ -29,7 +29,7 @@ actually using the machine.
 | History | none, a bare number | 60s sparkline on each |
 | Colour | one class flips at 80% | continuous ramp, green to red |
 | Detail view | none | memory, swap, net, temps, per-core, top processes |
-| Labels | symbolic icons | none; position identifies the two stats |
+| Labels | symbolic icons | Orbitron word tags: CPU, MEM, GPU, VRAM, NET |
 
 ## Design decisions worth knowing
 

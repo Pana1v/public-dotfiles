@@ -1,8 +1,8 @@
 /* Rice shell theme: the distro's dark shell theme (base.css, written by
- * apply.sh: ZorinGrey-Dark or Yaru-dark) with the conky HUD look on
- * notification banners and the clock drawer (calendar + message list).
- * Square cards, corner brackets, Orbitron headers, mono times,
- * green only for "today" and live state. */
+ * apply.sh: ZorinGrey-Dark or Yaru-dark) with the conky look on banners,
+ * the clock drawer, quick settings, menus and the OSD: translucent tinted
+ * rounded cards (no frost or glare), Space Mono type, accent red for state.
+ * The "Nothing cards" block at the end sets shapes and fills. */
 @import url("base.css");
 
 /* ── Cards: banners and the drawer popover ─────────────────────────── */
@@ -41,7 +41,7 @@
 
 .message .message-header { color: #b86a72; }
 .message .message-header .message-header-content .event-time {
-  font-family: "JetBrains Mono";
+  font-family: "Space Mono";
   color: #8a3a44;
 }
 .message .message-header .message-expand-button,
@@ -73,7 +73,7 @@
 .datemenu-today-button:hover { background-color: #2a1013; }
 
 .datemenu-today-button .date-label {
-  font-family: "Orbitron";
+  font-family: "Space Mono";
   font-weight: 600;
   color: #ffe9eb;
 }
@@ -84,10 +84,10 @@
 .events-button .events-box .events-title,
 .world-clocks-button .world-clocks-header,
 .weather-button .weather-box .weather-header-box .weather-header {
-  font-family: "Orbitron";
+  font-family: "Space Mono";
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   color: #b86a72;
 }
 .events-button .events-box .events-title,
@@ -100,18 +100,18 @@
 .events-button .events-box .events-list .event-box .event-time,
 .world-clocks-button .world-clocks-grid .world-clocks-time,
 .weather-button .weather-box .weather-grid .weather-forecast-time {
-  font-family: "JetBrains Mono";
+  font-family: "Space Mono";
 }
 
 .calendar .calendar-month-header .calendar-month-label {
-  font-family: "Orbitron";
-  letter-spacing: 2px;
+  font-family: "Space Mono";
+  letter-spacing: 1px;
   border-radius: 0;
 }
 .calendar .calendar-month-header .pager-button { border-radius: 0; }
 .calendar .calendar-day-heading { color: #8a3a44; border-radius: 0; }
 .calendar .calendar-day {
-  font-family: "JetBrains Mono";
+  font-family: "Space Mono";
   font-weight: normal;
   border-radius: 0;
 }
@@ -135,9 +135,9 @@
 
 /* Clock reads like a conky card title: spaced Orbitron, green unread dot. */
 #panel .panel-button.clock-display .clock {
-  font-family: "Orbitron";
+  font-family: "Space Mono";
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   color: #ffe9eb;
 }
 #panel .panel-button.clock-display .messages-indicator { color: #52e5ff; }
@@ -189,17 +189,17 @@
 .music-pill-expanded {
   border-image: url("brackets.svg") 12;
 }
-.music-pill-expanded .expanded-title { font-family: "Orbitron"; letter-spacing: 1px; }
-.music-pill-expanded .progress-time { font-family: "JetBrains Mono"; }
+.music-pill-expanded .expanded-title { font-family: "Space Mono"; letter-spacing: 1px; }
+.music-pill-expanded .progress-time { font-family: "Space Mono"; }
 
 /* ── Workspace numbers (ws-numbers@pan.local) ──────────────────────── */
 /* Same bracketed cells as the tray; the active one is a solid white cell. */
 .ws-numbers { spacing: 4px; padding: 0 6px; }
 .ws-number {
-  font-family: "Orbitron";
+  font-family: "Space Mono";
   font-weight: 700;
   font-size: 11px;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   color: #b86a72;
   min-width: 24px;
   padding: 2px 6px;
@@ -235,7 +235,7 @@
  * The live-lockscreen extension draws a video behind it; the clock and
  * focused entry glow in the accent like a Tron program. */
 .unlock-dialog-clock .unlock-dialog-clock-time {
-  font-family: "Orbitron", sans-serif;
+  font-family: "Space Mono", sans-serif;
   font-size: 104px;
   font-weight: 700;
   font-feature-settings: "tnum";
@@ -245,7 +245,7 @@
   text-shadow: 0 0 24px #ff1f3daa;
 }
 .unlock-dialog-clock .unlock-dialog-clock-date {
-  font-family: "Orbitron", sans-serif;
+  font-family: "Space Mono", sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 6px;
@@ -254,7 +254,7 @@
   text-shadow: 0 0 10px #ff1f3d88;
 }
 .unlock-dialog-clock .unlock-dialog-clock-hint {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
   font-size: 11px;
   color: #8a3a44;
 }
@@ -262,10 +262,10 @@
 /* Name above the entry, avatar squared off */
 .unlock-dialog .user-widget.vertical .user-widget-label,
 .login-dialog .user-widget.vertical .user-widget-label {
-  font-family: "Orbitron", sans-serif;
+  font-family: "Space Mono", sans-serif;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: #ffe9eb;
 }
@@ -302,7 +302,7 @@
 /* Password entry: flat cell, accent line and glow when focused */
 .unlock-dialog .login-dialog-prompt-entry,
 .login-dialog .login-dialog-prompt-entry {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
   font-size: 13px;
   letter-spacing: 3px;
   border-radius: 0;
@@ -322,13 +322,13 @@
 }
 .unlock-dialog .login-dialog-prompt-label,
 .login-dialog .login-dialog-prompt-label {
-  font-family: "Exo 2", sans-serif;
+  font-family: "Space Mono", sans-serif;
   color: #b86a72;
 }
 
 /* Status line: wrong password is an error, so red; the rest stays grey */
 .login-dialog-message {
-  font-family: "Exo 2", sans-serif;
+  font-family: "Space Mono", sans-serif;
   color: #b86a72;
 }
 .login-dialog-message-warning,
@@ -395,9 +395,9 @@
 }
 .osd-window .number-label,
 .osd-window StLabel {
-  font-family: "Orbitron", sans-serif;
+  font-family: "Space Mono", sans-serif;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   color: #ffe9eb;
 }
 
@@ -521,7 +521,7 @@
 }
 .app-folder-dialog .folder-name-container .folder-name-label,
 .app-folder-dialog .folder-name-container .folder-name-entry {
-  font-family: "Orbitron", sans-serif;
+  font-family: "Space Mono", sans-serif;
   font-weight: 700;
   letter-spacing: 3px;
   color: #ffe9eb;
@@ -562,7 +562,7 @@
   caret-color: #ff1f3d;
   selection-background-color: #4a161b;
   selected-color: #ffe9eb;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
 }
 .search-entry:hover { background-color: #2a1013cc; }
 .search-entry:focus {
@@ -594,7 +594,7 @@
 .list-search-result .list-search-result-title { color: #ffe9eb; }
 .list-search-result .list-search-result-description { color: #b86a72; }
 .search-statustext {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
   color: #8a3a44;
 }
 
@@ -609,7 +609,7 @@
   border-radius: 0;
   background-color: #0a0506ee;
   color: #ffe9eb;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
   font-size: 11px;
   border: 1px solid #2a1013;
 }
@@ -634,7 +634,94 @@
 
 /* Battery estimate under the percentage (power-extras@pan.local). */
 .power-item .quick-toggle-subtitle {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
   font-size: 10px;
   color: #b86a72;
 }
+
+/* ── Nothing cards ─────────────────────────────────────────────────── */
+/* Same look as the conky wings: translucent tinted card (#120809 at ~72%,
+ * popups denser so text stays readable), 18px corners, a hairline edge,
+ * no brackets, sheen or shadow. Hexes are palette roles; the 2 trailing
+ * digits are alpha, so switch-theme.sh still recolours them. */
+.notification-banner,
+.datemenu-popover,
+.popup-menu-content,
+.candidate-popup-content,
+.quick-settings,
+.osd-window,
+.unlock-dialog .notification-banner,
+.unlock-dialog .message {
+  background-color: #120809b8 !important;
+  border-radius: 18px !important;
+  border: 1px solid #2a1013 !important;
+  border-image: none !important;
+  box-shadow: none !important;
+}
+.popup-menu-content,
+.candidate-popup-content,
+.quick-settings,
+.datemenu-popover { background-color: #120809e6 !important; }
+
+/* Rows and buttons inside the cards: softer corners, tinted hover. */
+.popup-menu-item,
+.message,
+.events-button,
+.world-clocks-button,
+.weather-button,
+.datemenu-today-button,
+.message-list-controls .button,
+.message-list-controls .dnd-button,
+.message-media-control,
+.message .message-header .message-expand-button,
+.message .message-header .message-close-button,
+.window-caption,
+.dash-label { border-radius: 12px !important; }
+.events-button,
+.world-clocks-button,
+.weather-button { background-color: #1a0b0db8; }
+.message { background-color: #1a0b0d99; }
+
+/* Headers in the accent, like the numbered card titles. */
+.message .message-header .message-header-content .message-source-title,
+.datemenu-today-button .day-label,
+.events-button .events-box .events-title,
+.world-clocks-button .world-clocks-header,
+.weather-button .weather-box .weather-header-box .weather-header { color: #ff1f3d; }
+.events-button .events-box .events-title,
+.world-clocks-button .world-clocks-header,
+.weather-button .weather-box .weather-header-box .weather-header { border-bottom-color: #4a161b; }
+
+/* Calendar: round day cells, today a solid accent dot. */
+.calendar .calendar-day,
+.calendar .calendar-month-header .pager-button { border-radius: 99px; }
+.calendar .calendar-day.calendar-today,
+.calendar .calendar-day.calendar-today:hover {
+  background-color: #ff1f3d !important;
+  color: #ffe9eb !important;
+  border-radius: 99px;
+}
+
+/* Quick settings: pill toggles, round icon buttons. */
+.quick-toggle,
+.quick-menu-toggle .quick-toggle,
+.quick-toggle-menu,
+.quick-settings .icon-button,
+.quick-settings-system-item .icon-button { border-radius: 99px !important; }
+.quick-menu-toggle .quick-toggle-arrow { border-radius: 0 99px 99px 0 !important; }
+.quick-toggle-menu { border-radius: 18px !important; }
+
+/* Dot-style bars: round ends, accent fill, dark empty track. */
+.slider,
+.quick-slider .slider,
+.osd-window .level,
+.osd-window .level-bar {
+  -barlevel-border-radius: 99px;
+  -barlevel-background-color: #4a161b;
+  box-shadow: none;
+}
+
+/* Unread dot and the running-app dot in the accent. */
+#panel .panel-button.clock-display .messages-indicator { color: #ff1f3d; }
+#dashtodockContainer .dash-item-container .app-grid-running-dot,
+#dash .dash-item-container .app-grid-running-dot { border-radius: 99px; }

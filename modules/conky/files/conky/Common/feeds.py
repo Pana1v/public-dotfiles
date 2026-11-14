@@ -24,16 +24,16 @@ CACHE = f"{HOME}/.cache/conky"
 
 # name: (command, interval seconds)
 SOURCES = {
-    "weather": (["python3", f"{CONKY}/Weather/fetch_weather.py"], 900),
-    "github_prs": (["python3", f"{CONKY}/GithubPRs/fetch_prs.py"], 300),
-    "linear": (["python3", f"{CONKY}/LinearWidget/fetch_issues.py"], 300),
-    "now_playing": ([f"{CONKY}/NowPlaying/now_playing.sh"], 2),
-    "cmf_buds": (["python3", f"{CONKY}/CmfBuds/fetch_buds.py"], 30),
-    "audio": (["python3", f"{CONKY}/CmfBuds/fetch_audio.py"], 3),
-    "devices": (["python3", f"{CONKY}/Devices/fetch_devices.py"], 10),
-    "events": (["python3", f"{CONKY}/Agenda/fetch_events.py"], 120),
-    "tasks": (["python3", f"{CONKY}/Tasks/fetch_tasks.py"], 120),
-    "sysmon": (["python3", f"{CONKY}/Systems/fetch_system.py"], 2),
+    "weather": (["python3", f"{CONKY}/Weather/fetch_weather.py"], 600),
+    "github_prs": (["python3", f"{CONKY}/GithubPRs/fetch_prs.py"], 120),
+    "linear": (["python3", f"{CONKY}/LinearWidget/fetch_issues.py"], 120),
+    "now_playing": ([f"{CONKY}/NowPlaying/now_playing.sh"], 1),
+    "cmf_buds": (["python3", f"{CONKY}/CmfBuds/fetch_buds.py"], 15),
+    "audio": (["python3", f"{CONKY}/CmfBuds/fetch_audio.py"], 1),
+    "devices": (["python3", f"{CONKY}/Devices/fetch_devices.py"], 5),
+    "events": (["python3", f"{CONKY}/Agenda/fetch_events.py"], 60),
+    "tasks": (["python3", f"{CONKY}/Tasks/fetch_tasks.py"], 60),
+    "sysmon": (["python3", f"{CONKY}/Systems/fetch_system.py"], 1),
 }
 
 

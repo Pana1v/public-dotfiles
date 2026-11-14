@@ -39,7 +39,12 @@ uuids() {
 }
 
 enabled=()
+# The rice backdrop (RICE_BACKDROP in local.env) picks the live wallpaper.
+BACKDROP="$(conf_get RICE_BACKDROP || true)"
 while read -r uuid; do
+    if [ "$uuid" = grid-live@pan.local ] && [ "$BACKDROP" = ember ]; then
+        uuid=blackhole-live@pan.local
+    fi
     if ! meta="$(find_meta "$uuid")"; then
         # Installed later by a package (e.g. gsconnect) or not at all.
         warn "$uuid not installed yet, enabling anyway"

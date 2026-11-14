@@ -2,6 +2,7 @@
   handle_size = 2
   inactive_color_offset = 0.88
   enabled_plugins = ActivityWatch, InactivityWatch, TerminalShot, Logger, CustomCommandsMenu, PyTracebackHandler, PathLineHandler, LinearIssueHandler
+  ask_before_closing = never
   cell_height = 1.1
 [keybindings]
   switch_to_tab_1 = <Alt>1
@@ -17,8 +18,7 @@
   broadcast_all = <Shift><Control>b
 [profiles]
   [[default]]
-    background_color = "#5a1a24"
-    background_darkness = 0.35
+    background_darkness = 0.9
     background_type = transparent
     cursor_blink = False
     cursor_shape = ibeam

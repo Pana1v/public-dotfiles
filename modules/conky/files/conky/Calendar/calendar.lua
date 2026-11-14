@@ -39,12 +39,21 @@ local function draw(cr, w, h)
         local x = col_x(col)
         local y = HEADER_H + 22 + ROW_H * (row + 1)
 
-        -- Today: green disc with the number knocked out in card colour.
+        -- Today: accent ring of dots around the number, Nothing style.
         if day == now.day then
-            flat.set_color(cr, theme.green)
-            cairo_arc(cr, x, y - 5, 12, 0, 2 * math.pi)
+            flat.set_color(cr, theme.accent)
+            for k = 0, 15 do
+                local a = 2 * math.pi * k / 16
+                flat.dot(cr, x + math.cos(a) * 12, y - 5 + math.sin(a) * 12, 1.1)
+            end
             cairo_fill(cr)
-            centred(cr, x, y, tostring(day), theme.bg)
+            flat.font(cr, "Exo 2", 13, true)
+            centred(cr, x, y, tostring(day), theme.text)
+            flat.font(cr, "Exo 2", 13)
+            goto continue
+        end
+        if day < now.day then
+            centred(cr, x, y, tostring(day), theme.faint)
             goto continue
         end
 

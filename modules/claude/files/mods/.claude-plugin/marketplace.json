@@ -1,0 +1,7 @@
+{
+  "name": "pan-mods",
+  "owner": { "name": "Pan" },
+  "plugins": [
+    { "name": "blackhole-theme", "source": "./blackhole-theme", "description": "Animated ember black hole backdrop for the Claude desktop app" }
+  ]
+}

@@ -23,7 +23,8 @@ snap_dconf() {
     local tmp priv
     tmp="$(mktemp)"
     while read -r name path; do
-        dconf dump "$path" | grep -Ev "^(${excludes})=" | home_token > "$tmp"
+        # grep exits 1 on an empty dump (e.g. /com/zorin/ on Ubuntu); that is not an error
+        { dconf dump "$path" | grep -Ev "^(${excludes})=" || true; } | home_token > "$tmp"
         priv="$DOTFILES/private/gnome/dconf/$name.ini"
         [ -f "$DOTFILES/private/private.env" ] || priv="$(mktemp -u)"
         python3 -I "$DOTFILES/lib/dconf_split.py" "$M/gnome/private-sections.txt" "$tmp" \

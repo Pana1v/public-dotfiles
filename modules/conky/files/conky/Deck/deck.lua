@@ -41,7 +41,7 @@ function M.frame(cr, w, h, side)
     local pts = outline(w, h, side)
 
     path(cr, pts)
-    flat.set_color(cr, theme.glass, 0.90)
+    flat.set_color(cr, theme.glass, flat.GLASS_ALPHA)
     cairo_fill_preserve(cr)
     local sheen = cairo_pattern_create_linear(0, 0, w * 0.6, h)
     cairo_pattern_add_color_stop_rgba(sheen, 0, 1, 1, 1, 0.09)

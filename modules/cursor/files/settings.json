@@ -9,5 +9,7 @@
     "editor.fontFamily": "'JetBrains Mono', 'Symbols Nerd Font Mono', monospace",
     "editor.fontLigatures": true,
     "terminal.integrated.fontFamily": "'JetBrains Mono', 'Symbols Nerd Font Mono'",
-    "security.promptForRemoteFileProtocolHandling": false
+    "security.promptForRemoteFileProtocolHandling": false,
+    "cursor.composer.queueMessageDefaultBehavior": "steer",
+    "cursor.composer.queueManualSendBehavior2": "steer"
 }

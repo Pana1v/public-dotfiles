@@ -1,8 +1,8 @@
 /* Hexes come from the rice palettes so switch-theme.sh can recolor this file.
-   bg carries an alpha byte (fa = 0.98). Lower lets the conky widgets behind
-   the launcher bleed through the list text. */
+   bg carries an alpha byte (e6 = 0.90): a translucent tinted card like the
+   conky wings, dense enough that the widgets behind don't fight the text. */
 * {
-    bg:        #0a0506fa;
+    bg:        #120809e6;
     bg-input:  #050203;
     card:      #1a0b0d;
     surface:   #2a1013;
@@ -21,14 +21,15 @@
     spacing:          0;
 }
 
-/* Square HUD card, same look as the shell banners and conky widgets */
+/* Rounded translucent card, same look as the shell banners and conky wings */
 window {
     location:         center;
     anchor:           center;
     width:            660px;
     background-color: @bg;
-    border:           0;
-    border-radius:    0;
+    border:           1px;
+    border-color:     @surface;
+    border-radius:    18px;
     padding:          0;
 }
 
@@ -60,10 +61,8 @@ corner-tl, corner-tr, corner-bl, corner-br {
     padding:      8px;
     border-color: @dim;
 }
-corner-tl { border: 2px 0 0 2px; }
-corner-tr { border: 2px 2px 0 0; }
-corner-bl { border: 0 0 2px 2px; }
-corner-br { border: 0 2px 2px 0; }
+/* Brackets retired with the rounded cards: the boxes stay as padding. */
+corner-tl, corner-tr, corner-bl, corner-br { border: 0; }
 
 body {
     children: [ inputbar, message, listview, mode-switcher ];
@@ -93,9 +92,9 @@ entry {
 case-indicator {
     text-color: @faint;
 }
-/* Orbitron for labels and headers, same as the shell's clock and drawer */
+/* Space Mono for labels and headers, same as the shell clock and drawer */
 prompt {
-    font:           "Orbitron Bold 9";
+    font:           "Space Mono Bold 9";
     vertical-align: 0.5;
     text-color:     @faint;
 }
@@ -105,7 +104,8 @@ message {
     padding:          8px 12px;
     background-color: @card;
     border:           0 0 0 2px;
-    border-color:     @dim;
+    border-color:     @accent;
+    border-radius:    12px;
 }
 textbox {
     text-color: @fg-soft;
@@ -124,10 +124,11 @@ listview {
 
 /* Rows reserve a 2px left edge so the selection bar doesn't shift text */
 element {
-    padding:      7px 12px 7px 10px;
-    spacing:      14px;
-    border:       0 0 0 2px;
-    border-color: transparent;
+    padding:       7px 12px 7px 10px;
+    spacing:       14px;
+    border:        0 0 0 2px;
+    border-color:  transparent;
+    border-radius: 12px;
 }
 element-icon {
     size:           24px;
@@ -176,7 +177,7 @@ button {
     expand:           false;
     border:           0 0 2px 0;
     border-color:     transparent;
-    font:             "Orbitron Bold 9";
+    font:             "Space Mono Bold 9";
     text-color:       @faint;
 }
 button selected {

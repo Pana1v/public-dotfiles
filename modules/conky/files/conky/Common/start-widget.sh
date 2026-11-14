@@ -53,10 +53,16 @@ DOCK_CLEAR=$(sed -n 's/^\s*CONKY_DOCK_CLEAR\s*=\s*["'"'"']\?\([0-9]*\).*/\1/p' "
 DOCK_CLEAR=${DOCK_CLEAR:-$(scale 92)}
 MON_WIDTH=$(xrandr --listmonitors | awk 'NR == 2 { split($3, a, /[\/x+]/); print a[1] }')
 WING_TOP=46 WING_BOTTOM=24
-WING_W=$(scale 500) DECK_H=$(scale 150) SIDE_GAP=$(scale 12)
+# Wings draw bigger than the other widgets: CONKY_WING_SCALE in local.env
+# multiplies the monitor scale (default 1.15).
+WING_SCALE=$(sed -n 's/^\s*CONKY_WING_SCALE\s*=\s*["'"'"']\?\([0-9.]*\).*/\1/p' "$LOCAL_ENV" 2>/dev/null | tail -1)
+WING_SCALE=$(awk -v s="$CONKY_SCALE" -v w="${WING_SCALE:-1.15}" 'BEGIN { printf "%.3f", s * w }')
+WING_W=$(awk -v s="$WING_SCALE" 'BEGIN { printf "%d", 500 * s + 0.5 }')
+DECK_H=$(scale 150) SIDE_GAP=$(scale 12)
 case "$(basename "$BASE_CONF")" in
     wing_left.conf|wing_right.conf)
-        PX_H=$((MON_HEIGHT - WING_TOP - WING_BOTTOM)) PX_Y=$WING_TOP ;;
+        export CONKY_SCALE=$WING_SCALE
+        PX_W=$WING_W PX_H=$((MON_HEIGHT - WING_TOP - WING_BOTTOM)) PX_Y=$WING_TOP ;;
     deck_top.conf|deck_bottom.conf)
         PX_W=$((MON_WIDTH - 2 * WING_W - 2 * SIDE_GAP)) PX_H=$DECK_H PX_X=0
         if [ "$(basename "$BASE_CONF")" = deck_top.conf ]; then

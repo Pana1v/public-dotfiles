@@ -15,9 +15,11 @@ import St from 'gi://St';
 
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
-const RADIUS = 30;
-// The clock has no glass panel, only rings, so it stays sharp.
-const SKIP = new Set(['ConkyClock']);
+// Light enough that the live backdrop stays legible through the glass.
+const RADIUS = 12;
+// The clock has no glass panel, only rings, and the wings are solid matte
+// cards now (Nothing style), so none of them gets blur behind it.
+const SKIP = new Set(['ConkyClock', 'ConkyWingL', 'ConkyWingR']);
 
 // Matches modules/conky/files/conky/Common/wing.lua: MARGIN and SLANT.
 const WING_MARGIN = 16;

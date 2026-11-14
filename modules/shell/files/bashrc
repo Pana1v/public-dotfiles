@@ -131,6 +131,9 @@ command -v xhost >/dev/null && xhost +local:docker >/dev/null
 # GitHub PAT for gh CLI and daily-report
 [ -f ~/.config/secrets/github.env ] && . ~/.config/secrets/github.env
 
+# NVIDIA API key for NIM / Qwen Code
+[ -f ~/.config/secrets/nvidia.env ] && . ~/.config/secrets/nvidia.env
+
 export LANG=en_IN.UTF-8
 export LANGUAGE=en_IN:en
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
@@ -179,3 +182,7 @@ fi
 [ -f "$HOME/.config/dotfiles/private/shell/bashrc.private" ] && . "$HOME/.config/dotfiles/private/shell/bashrc.private"
 
 [[ ! ${BLE_VERSION-} ]] || ble-attach
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

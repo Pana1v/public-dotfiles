@@ -16,8 +16,12 @@ import {HeatGlow} from './src/heat.js';
 import {watchPalette} from './src/palette.js';
 
 const PANEL_ROLE = 'sysmon-flair';
-const PANEL_BOX = 'right';
-const PANEL_INDEX = 0;
+
+// Left box, directly after the workspace switchers. Those extensions may
+// enable after this one and insert themselves anywhere, so the chip re-anchors
+// whenever the left box changes instead of trusting a fixed index.
+const WORKSPACE_ROLES = ['Space Bar', 'space-bar'];
+const WORKSPACE_STYLE_CLASS = 'ws-numbers';
 
 const TICK_SEC = 1;
 
@@ -42,7 +46,7 @@ class SysmonIndicator extends PanelMenu.Button {
 
         this.add_style_class_name('sysmon-indicator');
 
-        this._box = new St.BoxLayout({style_class: 'sysmon-panel'});
+        this._box = new St.BoxLayout({style_class: 'sysmon-panel sysmon-panel-root'});
         this.add_child(this._box);
 
         // Panel carries what decides whether a job fits: load, heat and
@@ -65,17 +69,17 @@ class SysmonIndicator extends PanelMenu.Button {
             width: USAGE_CHIP_WIDTH,
         });
 
-        this._box.add_child(tagged('C', this.cpu));
-        this._box.add_child(tagged('R', this.ram));
+        this._box.add_child(tagged('CPU', this.cpu));
+        this._box.add_child(tagged('MEM', this.ram));
 
         // One box so a machine without nvidia-smi hides both GPU chips.
         this.gpuGroup = new St.BoxLayout({style_class: 'sysmon-panel'});
-        this.gpuGroup.add_child(tagged('G', this.gpu));
-        this.gpuGroup.add_child(tagged('V', this.vram));
+        this.gpuGroup.add_child(tagged('GPU', this.gpu));
+        this.gpuGroup.add_child(tagged('VRAM', this.vram));
         this._box.add_child(this.gpuGroup);
 
         this.down = new StatChip({accessibleName: 'Download speed'});
-        this._box.add_child(tagged('↓', this.down));
+        this._box.add_child(tagged('NET', this.down));
 
         this.detail = new DetailMenu(coreCount);
         this.menu.addMenuItem(this.detail);
@@ -117,8 +121,11 @@ export default class SysmonFlairExtension extends Extension {
                 this._procPending = true;
             });
 
-        Main.panel.addToStatusArea(
-            PANEL_ROLE, this._indicator, PANEL_INDEX, PANEL_BOX);
+        Main.panel.addToStatusArea(PANEL_ROLE, this._indicator, 0, 'left');
+        this._anchor();
+        const leftBox = Main.panel._leftBox;
+        this._leftBoxIds = ['child-added', 'child-removed'].map(sig =>
+            leftBox.connect(sig, () => this._anchor()));
 
         // Prime the counters so the first visible sample is a real delta
         // rather than a meaningless zero.
@@ -129,6 +136,34 @@ export default class SysmonFlairExtension extends Extension {
                 this._tick();
                 return GLib.SOURCE_CONTINUE;
             });
+    }
+
+    /** Moves the chip to sit right after the last workspace switcher. */
+    _anchor() {
+        const leftBox = Main.panel._leftBox;
+        const own = this._indicator?.container;
+        if (!own || this._anchoring)
+            return;
+
+        const roleActors = WORKSPACE_ROLES
+            .map(role => Main.panel.statusArea[role]?.container)
+            .filter(Boolean);
+        const isWorkspace = child => child !== own &&
+            (roleActors.includes(child) ||
+             child.has_style_class_name?.(WORKSPACE_STYLE_CLASS));
+
+        const children = leftBox.get_children();
+        const last = children.filter(isWorkspace).at(-1);
+        const target = last ? children.indexOf(last) + 1 : 0;
+        const current = children.indexOf(own);
+        // After removal the target shifts left by one if we sat before it.
+        const wanted = current < target ? target - 1 : target;
+        if (current === wanted)
+            return;
+
+        this._anchoring = true;
+        leftBox.set_child_at_index(own, wanted);
+        this._anchoring = false;
     }
 
     _sample() {
@@ -211,6 +246,9 @@ export default class SysmonFlairExtension extends Extension {
         if (this._menuId)
             this._indicator?.menu.disconnect(this._menuId);
         this._menuId = 0;
+
+        this._leftBoxIds?.forEach(id => Main.panel._leftBox.disconnect(id));
+        this._leftBoxIds = null;
 
         this._gpu?.stop();
         this._unwatchPalette?.();

@@ -14,14 +14,13 @@ local flat = dofile(os.getenv("HOME") .. "/.config/conky/Common/flat.lua")
 
 local theme = {
     bg     = "#0a0506",
-    bar_bg = "#2a1013",
+    bar_bg = "#4a161b",
     text   = "#ffe9eb",
     red    = "#ff3b1f",
-    green  = "#52e5ff",
+    green  = "#ffe9eb",   -- fine is plain fg
     orange = "#ffc14d",   -- warn state, clear yellow despite the name
-    blue   = "#ffe9eb",   -- neutral, same as text
-    dim    = "#b86a72",
-    faint  = "#8a3a44",
+    dim    = "#fff4f5",
+    faint  = "#ffa3b0",
 }
 
 local function rgb(colour, alpha)
@@ -50,7 +49,7 @@ end
 -- Fetch (throttled): plain file read, no subprocess at all
 -- =====================================================
 local RATE_CACHE = os.getenv("HOME") .. "/.claude/rate-cache.json"
-local REFRESH_SECONDS = 2
+local REFRESH_SECONDS = 1
 local STALE_SECONDS = 600
 local WEEK_SECONDS = 7 * 24 * 3600
 local SESSION_SECONDS = 5 * 3600
@@ -167,6 +166,25 @@ local function draw_limit_row(cr, w, y, label, pct, colour, value_text)
     flat.ticks(cr, PAD, y + 8, w - PAD * 2, 5, pct / 100, colour)
 end
 
+-- One half of the card: label, big dot-matrix percentage, dotted bar, and
+-- how far through its window we are.
+--   SESSION 5H
+--   37%
+--   oooooooo.........
+--   ELAPSED 28%  3H 34M LEFT
+local function draw_limit(cr, x, w, label, pct, elapsed, remaining)
+    flat.font(cr, "Space Mono", 10.5)
+    flat.text(cr, x, 62, label, theme.dim)
+    local colour = pct >= 50 and pct_color(pct) or theme.text
+    local sw = flat.dm(cr, x, 106, string.format("%d", pct), 35, colour, 0.06)
+    flat.dm(cr, x + sw + 8, 106, "%", 18, pct >= 50 and colour or flat.theme.accent)
+    flat.ticks(cr, x, 122, w, 4, pct / 100, colour)
+    flat.ticks(cr, x, 132, w, 2, (elapsed or 0) / 100, theme.faint)
+    flat.font(cr, "Space Mono", 10)
+    flat.text(cr, x, 154, elapsed and string.format("%d%% / %s", math.floor(elapsed), format_remaining(remaining)):upper()
+        or "NO ACTIVE WINDOW", theme.faint)
+end
+
 local function draw(cr, w, h)
     flat.card(cr, w, h)
 
@@ -176,23 +194,14 @@ local function draw(cr, w, h)
 
     local age = cache.ts and math.max(0, os.time() - cache.ts) or nil
     local stale = age and age > STALE_SECONDS
-    flat.header(cr, w, "claude", age and ((stale and "stale " or "updated ") .. format_age(age)),
+    flat.header(cr, w, "claude", age and ((stale and "stale " or "") .. format_age(age)),
         stale and theme.orange or theme.faint, "robot")
 
-    -- four rows, 44 px apart in a full card; closer together when the card is short
-    local pitch = math.min(44, (h - 58 - 14) / 3)
-    draw_limit_row(cr, w, 58, "Session (5h)", live_pct(cache.r5, cache.r5_reset))
-
+    local col = (w - 2 * PAD - 24) / 2
     local s_elapsed, s_remaining = session_elapsed()
-    draw_limit_row(cr, w, 58 + pitch, "Session elapsed", s_elapsed or 0, theme.green,
-        s_elapsed and string.format("%d%%  |  %s", math.floor(s_elapsed), format_remaining(s_remaining))
-                   or "no active window")
-
-    draw_limit_row(cr, w, 58 + 2 * pitch, "Weekly (7d)", live_pct(cache.r7, cache.r7_reset))
-
+    draw_limit(cr, PAD + 2, col, "SESSION 5H", live_pct(cache.r5, cache.r5_reset), s_elapsed, s_remaining)
     local elapsed, remaining = week_elapsed()
-    draw_limit_row(cr, w, 58 + 3 * pitch, "Week elapsed (resets Thu 16:30)", elapsed, theme.green,
-        string.format("%d%%  |  %s", math.floor(elapsed), format_remaining(remaining)))
+    draw_limit(cr, PAD + 2 + col + 24, col, "WEEK 7D", live_pct(cache.r7, cache.r7_reset), elapsed, remaining)
 end
 
 -- Loaded by a wing window: hand over update/draw instead of becoming conky_main.

@@ -1,0 +1,6 @@
+{
+  "uuid": "show-desktop@pan.local",
+  "name": "Show Desktop",
+  "description": "Super+D minimises every window on the workspace and restores them on the next press. Replaces mutter's show-desktop mode, which hides windows without minimising them and leaves them stuck behind the desktop-type conky widgets.",
+  "shell-version": ["46", "47", "48", "49", "50"]
+}

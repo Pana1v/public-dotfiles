@@ -67,8 +67,9 @@ export function formatUsage(usedBytes, totalBytes) {
 export {percentFmt};
 
 /**
- * Single-letter tag in front of a chip. Four chips side by side are no longer
- * identifiable by position alone.
+ * Short word tag (CPU, MEM, ...) in front of a chip, in the rice's Orbitron
+ * label style. Five chips side by side are not identifiable by position alone,
+ * and single letters made the reader decode them.
  */
 export function tagged(tag, chip) {
     const box = new St.BoxLayout({style_class: 'sysmon-stat'});

@@ -35,7 +35,7 @@ run systemctl --user daemon-reload
 : "${LOCAL_ENV:=$HOME/.config/dotfiles/local.env}"
 # shellcheck disable=SC1090
 [ -f "$LOCAL_ENV" ] && . "$LOCAL_ENV"
-ALL_WIDGETS="elysium claude fleet linear calendar weather nowplaying audio devices agenda github wings deck"
+ALL_WIDGETS="elysium claude fleet linear calendar weather nowplaying audio devices agenda github wings deck clock"
 WIDGETS="${CONKY_WIDGETS:-wings deck}"
 
 widget_units() {
@@ -50,7 +50,8 @@ widget_units() {
         audio)      echo cmf-buds-conky.service ;;
         devices)    echo devices-conky.service ;;
         agenda)     echo agenda-conky.service ;;
-        wings)      echo wing-left-conky.service wing-right-conky.service clock-conky.service ;;
+        wings)      echo wing-left-conky.service wing-right-conky.service ;;
+        clock)      echo clock-conky.service ;;
         deck)       echo deck-top-conky.service deck-bottom-conky.service fleet-ping.service ;;
         github)     echo github-prs-conky.service ;;
     esac
@@ -70,5 +71,5 @@ if [[ " $WIDGETS " =~ \ (weather|nowplaying|audio|devices|agenda|github|wings|de
 log "widgets $WIDGETS"
 run systemctl --user enable --now "${on[@]}"
 # Windows read the widget list and PROFILE only at start, so running ones restart.
-run systemctl --user try-restart conky-feeds.service deck-top-conky.service deck-bottom-conky.service wing-left-conky.service wing-right-conky.service clock-conky.service
+run systemctl --user try-restart conky-feeds.service deck-top-conky.service deck-bottom-conky.service wing-left-conky.service wing-right-conky.service
 [ "${#off[@]}" -eq 0 ] || run systemctl --user disable --now "${off[@]}"

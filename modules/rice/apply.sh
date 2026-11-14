@@ -22,7 +22,7 @@ GTK_REPO="https://github.com/Fausto-Korpsvart/Tokyonight-GTK-Theme.git"
 GTK_SRC="$HOME/.cache/dotfiles/Tokyonight-GTK-Theme"
 
 # Skip apt when present: sudo has no tty when re-run from scripts.
-dpkg -s sassc papirus-icon-theme rofi qalc xclip qt5ct node-typescript make >/dev/null 2>&1 || apt_install "$MOD/packages.apt"
+dpkg -s sassc papirus-icon-theme rofi qalc xclip qt5ct node-typescript make python3-numpy >/dev/null 2>&1 || apt_install "$MOD/packages.apt"
 
 # Set a gsettings key only when it differs, so re-runs print ok.
 gset() {
@@ -136,16 +136,23 @@ mkdir "$AV_TMP/src" && cp "$F/avatar/ares-x.png" "$AV_TMP/src/"
 run python3 -I "$MOD/tools/recolor-assets.py" "$MOD/themes/ares.palette" "$PALETTE" "$AV_TMP/src" "$AV_TMP/out"
 run cp "$AV_TMP/out/ares-x.png" "$HOME/.face"
 rm -rf "$AV_TMP"
+# Backdrop is per machine: RICE_BACKDROP in local.env, "grid" (default, the
+# moving Tron grid) or "ember" (the black hole, tools/blackhole.py). It picks
+# the live wallpaper extension, the lock-screen default, and, through
+# system-rice.sh, the GRUB and GDM backgrounds.
+BACKDROP="$(conf_get RICE_BACKDROP || true)"
+BACKDROP="${BACKDROP:-grid}"
 # Lock-screen video, one per palette and style, rendered once each. Style is
-# per machine: RICE_LOCKSCREEN in local.env, "grid" (default) or "rain".
-# Both renderers read ~/.config/rice/palette.
+# per machine: RICE_LOCKSCREEN in local.env, "grid", "rain" or "ember"
+# (default: the backdrop). All renderers read ~/.config/rice/palette.
 LOCK_STYLE="$(sed -n "s/^[[:space:]]*RICE_LOCKSCREEN[[:space:]]*=[[:space:]]*[\"']\?\([a-z]*\).*/\1/p" "$LOCAL_ENV" 2>/dev/null | tail -1)"
-LOCK_STYLE="${LOCK_STYLE:-grid}"
+LOCK_STYLE="${LOCK_STYLE:-$BACKDROP}"
 LOCK_VIDEO="$HOME/Videos/lockscreen/$THEME-$LOCK_STYLE-loop.mp4"
 if [ ! -f "$LOCK_VIDEO" ] && command -v ffmpeg >/dev/null && [ "$DRY_RUN" != 1 ]; then
     frames="$(mktemp -d)"
     case "$LOCK_STYLE" in
-        rain) python3 -I "$MOD/tools/rain.py" frames "$frames" 1920 1200 240; FPS=24 ;;
+        rain)  python3 -I "$MOD/tools/rain.py" frames "$frames" 1920 1200 240; FPS=24 ;;
+        ember) python3 -I "$MOD/tools/blackhole.py" frames "$frames" 1920 1200 240; FPS=24 ;;
         *)    python3 "$MOD/tools/grid.py" frames "$frames" 1920 1200 60; FPS=30 ;;
     esac
     mkdir -p "$(dirname "$LOCK_VIDEO")"
@@ -161,6 +168,18 @@ if [ -d "$LL_SCHEMAS" ]; then
     run gsettings --schemadir "$LL_SCHEMAS" set $LL playlist-fade-enabled false
 fi
 run gsettings set org.gnome.login-screen logo ''
+
+# Live wallpaper: grid-live or blackhole-live, never both. The gnome-extensions
+# module makes the same swap when it rewrites the enabled list.
+if [ "$BACKDROP" = ember ]; then LIVE_OFF=grid-live@pan.local LIVE_ON=blackhole-live@pan.local
+else LIVE_OFF=blackhole-live@pan.local LIVE_ON=grid-live@pan.local; fi
+EXTS="$(gsettings get org.gnome.shell enabled-extensions)"
+if grep -q "'$LIVE_OFF'" <<<"$EXTS" || ! grep -q "'$LIVE_ON'" <<<"$EXTS"; then
+    EXTS="$(sed "s/'$LIVE_OFF'/'$LIVE_ON'/" <<<"$EXTS")"
+    grep -q "'$LIVE_ON'" <<<"$EXTS" || EXTS="$(sed "s/^@as \[\]$/[]/; s/\]$/, '$LIVE_ON']/; s/\[, /[/" <<<"$EXTS")"
+    run gsettings set org.gnome.shell enabled-extensions "$EXTS"
+    warn "live wallpaper is now $LIVE_ON; log out and back in if it does not appear"
+fi
 
 # ── Terminal ───────────────────────────────────────────────────────────────
 link_file "$F/kitty/current-theme.conf" "$HOME/.config/kitty/current-theme.conf"

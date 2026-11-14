@@ -43,6 +43,7 @@ if [ "$TARGET" != "$CURRENT" ]; then
         "$DOTFILES"/modules/cli-tools/files/lazygit.yml
         "$MOD"/files/ptyxis/rice.palette
         "$DOTFILES"/modules/gnome-extensions/files/sysmon-flair@pan.local/stylesheet.css
+        "$DOTFILES"/modules/gnome-extensions/files/sysmon-flair@pan.local/brackets-sm.svg
     )
 
     python3 - "$MOD/themes/$CURRENT.palette" "$MOD/themes/$TARGET.palette" "${FILES[@]}" <<'EOF'
@@ -82,11 +83,11 @@ mkdir -p "$HOME/.config/rice"
 cp "$MOD/themes/$TARGET.palette" "$HOME/.config/rice/palette"
 
 # sysmon-flair is copied, not linked (gnome-extensions module), so push the
-# recoloured stylesheet and toggle the extension to reload it.
+# recoloured stylesheet and brackets, and toggle the extension to reload it.
 SYSMON=sysmon-flair@pan.local
 SYSMON_DIR="$HOME/.local/share/gnome-shell/extensions/$SYSMON"
 if [ -d "$SYSMON_DIR" ]; then
-    cp "$DOTFILES/modules/gnome-extensions/files/$SYSMON/stylesheet.css" "$SYSMON_DIR/"
+    cp "$DOTFILES/modules/gnome-extensions/files/$SYSMON/"{stylesheet.css,brackets-sm.svg} "$SYSMON_DIR/"
     if gnome-extensions info "$SYSMON" 2>/dev/null | grep -q "Enabled: Yes"; then
         gnome-extensions disable "$SYSMON" && gnome-extensions enable "$SYSMON"
     fi
@@ -121,14 +122,14 @@ if has_schema $TB; then
 fi
 
 # Dock paints its background inline, so the shell CSS can't reach it.
-# Same fill and alpha as the conky cards (flat.lua CARD_ALPHA), square corners.
+# Same tint and alpha as the conky cards (flat.lua GLASS_ALPHA 0.72), round corners.
 DOCK=org.gnome.shell.extensions.$(distro_name dconf zorin-dash)
 if has_schema $DOCK; then
     gsettings set $DOCK custom-background-color true
     gsettings set $DOCK background-color "$(sed -n 's/^bg[[:space:]]\+//p' "$MOD/themes/$TARGET.palette")"
     gsettings set $DOCK transparency-mode 'FIXED'
-    gsettings set $DOCK background-opacity 0.78
-    gsettings set $DOCK force-straight-corner true
+    gsettings set $DOCK background-opacity 0.72
+    gsettings set $DOCK force-straight-corner false
 fi
 
 # Music pill (dock/panel media widget) also styles itself inline; it takes R,G,B.
@@ -150,6 +151,9 @@ if [ -d "$PILL_SCHEMAS" ]; then
 fi
 
 WP="$(setting wallpaper)"
+# The black hole backdrop (RICE_BACKDROP=ember) brings its own still, the
+# frame blackhole-live animates.
+[ "$(conf_get RICE_BACKDROP || true)" = ember ] && WP=image:ares-ember.jpg
 case "$WP" in
     image:*)
         uri="file://$HOME/.local/share/backgrounds/${WP#image:}"
@@ -234,13 +238,27 @@ for line in open(sys.argv[1]):
 r = roles
 conf = json.load(open(sys.argv[2]))
 conf["description"] = "Matches the desktop rice palette."
+# Every key Chrome themes accept; anything left out falls back to stock grey
+# (inactive tabs, toolbar text, new tab header), which reads as un-riced.
 conf["theme"]["colors"] = {
-    "frame": r["black"], "frame_inactive": r["bg"], "frame_incognito": r["black"],
-    "toolbar": r["bg"], "toolbar_button_icon": r["fg2"], "tab_text": r["fg"],
-    "tab_background_text": r["dim2"], "bookmark_text": r["fg2"],
+    "frame": r["black"], "frame_inactive": r["bg2"],
+    "frame_incognito": r["black"], "frame_incognito_inactive": r["bg2"],
+    "background_tab": r["black"], "background_tab_inactive": r["bg2"],
+    "background_tab_incognito": r["black"], "background_tab_incognito_inactive": r["bg2"],
+    "toolbar": r["bg"], "toolbar_text": r["fg"], "toolbar_button_icon": r["fg2"],
+    "tab_text": r["fg"], "tab_background_text": r["dim2"],
+    "tab_background_text_inactive": r["dim"],
+    "tab_background_text_incognito": r["dim2"],
+    "tab_background_text_incognito_inactive": r["dim"],
+    "bookmark_text": r["fg2"],
     "ntp_background": r["bg"], "ntp_text": r["fg"], "ntp_link": r["accent"],
-    "button_background": r["surface"], "omnibox_background": r["surface"], "omnibox_text": r["fg"],
+    "ntp_header": r["accent"], "ntp_section": r["card"],
+    "ntp_section_text": r["fg"], "ntp_section_link": r["accent"],
+    "button_background": r["surface"],
+    "omnibox_background": r["surface"], "omnibox_text": r["fg"],
 }
+conf["theme"]["tints"] = {"buttons": [-1, -1, -1]}
+conf["theme"]["properties"] = {"ntp_logo_alternate": 1}
 json.dump(conf, open(sys.argv[2], "w"), indent=2)
 PY
     rm -f "$CHROME_THEME/Cached Theme.pak"

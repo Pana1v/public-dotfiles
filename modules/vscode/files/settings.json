@@ -1,43 +1,16 @@
 {
-    "workbench.colorCustomizations": {
-        "terminal.background": "#00000000"
-    },
-    "workbench.settings.applyToAllProfiles": [
-        "workbench.colorCustomizations"
-    ],
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "workbench.colorTheme": "Interstellar",
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "javascript.updateImportsOnFileMove.enabled": "always",
     "claudeCode.preferredLocation": "panel",
-    "githubPullRequests.pushBranch": "always",
-    "files.watcherExclude": {
-        "**/.git/objects/**": true,
-        "**/.git/subtree-cache/**": true,
-        "**/node_modules/**": true,
-        "**/build/**": true,
-        "**/install/**": true,
-        "**/log/**": true,
-        "**/.venv/**": true,
-        "**/__pycache__/**": true,
-        "**/dist/**": true,
-        "**/.cache/**": true
-    },
-    "githubPullRequests.pullBranch": "never",
-    "remote.autoForwardPortsSource": "hybrid",
-    "diffEditor.hideUnchangedRegions.enabled": true,
-    "claudeCode.hideOnboarding": true,
-    "git.replaceTagsWhenPull": true,
-    "workbench.iconTheme": "catppuccin-mocha",
-    "workbench.startupEditor": "none",
-    "workbench.editorAssociations": {
-        "*.copilotmd": "vscode.markdown.preview.editor",
-        "*.MP4": "videoPreviewXD.videoPlayer"
-    },
-    "workbench.colorTheme": "Rice",
-    "editor.fontFamily": "'JetBrains Mono', 'Symbols Nerd Font Mono', monospace",
-    "editor.fontLigatures": true,
-    "editor.cursorSmoothCaretAnimation": "on",
-    "editor.cursorBlinking": "phase",
-    "terminal.integrated.fontFamily": "'JetBrains Mono', 'Symbols Nerd Font Mono'",
-    "terminal.integrated.cursorStyle": "line",
-    "security.promptForLocalFileProtocolHandling": false,
-    "security.promptForRemoteFileProtocolHandling": false,
-    "animations.Install-Method": "Apc Customize UI++"
+    "terminal.integrated.commandsToSkipShell": [
+        "kilo-code.new.agentManagerOpen",
+        "kilo-code.new.agentManager.showTerminal",
+        "kilo-code.new.agentManager.previousTerminal",
+        "kilo-code.new.agentManager.nextTerminal"
+    ],
+    "gitlens.graph.details.location": "auto"
 }

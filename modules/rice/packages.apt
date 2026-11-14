@@ -5,3 +5,4 @@ qalc     # rofi calc mode
 xclip    # rofi calc copies results
 qt5ct
 node-typescript make   # pop-shell is built from source (no noble package)
+python3-numpy   # tools/blackhole.py (ember lock-screen video)

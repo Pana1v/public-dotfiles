@@ -1,13 +1,11 @@
--- Right instrument wing: one glass shape holding several widgets.
+-- Right wing: a column of separate cards, numbered on from the left wing.
 local HOME = os.getenv("HOME")
 local CONKY = HOME .. "/.config/conky/"
 local flat = dofile(CONKY .. "Common/flat.lua")
 
 -- The widgets below see WING and hand over update/draw instead of running
--- themselves; the wing frame draws the glass, so they skip their own cards.
+-- themselves; each draws its own card inside the column.
 WING = true
-flat.suppress_card = true
-flat.accent_icons = true
 
 local wing = dofile(CONKY .. "Common/wing.lua")
 local weather  = dofile(CONKY .. "Weather/weather.lua")
@@ -29,9 +27,7 @@ if tasks then
 end
 
 local function draw(cr, w, h)
-    wing.frame(cr, "right", w, h)
-    wing.captions(cr, "right", w, h, "world", "gnome 50")
-    wing.layout(cr, w, h, sections)
+    wing.layout(cr, w, h, sections, 7)
 end
 
 function conky_main()

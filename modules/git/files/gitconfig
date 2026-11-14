@@ -13,3 +13,9 @@
 	# name + email: private repo, or the example on a public clone
 	path = ~/.config/git/identity.gitconfig
 	path = ~/.config/git/delta.gitconfig
+[user]
+	name = Pana1v
+	email = praajarpit@gmail.com
+[safe]
+	directory = /home/panav/happy/Bots/coding_agent/repo
+	directory = /home/panav/happy/Bots/coding_agent/main_repo

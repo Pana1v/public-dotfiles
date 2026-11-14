@@ -180,6 +180,18 @@ local function draw(cr, w, h)
         y, shown = y + ROW_H, shown + 1
     end
 
+    -- Spare room at the bottom: today's date in big dot-matrix type.
+    local DATE_H = 28
+    if limit - y >= DATE_H + 40 then
+        local day = os.date("%a"):upper()
+        local num = tostring(tonumber(os.date("%d")))
+        local base = h - 22
+        local x = PAD + 2 + flat.dm(cr, PAD + 2, base, day, DATE_H, theme.faint, 0.05) + 16
+        flat.dm(cr, x, base, num, DATE_H, theme.accent, 0.08)
+        flat.font(cr, "Space Mono", 10.5)
+        flat.text_right(cr, w - PAD - 2, base, os.date("%B"):upper() .. "  /  WEEK " .. os.date("%V"), theme.faint)
+    end
+
     if shown < #list then
         local more = string.format("+%d more", #list - shown)
         flat.font(cr, "JetBrains Mono", 10)

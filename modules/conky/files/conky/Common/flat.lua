@@ -14,16 +14,22 @@ if rawget(_G, "RICE_FLAT") then return RICE_FLAT end
 
 local M = {}
 
+-- Nothing-style layout in the Ares palette: near-black red-tinted cards,
+-- dot-matrix type, red for everything that is lit. These are palette hexes,
+-- so switch-theme.sh recolours them with the rest of the rice.
 M.theme = {
     bg     = "#0a0506",
-    glass  = "#1a0b0d",   -- glass panel tint: a step above bg so it reads over a black sky
-    bar_bg = "#2a1013",
+    card   = "#120809",
+    bar_bg = "#4a161b",   -- unlit dots
+    grid   = "#1a0b0d",   -- dot-matrix background grid
     text   = "#ffe9eb",
     red    = "#ff3b1f",
-    green  = "#52e5ff",
+    green  = "#ffe9eb",   -- "good" is plain fg, colour is kept for state
     yellow = "#ffc14d",
-    dim    = "#b86a72",
-    faint  = "#8a3a44",
+    -- Secondary tones stay light: over a red wallpaper through a red tint,
+    -- mid pinks vanish. Hierarchy comes from size and weight instead.
+    dim    = "#fff4f5",   -- secondary text, near white
+    faint  = "#ffa3b0",   -- tertiary text (palette purple2, a light pink)
 }
 -- Highlight colour for chrome (section icons, dividers, glow). switch-theme.sh
 -- rewrites this line from the palette's @conky_accent (green for most palettes).
@@ -47,19 +53,20 @@ function M.profile()
     return value
 end
 
--- Set by the wing windows: their frame draws the glass, so embedded widgets
--- skip their own card, and section icons take the accent colour.
+-- suppress_card: a host window draws the background itself (the ops deck).
+-- section: set by the wing layout before each card, shown as "01", "02" ...
 M.suppress_card = false
 M.accent_icons = false
+M.section = nil
 
 M.PAD = 16
-M.RULE_Y = 38          -- header hairline; content starts below ~46
-local CARD_ALPHA = 0.90   -- frosted glass, 90% opaque
-local BRACKET = 10     -- corner bracket arm length
-local BRACKET_W = 1.5
-local TITLE_TRACK = 2  -- extra px between header letters
+M.RULE_Y = 38          -- header baseline area; content starts below ~46
+-- Translucent tinted cards: plain alpha, no frost, sheen or blur behind.
+M.GLASS_ALPHA = 0.84
+M.RADIUS = 18
+local TITLE_TRACK = 1  -- extra px between header letters
 local STATUS_TRACK = 0.5
-local TICK_W, TICK_GAP = 2, 2
+local DOT_PITCH = 5    -- dotted bars: centre to centre
 
 local function rgb(colour, alpha)
     colour = tonumber((colour:gsub("#", "0x")))
@@ -109,71 +116,24 @@ function M.rounded_rect(cr, x, y, w, h, r)
     cairo_close_path(cr)
 end
 
--- HUD card: translucent "frosted glass" panel with two slanted corners
--- (top right, bottom left) and brackets that follow the outline.
---       ┌─────────╲
---       │          ╲
---        ╲          │
---         ╲─────────┘
--- Real blur comes from Blur My Shell when the compositor allows it; the
--- sheen, hairline edge and low alpha carry the look when it does not.
-local CUT = 16
-
-local function card_path(cr, w, h, cut)
-    cairo_move_to(cr, 0, 0)
-    cairo_line_to(cr, w - cut, 0)
-    cairo_line_to(cr, w, cut)
-    cairo_line_to(cr, w, h)
-    cairo_line_to(cr, cut, h)
-    cairo_line_to(cr, 0, h - cut)
-    cairo_close_path(cr)
-end
-
+-- Card: translucent rounded tile, no shadow, frost or sheen; a hairline
+-- top bevel is the only highlight.
 function M.card(cr, w, h)
     if M.suppress_card then return end
-    local cut = math.min(CUT, w / 4, h / 4)
-
-    card_path(cr, w, h, cut)
-    M.set_color(cr, M.theme.glass, CARD_ALPHA)
-    cairo_fill_preserve(cr)
-
-    -- Frost: light falls from the top left and fades across the panel.
-    local sheen = cairo_pattern_create_linear(0, 0, w * 0.7, h)
-    cairo_pattern_add_color_stop_rgba(sheen, 0, 1, 1, 1, 0.075)
-    cairo_pattern_add_color_stop_rgba(sheen, 0.45, 1, 1, 1, 0.02)
-    cairo_pattern_add_color_stop_rgba(sheen, 1, 1, 1, 1, 0.0)
-    cairo_set_source(cr, sheen)
+    local r = math.min(M.RADIUS, w / 4, h / 4)
+    M.rounded_rect(cr, 0, 0, w, h, r)
+    M.set_color(cr, M.theme.card, M.GLASS_ALPHA)
     cairo_fill(cr)
-    cairo_pattern_destroy(sheen)
-
-    -- Glass edge: a faint light hairline just inside the outline.
-    local i = BRACKET_W / 2
-    cairo_save(cr)
-    cairo_translate(cr, i, i)
-    card_path(cr, w - 2 * i, h - 2 * i, cut)
-    cairo_restore(cr)
-    cairo_set_source_rgba(cr, 1, 1, 1, 0.07)
+    -- top bevel: light catching the upper edge only
+    local bevel = cairo_pattern_create_linear(0, 0, 0, h)
+    cairo_pattern_add_color_stop_rgba(bevel, 0, 1, 1, 1, 0.10)
+    cairo_pattern_add_color_stop_rgba(bevel, 0.15, 1, 1, 1, 0.025)
+    cairo_pattern_add_color_stop_rgba(bevel, 1, 1, 1, 1, 0.015)
+    M.rounded_rect(cr, 0.5, 0.5, w - 1, h - 1, r)
+    cairo_set_source(cr, bevel)
     cairo_set_line_width(cr, 1)
     cairo_stroke(cr)
-
-    -- Brackets: plain L at the square corners, bent around the slanted ones.
-    M.set_color(cr, M.theme.dim)
-    cairo_set_line_width(cr, BRACKET_W)
-    cairo_move_to(cr, i, i + BRACKET)
-    cairo_line_to(cr, i, i)
-    cairo_line_to(cr, i + BRACKET, i)
-    cairo_move_to(cr, w - i, h - i - BRACKET)
-    cairo_line_to(cr, w - i, h - i)
-    cairo_line_to(cr, w - i - BRACKET, h - i)
-    cairo_move_to(cr, w - cut - BRACKET, i)
-    cairo_line_to(cr, w - cut, i)
-    cairo_line_to(cr, w - i, cut)
-    cairo_line_to(cr, w - i, cut + BRACKET)
-    cairo_move_to(cr, i, h - cut - BRACKET)
-    cairo_line_to(cr, i, h - cut)
-    cairo_line_to(cr, cut, h - i)
-    cairo_line_to(cr, cut + BRACKET, h - i)
-    cairo_stroke(cr)
+    cairo_pattern_destroy(bevel)
 end
 
 -- Elysium modules place cards with s() offsets instead of cairo_scale;
@@ -195,11 +155,35 @@ function M.ticks_at(cr, x, y, w, h, frac, colour)
     cairo_restore(cr)
 end
 
--- face: "Exo 2" body, "JetBrains Mono" numbers, "Orbitron" titles
+-- Widgets still ask for the old faces; everything maps onto Space Mono
+-- (labels, body) at a size that keeps their layouts. Big numbers use the
+-- drawn dot-matrix type below (M.dm).
+local FACE = {
+    ["Exo 2"] = { "Space Mono", 0.95 },
+    ["Orbitron"] = { "Space Mono", 1.05 },
+    ["JetBrains Mono"] = { "Space Mono", 1.0 },
+}
 function M.font(cr, face, size, bold)
+    local f = FACE[face]
+    if f then face, size = f[1], size * f[2] end
     local weight = bold and CAIRO_FONT_WEIGHT_BOLD or CAIRO_FONT_WEIGHT_NORMAL
     cairo_select_font_face(cr, face, CAIRO_FONT_SLANT_NORMAL, weight)
     cairo_set_font_size(cr, size)
+end
+
+-- Dot-matrix numerals and caps (Common/dotmatrix.lua), drawn as real dots.
+-- height is the cap height; the baseline is y.
+local dm = dofile(os.getenv("HOME") .. "/.config/conky/Common/dotmatrix.lua")
+function M.dm_width(s, height) return dm.width(s, height) end
+function M.dm(cr, x, y, s, height, colour, ghost)
+    local r, g, b = rgb(colour, 1)
+    dm.draw(cr, x, y, s, height, r, g, b, ghost)
+    return dm.width(s, height)
+end
+
+function M.dot(cr, x, y, r)
+    cairo_new_sub_path(cr)
+    cairo_arc(cr, x, y, r, 0, 2 * math.pi)
 end
 
 local ext = cairo_text_extents_t:create()
@@ -281,49 +265,56 @@ function M.spaced(cr, x, y, s, colour, track)
     end
 end
 
--- Header row shared by every panel, all caps:
---   FLEET                2/7 ONLINE
---   ─────────────────────────────── RULE_Y
+-- Header row shared by every panel, small mono caps, no rule:
+--   01  SYSTEMS                     HOSTNAME
 -- Status is trimmed to the space the title leaves. Leaves the mono font
 -- selected, so callers must set their own font afterwards.
 function M.header(cr, w, title, status, status_colour, icon)
     title = title:upper()
-    local x0 = M.PAD
-    if icon then x0 = x0 + M.icon(cr, M.PAD, 29, icon, 14, M.accent_icons and M.theme.accent or M.theme.dim) + 8 end
-    M.font(cr, "Orbitron", 11, true)
+    local x0 = M.PAD + 2
+    M.font(cr, "Space Mono", 12)
+    if M.section then
+        local no = string.format("%02d", M.section)
+        M.text(cr, x0, 28, no, M.theme.accent)
+        x0 = x0 + M.width(cr, no) + 9
+    end
+    M.font(cr, "Space Mono", 12, true)
     M.spaced(cr, x0, 28, title, M.theme.text, TITLE_TRACK)
     local title_w = M.spaced_width(cr, title, TITLE_TRACK) + (x0 - M.PAD)
-    M.hline(cr, M.PAD, w - M.PAD, M.RULE_Y)
     if not status or status == "" then return end
 
     status = status:upper()
-    M.font(cr, "JetBrains Mono", 10)
+    M.font(cr, "Space Mono", 10)
     local max_w = w - 2 * M.PAD - title_w - 16
     while utf8.len(status) > 1 and M.spaced_width(cr, status, STATUS_TRACK) > max_w do
         status = status:sub(1, utf8.offset(status, -1) - 1)
     end
-    local x = w - M.PAD - M.spaced_width(cr, status, STATUS_TRACK)
+    local x = w - M.PAD - 2 - M.spaced_width(cr, status, STATUS_TRACK)
     M.spaced(cr, x, 28, status, status_colour or M.theme.faint, STATUS_TRACK)
 end
 
--- Segmented bar: whole ticks only, lit share = frac.
---   ||||||||::::::::::::
+-- Dotted bar: a row of round dots, lit share = frac, the last lit dot
+-- brighter like a cursor.   o o o o o o . . . . .
 function M.ticks(cr, x, y, w, h, frac, colour)
-    local n = math.floor((w + TICK_GAP) / (TICK_W + TICK_GAP))
+    local n = math.floor(w / DOT_PITCH)
     local lit = math.floor(n * math.max(0, math.min(frac, 1)) + 0.5)
-    for i = 0, n - 1 do
-        M.set_color(cr, i < lit and colour or M.theme.bar_bg)
-        cairo_rectangle(cr, x + i * (TICK_W + TICK_GAP), y, TICK_W, h)
-        cairo_fill(cr)
-    end
+    local cy = y + h / 2
+    local r = math.min(1.7, h / 2 + 0.4)
+    -- plain white bars light in the accent; warning colours keep their own
+    if colour == M.theme.text then colour = M.theme.accent end
+    M.set_color(cr, M.theme.bar_bg)
+    for i = lit, n - 1 do M.dot(cr, x + i * DOT_PITCH + DOT_PITCH / 2, cy, r * 0.8) end
+    cairo_fill(cr)
+    M.set_color(cr, colour)
+    for i = 0, lit - 1 do M.dot(cr, x + i * DOT_PITCH + DOT_PITCH / 2, cy, r) end
+    cairo_fill(cr)
 end
 
+-- Dotted hairline.
 function M.hline(cr, x1, x2, y)
     M.set_color(cr, M.theme.bar_bg)
-    cairo_set_line_width(cr, 1)
-    cairo_move_to(cr, x1, y + 0.5)
-    cairo_line_to(cr, x2, y + 0.5)
-    cairo_stroke(cr)
+    for x = x1, x2, 4 do M.dot(cr, x, y + 0.5, 0.7) end
+    cairo_fill(cr)
 end
 
 -- Split exec output into rows of tab-separated fields.
@@ -385,12 +376,15 @@ local function render_preview(tag, draw)
     if not w then return end
     w, h = tonumber(w), tonumber(h)
     local pad = 24
+    -- w, h are window pixels, like the real window; drawing scales by SCALE
     local cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, w + 2 * pad, h + 2 * pad)
     local cr = cairo_create(cs)
-    M.set_color(cr, "#101114")
-    cairo_paint(cr)
+    -- transparent unless asked for a mock desktop colour
+    local bg = os.getenv("CONKY_PREVIEW_BG")
+    if bg then M.set_color(cr, bg) cairo_paint(cr) end
     cairo_translate(cr, pad, pad)
-    local ok, err = pcall(draw, cr, w, h)
+    cairo_scale(cr, M.SCALE, M.SCALE)
+    local ok, err = pcall(draw, cr, w / M.SCALE, h / M.SCALE)
     if not ok then io.stderr:write("[" .. tag .. "] draw error: " .. tostring(err) .. "\n") end
     cairo_surface_write_to_png(cs, path)
     cairo_destroy(cr)

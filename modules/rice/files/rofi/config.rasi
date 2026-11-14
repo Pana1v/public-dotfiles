@@ -1,7 +1,7 @@
 configuration {
     /* Script modes live in scripts/, linked to ~/.config/rofi/scripts */
     modes: "drun,windows:~/.config/rofi/scripts/windows.py,run,calc:~/.config/rofi/scripts/calc.sh,ssh,filebrowser,cheatsheet:~/.config/rofi/scripts/keys.sh,power:~/.config/rofi/scripts/power.sh";
-    font: "Exo 2 11";
+    font: "Space Mono 10";
     show-icons: true;
     icon-theme: "Rice";
     terminal: "terminator";

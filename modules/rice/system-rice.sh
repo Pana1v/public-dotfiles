@@ -10,7 +10,8 @@
 #   2. Plymouth: the "Ares Grid" splash (moving grid) instead of the vendor logo.
 #      Steps 2-4 recolour their assets for the machine's palette (RICE_THEME).
 #   3. GDM: no Ubuntu logo, grid background, lock-screen styling, X avatar.
-#   4. GRUB: new grid background (no stray L line), menu at the panel's 1920x1200.
+#   4. GRUB: grid background (no stray L line), menu at the panel's 1920x1200.
+#   Steps 3-4 use the black hole instead of the grid when RICE_BACKDROP=ember.
 #
 # Step 1 rewrites firmware boot entries for one specific HP laptop, so it only
 # runs with --firmware. Steps 2-4 are safe on any machine.
@@ -40,6 +41,16 @@ echo "backups in $BK"
 THEME="$(sed -n "s/^[[:space:]]*RICE_THEME[[:space:]]*=[[:space:]]*[\"']\?\([A-Za-z0-9_-]*\).*/\1/p" \
     "$USER_HOME/.config/dotfiles/local.env" 2>/dev/null | tail -1)"
 THEME="${THEME:-$(cat "$HERE/current-theme")}"
+# Backdrop: RICE_BACKDROP in local.env, "grid" (default) or "ember" (black hole).
+BACKDROP="$(sed -n "s/^[[:space:]]*RICE_BACKDROP[[:space:]]*=[[:space:]]*[\"']\?\([a-z]*\).*/\1/p" \
+    "$USER_HOME/.config/dotfiles/local.env" 2>/dev/null | tail -1)"
+BACKDROP="${BACKDROP:-grid}"
+if [ "$BACKDROP" = ember ]; then
+    LIVE=blackhole-live@pan.local; GDM_BG=grub/ember.png
+else
+    LIVE=grid-live@pan.local; GDM_BG=gdm/grid.png
+fi
+echo "backdrop: $BACKDROP"
 [ -f "$HERE/themes/$THEME.palette" ] || { echo "no palette themes/$THEME.palette" >&2; exit 1; }
 ASSETS="$(mktemp -d)"
 WORK=""
@@ -112,7 +123,7 @@ done
 for css in "$WORK"/gdm.css "$WORK"/*/gnome-shell*.css "$WORK"/gnome-shell*.css; do
     [ -f "$css" ] && cat "$F/gdm/rice.css" >> "$css"
 done
-cp "$F/gdm/grid.png" "$WORK/rice-grid.png"
+cp "$F/$GDM_BG" "$WORK/rice-grid.png"
 {
     echo '<?xml version="1.0" encoding="UTF-8"?><gresources><gresource prefix="/org/gnome/shell/theme">'
     (cd "$WORK" && find . -type f ! -name '*.xml' | sed 's|^\./|  <file>|; s|$|</file>|')
@@ -128,20 +139,20 @@ echo "gdm: Rice theme installed"
 
 # No Ubuntu logo on the greeter. Ubuntu's gdm profile reads one compiled file
 # built from /usr/share/gdm/dconf (which links /etc/gdm3/greeter.dconf-defaults).
-# The greeter also runs grid-live (system-wide copy), so the login screen has
-# the same moving grid as the splash before it and the desktop after it.
-cat > /usr/share/gdm/dconf/95-rice <<'EOF'
+# The greeter also runs the live backdrop (system-wide copy of grid-live or
+# blackhole-live), so the login screen moves like the desktop after it.
+cat > /usr/share/gdm/dconf/95-rice <<EOF
 [org/gnome/login-screen]
 logo=''
 
 [org/gnome/shell]
-enabled-extensions=['grid-live@pan.local']
+enabled-extensions=['$LIVE']
 EOF
-EXT=/usr/share/gnome-shell/extensions/grid-live@pan.local
-rm -rf "$EXT"
-cp -r "$HERE/../gnome-extensions/files/grid-live@pan.local" "$EXT"
+rm -rf /usr/share/gnome-shell/extensions/{grid,blackhole}-live@pan.local
+EXT=/usr/share/gnome-shell/extensions/$LIVE
+cp -r "$HERE/../gnome-extensions/files/$LIVE" "$EXT"
 chmod -R a+rX "$EXT"
-echo "gdm: grid-live enabled on the login screen"
+echo "gdm: $LIVE enabled on the login screen"
 dconf compile /var/lib/gdm3/greeter-dconf-defaults /usr/share/gdm/dconf
 
 # Avatar for the greeter list.
@@ -156,6 +167,7 @@ fi
 {
     mkdir -p /boot/grub/themes/ares
     cp "$F"/grub/ares/* /boot/grub/themes/ares/
+    [ "$BACKDROP" = ember ] && cp "$F/grub/ember.png" /boot/grub/themes/ares/background.png
     cp /etc/default/grub "$BK/grub.default"
     set_grub() {  # set_grub KEY VALUE: replace or append in /etc/default/grub
         if grep -q "^#\?$1=" /etc/default/grub; then
@@ -180,4 +192,4 @@ echo
 echo "done. Reboot to see the splash and greeter."
 echo "undo: update-alternatives --auto default.plymouth; update-alternatives --auto gdm-theme.gresource;"
 echo "      cp $BK/grub.default /etc/default/grub && update-grub;"
-echo "      rm -r /usr/share/gdm/dconf/95-rice /usr/share/gnome-shell/extensions/grid-live@pan.local; dconf compile /var/lib/gdm3/greeter-dconf-defaults /usr/share/gdm/dconf; update-initramfs -u"
+echo "      rm -r /usr/share/gdm/dconf/95-rice /usr/share/gnome-shell/extensions/$LIVE; dconf compile /var/lib/gdm3/greeter-dconf-defaults /usr/share/gdm/dconf; update-initramfs -u"

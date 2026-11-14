@@ -32,3 +32,4 @@ zorin-window-move-effect@zorinos.com
 zorin-dash@zorinos.com
 blur-my-shell@aunetx
 term-landscape@pan.local
+show-desktop@pan.local

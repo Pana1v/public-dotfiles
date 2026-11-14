@@ -4,15 +4,23 @@
 }
 
 .sysmon-panel {
-  spacing: 8px;
+  spacing: 10px;
+}
+
+/* Sits after the workspace cells in the left box. A thin rule in the
+   palette's bright_black splits "where am I" from "how is the machine". */
+.sysmon-panel-root {
+  border-left: 1px solid #5e1f25;
+  padding-left: 10px;
+  margin-left: 2px;
 }
 
 /* The graph and the number share this cell via BinLayout, so the chip needs a
    frame of its own to read as one instrument rather than two loose elements. */
 .sysmon-chip {
-  border-radius: 0;
-  background-color: #1a0b0d;
-  border-image: url("brackets-sm.svg") 6;
+  border-radius: 99px;
+  background-color: #1a0b0db8;
+  border: 1px solid #2a1013;
 }
 
 /* Tabular figures keep each digit the same width, so a value ticking
@@ -22,7 +30,7 @@
   font-weight: 700;
   font-feature-settings: "tnum";
   padding-right: 4px;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
 }
 
 /* --- dropdown --- */
@@ -44,16 +52,16 @@
 }
 
 .sysmon-section-title {
-  font-family: "Orbitron", sans-serif;
+  font-family: "Space Mono", sans-serif;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  color: #b86a72;
+  color: #ff1f3d;
 }
 
 .sysmon-section-value {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
   font-size: 12px;
   font-feature-settings: "tnum";
   font-weight: 600;
@@ -67,14 +75,14 @@
   font-weight: 500;
   text-transform: none;
   letter-spacing: 0;
-  font-family: "Exo 2", sans-serif;
+  font-family: "Space Mono", monospace;
   letter-spacing: 0;
   font-size: 12px;
   color: #f2c4c8;
 }
 
 .sysmon-detail-graph {
-  border-radius: 0;
+  border-radius: 12px;
   background-color: #050203;
   border: 1px solid #2a1013;
 }
@@ -98,7 +106,7 @@
   width: 16px;
   font-size: 9px;
   font-feature-settings: "tnum";
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
   color: #8a3a44;
   text-align: right;
 }
@@ -109,13 +117,13 @@
 }
 
 .sysmon-process-name {
-  font-family: "Exo 2", sans-serif;
+  font-family: "Space Mono", monospace;
   font-size: 12px;
   color: #ffe9eb;
 }
 
 .sysmon-process-metric {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
   font-size: 12px;
   font-feature-settings: "tnum";
   font-weight: 600;
@@ -128,14 +136,14 @@
 
 .sysmon-uptime {
   font-size: 11px;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Space Mono", monospace;
   color: #8a3a44;
 }
 
 .sysmon-launch {
   font-size: 11px;
   padding: 4px 12px;
-  border-radius: 0;
+  border-radius: 99px;
   background-color: #2a1013;
   color: #ffe9eb;
   transition-duration: 120ms;
@@ -166,11 +174,13 @@
   spacing: 3px;
 }
 
-/* Dim so the tag identifies the chip without competing with its value. */
+/* Same voice as the workspace cells and dropdown headers: Space Mono caps,
+   wide tracking, dim2. Dim so it names the chip without competing with the
+   value. */
 .sysmon-chip-tag {
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 700;
-  font-family: "Orbitron", sans-serif;
+  font-family: "Space Mono", sans-serif;
   letter-spacing: 1px;
   color: #b86a72;
 }
