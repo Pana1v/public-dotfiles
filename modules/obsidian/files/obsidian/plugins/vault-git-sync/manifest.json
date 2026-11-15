@@ -1,0 +1,9 @@
+{
+	"id": "vault-git-sync",
+	"name": "Vault Git Sync",
+	"version": "1.0.0",
+	"minAppVersion": "1.5.0",
+	"description": "Commits, pulls and pushes the vault with the host git and gh CLI login. Never prompts for credentials.",
+	"author": "Pana1v",
+	"isDesktopOnly": true
+}

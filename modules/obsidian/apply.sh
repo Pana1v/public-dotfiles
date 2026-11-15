@@ -19,3 +19,7 @@ run mkdir -p "$VAULT"
 # Plugin data.json (settings, some with API keys) is never shipped; each
 # plugin starts on defaults until configured.
 copy_tree "$MOD/files/obsidian" "$VAULT/.obsidian" --ignore-existing
+
+# vault-git-sync runs the host git (with its gh credential helper) through
+# flatpak-spawn, which needs access to the Flatpak portal.
+run flatpak override --user --talk-name=org.freedesktop.Flatpak md.obsidian.Obsidian

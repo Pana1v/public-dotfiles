@@ -1,9 +1,0 @@
-{
-    "id": "obsidian-git-gh-auth",
-    "name": "GitHub Auth for Git",
-    "version": "1.0.0",
-    "minAppVersion": "1.5.0",
-    "description": "Authenticates the Git plugin against GitHub using the gh CLI token, so no personal access token has to be pasted into Obsidian.",
-    "author": "Pana1v",
-    "isDesktopOnly": true
-}
