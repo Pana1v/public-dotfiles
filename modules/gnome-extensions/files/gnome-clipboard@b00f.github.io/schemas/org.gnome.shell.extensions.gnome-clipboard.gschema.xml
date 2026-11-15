@@ -8,11 +8,6 @@
       <summary>Maximum size of history</summary>
     </key>
 
-    <key type="u" name="history-sort">
-      <default>0</default>
-      <summary>Sort history by</summary>
-    </key>
-
     <key type="b" name="clipboard-timer">
       <default>false</default>
       <summary>Read clipboard by timer</summary>
@@ -33,9 +28,16 @@
       <summary>Show notifications</summary>
     </key>
 
-    <key type="b" name="private-mode">
-      <default>false</default>
-      <summary>Private mode</summary>
+    <key type="b" name="store-images">
+      <default>true</default>
+      <summary>Store images</summary>
+      <description>Whether images copied to the clipboard are saved in the history.</description>
+    </key>
+
+    <key type="u" name="max-image-size">
+      <default>10</default>
+      <summary>Maximum image size (MB)</summary>
+      <description>Images larger than this size, in megabytes, are ignored.</description>
     </key>
 
     <key type="as" name="blacklist">
@@ -55,12 +57,6 @@
       <description>Keyboard shortcut to clear all non-pinned clipboard items.</description>
     </key>
 
-    <key type="as" name="shortcut-private-mode">
-      <default>[]</default>
-      <summary>Shortcut to toggle private mode</summary>
-      <description>Keyboard shortcut to enable/disable private mode (stopping clipboard monitoring).</description>
-    </key>
-
     <key type="as" name="shortcut-next">
       <default>[]</default>
       <summary>Shortcut to select next item</summary>
@@ -73,8 +69,14 @@
       <description>Keyboard shortcut to cycle to the previous item in history without opening the menu.</description>
     </key>
 
+    <key type="as" name="shortcut-capture">
+      <default>[]</default>
+      <summary>Shortcut to toggle capture</summary>
+      <description>Keyboard shortcut to pause and resume capturing clipboard items.</description>
+    </key>
+
     <key type="u" name="log-level">
-      <default>3</default>
+      <default>2</default>
       <summary>
           Derive some log4j level/order
           0 - OFF

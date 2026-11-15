@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.clip-deck" path="/org/gnome/shell/extensions/clip-deck/">
+    <key name="toggle" type="as">
+      <default><![CDATA[['<Super>v']]]></default>
+      <summary>Open or close the deck</summary>
+    </key>
+    <key name="history-size" type="i">
+      <default>300</default>
+      <summary>Unpinned clips to keep</summary>
+    </key>
+    <key name="max-image-mb" type="i">
+      <default>25</default>
+      <summary>Largest image to keep, in MB</summary>
+    </key>
+  </schema>
+</schemalist>

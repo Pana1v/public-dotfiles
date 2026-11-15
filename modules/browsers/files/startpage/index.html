@@ -28,26 +28,16 @@
   }
   main { width: min(720px, 92vw); display: grid; gap: 24px; }
 
-  .hud { position: relative; background: var(--bg2); padding: 16px 20px; }
-  /* four corner brackets, 10px arms, same as the conky cards */
+  /* Same card as the shell popups: translucent, 18px corners, hairline edge */
   .hud {
-    --arm: 10px; --w: 1.5px;
-    background-image:
-      linear-gradient(var(--dim2), var(--dim2)), linear-gradient(var(--dim2), var(--dim2)),
-      linear-gradient(var(--dim2), var(--dim2)), linear-gradient(var(--dim2), var(--dim2)),
-      linear-gradient(var(--dim2), var(--dim2)), linear-gradient(var(--dim2), var(--dim2)),
-      linear-gradient(var(--dim2), var(--dim2)), linear-gradient(var(--dim2), var(--dim2));
-    background-repeat: no-repeat;
-    background-size:
-      var(--arm) var(--w), var(--w) var(--arm), var(--arm) var(--w), var(--w) var(--arm),
-      var(--arm) var(--w), var(--w) var(--arm), var(--arm) var(--w), var(--w) var(--arm);
-    background-position:
-      0 0, 0 0, 100% 0, 100% 0, 0 100%, 0 100%, 100% 100%, 100% 100%;
+    position: relative; padding: 16px 20px;
+    background: color-mix(in srgb, var(--bg2) 90%, transparent);
+    border: 1px solid var(--surface); border-radius: 18px;
   }
 
   .head { display: flex; justify-content: space-between; align-items: baseline;
           border-bottom: 1px solid var(--surface); padding-bottom: 12px; margin-bottom: 18px; }
-  .title { font: 700 11px Orbitron, sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+  .title { font: 700 11px "Space Mono", "JetBrains Mono", monospace; letter-spacing: 1px; text-transform: uppercase; color: var(--accent, var(--fg)); }
   .status { color: var(--dim); letter-spacing: .5px; text-transform: uppercase; font-size: 11px; }
 
   .clock { font-feature-settings: "tnum"; font-size: 64px; font-weight: 300; letter-spacing: -2px; line-height: 1; }
@@ -66,13 +56,13 @@
   .links a {
     display: flex; justify-content: space-between; align-items: center;
     padding: 8px 16px; background: var(--cell); color: var(--fg);
-    text-decoration: none; border-left: 2px solid var(--surface);
+    text-decoration: none; border: 1px solid var(--surface); border-radius: 12px;
     transition: border-color 120ms linear, background 120ms linear;
   }
-  .links a:hover, .links a:focus-visible { border-color: var(--fg); background: var(--surface); outline: 0; }
+  .links a:hover, .links a:focus-visible { border-color: var(--accent, var(--fg)); background: var(--surface); outline: 0; }
   .links kbd {
     font: inherit; font-size: 11px; color: var(--dim2);
-    border: 1px solid var(--surface); padding: 0 6px;
+    border: 1px solid var(--surface); border-radius: 99px; padding: 0 6px;
   }
   @media (max-width: 560px) { .links { grid-template-columns: repeat(2, 1fr); } .clock { font-size: 48px; } }
 </style>

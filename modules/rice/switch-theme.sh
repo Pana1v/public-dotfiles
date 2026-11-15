@@ -44,6 +44,18 @@ if [ "$TARGET" != "$CURRENT" ]; then
         "$MOD"/files/ptyxis/rice.palette
         "$DOTFILES"/modules/gnome-extensions/files/sysmon-flair@pan.local/stylesheet.css
         "$DOTFILES"/modules/gnome-extensions/files/sysmon-flair@pan.local/brackets-sm.svg
+        "$DOTFILES"/modules/gnome-extensions/files/clip-deck@pan.local/stylesheet.css
+        "$DOTFILES"/modules/cli-tools/files/yazi/theme.toml
+        "$DOTFILES"/modules/cli-tools/files/bat/themes/Ares.tmTheme
+        "$DOTFILES"/modules/cli-tools/files/delta.gitconfig
+        "$DOTFILES"/modules/cli-tools/files/glow/ares.json
+        "$DOTFILES"/modules/cli-tools/files/atuin/themes/ares.toml
+        "$DOTFILES"/modules/cli-tools/files/eza/theme.yml
+        "$DOTFILES"/modules/cli-tools/files/cli-tools.bash
+        "$MOD"/files/mpv/mpv.conf
+        "$MOD"/files/mpv/script-opts/osc.conf
+        "$MOD"/files/mpv/script-opts/console.conf
+        "$MOD"/files/mpv/script-opts/context_menu.conf
     )
 
     python3 - "$MOD/themes/$CURRENT.palette" "$MOD/themes/$TARGET.palette" "${FILES[@]}" <<'EOF'
@@ -76,6 +88,9 @@ EOF
 fi
 
 echo "$TARGET" > "$MOD/current-theme"
+
+# bat (and delta, yazi previews) read a compiled cache, not the tmTheme.
+command -v bat >/dev/null && bat cache --build >/dev/null || true
 
 # Runtime copy for things that read colours live (sysmon-flair's load ramp,
 # top bar line and window strip). They watch this file, so no re-login.

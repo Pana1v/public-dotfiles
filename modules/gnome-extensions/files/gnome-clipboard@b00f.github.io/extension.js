@@ -3,6 +3,12 @@ import Meta from 'gi://Meta';
 import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as ClipboardPanel from './clipboardPanel.js';
+import * as ClipboardItemImage from './clipboardItemImage.js';
+import * as ActionBar from './actionBar.js';
+import * as ConfirmDialog from './confirmDialog.js';
+import * as HistoryMenu from './historyMenu.js';
+import * as MenuItem from './menuItem.js';
+import * as SearchBox from './searchBox.js';
 import * as log from './log.js';
 import * as Settings from './settings.js';
 export default class GnomeClipboardExtension extends Extension {
@@ -11,7 +17,17 @@ export default class GnomeClipboardExtension extends Extension {
         log.info(`enabling...`);
         log.init(this.getSettings(Settings.SCHEMA_ID));
         if (!this._panel) {
-            ClipboardPanel.init(this.gettext.bind(this));
+            const gettext = this.gettext.bind(this);
+            for (const mod of [
+                ClipboardPanel,
+                ClipboardItemImage,
+                ActionBar,
+                ConfirmDialog,
+                HistoryMenu,
+                MenuItem,
+                SearchBox,
+            ])
+                mod.init(gettext);
             this._panel = new ClipboardPanel.ClipboardPanel(this.getSettings(Settings.SCHEMA_ID), this.gettext.bind(this), this.uuid, () => this.openPreferences());
             Main.panel.addToStatusArea(this.uuid, this._panel);
             if (this._panel)
@@ -38,10 +54,6 @@ export default class GnomeClipboardExtension extends Extension {
             if (this._panel)
                 this._panel.clearHistory();
         });
-        wm.addKeybinding(Settings.SHORTCUT_PRIVATE_MODE, settings, Meta.KeyBindingFlags.NONE, Shell.ActionMode.ALL, () => {
-            if (this._panel)
-                this._panel.togglePrivateMode();
-        });
         wm.addKeybinding(Settings.SHORTCUT_NEXT, settings, Meta.KeyBindingFlags.NONE, Shell.ActionMode.ALL, () => {
             if (this._panel)
                 this._panel.selectNextItem();
@@ -50,13 +62,17 @@ export default class GnomeClipboardExtension extends Extension {
             if (this._panel)
                 this._panel.selectPrevItem();
         });
+        wm.addKeybinding(Settings.SHORTCUT_CAPTURE, settings, Meta.KeyBindingFlags.NONE, Shell.ActionMode.ALL, () => {
+            if (this._panel)
+                this._panel.toggleCapture();
+        });
     }
     _removeKeybinding() {
         const wm = Main.wm;
         wm.removeKeybinding(Settings.SHORTCUT_MENU);
         wm.removeKeybinding(Settings.SHORTCUT_CLEAR);
-        wm.removeKeybinding(Settings.SHORTCUT_PRIVATE_MODE);
         wm.removeKeybinding(Settings.SHORTCUT_NEXT);
         wm.removeKeybinding(Settings.SHORTCUT_PREV);
+        wm.removeKeybinding(Settings.SHORTCUT_CAPTURE);
     }
 }

@@ -3,6 +3,7 @@ import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import Clutter from 'gi://Clutter';
 import * as ScrollMenu from './scrollMenu.js';
 import * as MenuItem from './menuItem.js';
+import * as utils from './utils.js';
 let _ = (s) => s;
 export function init(gettextFunc) {
     _ = gettextFunc;
@@ -28,7 +29,7 @@ export class HistoryMenu extends ScrollMenu.ScrollMenu {
     updateNavigation(history, selectedID) {
         this._nextItem = null;
         this._prevItem = null;
-        const index = history.findIndex(h => h.id() === selectedID);
+        const index = history.findIndex((h) => h.id === selectedID);
         if (index < 0) {
             return;
         }
@@ -50,35 +51,52 @@ export class HistoryMenu extends ScrollMenu.ScrollMenu {
         this.scrollViewSection.removeAll();
         this._items.clear();
         this._headers.clear();
-        const pinned = history.filter(h => h.pinned);
-        const recent = history.filter(h => !h.pinned);
+        const pinned = history.filter((h) => h.pinned);
+        const recent = history.filter((h) => !h.pinned);
+        // Rice: conky-card headers, "01 PINNED .......... 3".
+        let section = 0;
         if (pinned.length > 0) {
-            this._addHeader(_("Pinned"));
+            this._addHeader(++section, _('Pinned'), pinned.length);
             pinned.forEach((info) => {
                 this._addItem(info, selectedID);
             });
             super.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
         }
         if (recent.length > 0) {
-            this._addHeader(_("Recent History"));
+            this._addHeader(++section, _('Recent'), recent.length);
             recent.forEach((info) => {
                 this._addItem(info, selectedID);
             });
         }
     }
-    _addHeader(title) {
-        let header = new PopupMenu.PopupBaseMenuItem({
+    _addHeader(no, title, count) {
+        const header = new PopupMenu.PopupBaseMenuItem({
             reactive: false,
             activate: false,
-            style_class: 'section-header'
+            style_class: 'section-header',
         });
-        header.add_child(new St.Label({ text: title, style_class: 'section-header-label' }));
+        header.x_expand = true;
+        const parts = [
+            [String(no).padStart(2, '0'), 'section-header-no', false],
+            [title.toUpperCase(), 'section-header-label', true],
+            [String(count), 'section-header-count', false],
+        ];
+        for (const [text, cls, expand] of parts) {
+            const label = new St.Label({
+                text,
+                style_class: cls,
+                x_expand: expand,
+                y_align: Clutter.ActorAlign.CENTER,
+            });
+            label.clutter_text.ellipsize = 0;
+            header.add_child(label);
+        }
         super.addMenuItem(header);
     }
     _addItem(info, selectedID) {
-        let item = new MenuItem.MenuItem(info, this.onActivateItem.bind(this), this.onPinItem.bind(this), this.onRemoveItem.bind(this));
-        this._items.set(info.id(), item);
-        if (info.id() == selectedID) {
+        const item = new MenuItem.MenuItem(info, this.onActivateItem.bind(this), this.onPinItem.bind(this), this.onRemoveItem.bind(this));
+        this._items.set(info.id, item);
+        if (info.id === selectedID) {
             item.add_style_class_name('selected');
         }
         else {
@@ -87,28 +105,28 @@ export class HistoryMenu extends ScrollMenu.ScrollMenu {
         super.addMenuItem(item);
     }
     _showEmptyState() {
-        let box = new St.BoxLayout({
-            orientation: Clutter.Orientation.VERTICAL,
+        const box = new St.BoxLayout({
+            ...utils.boxOrientation(Clutter.Orientation.VERTICAL),
             x_expand: true,
             y_expand: true,
             style_class: 'empty-state',
             x_align: Clutter.ActorAlign.CENTER,
-            y_align: Clutter.ActorAlign.CENTER
+            y_align: Clutter.ActorAlign.CENTER,
         });
-        let icon = new St.Icon({
+        const icon = new St.Icon({
             icon_name: 'edit-copy-symbolic',
-            style_class: 'empty-state-icon'
+            style_class: 'empty-state-icon',
         });
         box.add_child(icon);
-        let label = new St.Label({
-            text: _("Clipboard is empty"),
-            style_class: 'empty-state-label'
+        const label = new St.Label({
+            text: _('Clipboard is empty'),
+            style_class: 'empty-state-label',
         });
         box.add_child(label);
-        let container = new PopupMenu.PopupBaseMenuItem({
+        const container = new PopupMenu.PopupBaseMenuItem({
             reactive: false,
             activate: false,
-            hover: false
+            hover: false,
         });
         container.add_child(box);
         super.addMenuItem(container);
@@ -162,7 +180,7 @@ export class HistoryMenu extends ScrollMenu.ScrollMenu {
                 item.show?.();
             }
             else {
-                const text = item.cbInfo.text?.toLowerCase() ?? '';
+                const text = item.cbInfo.searchText().toLowerCase();
                 const matches = text.includes(query);
                 if (matches) {
                     item.actor?.show?.();
@@ -185,4 +203,3 @@ export class HistoryMenu extends ScrollMenu.ScrollMenu {
         this._onPinItem(item.cbInfo);
     }
 }
-;

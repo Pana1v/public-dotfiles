@@ -1,0 +1,14 @@
+# Ares palette for atuin's search TUI.
+[theme]
+name = "ares"
+
+[colors]
+AlertInfo = "#52e5ff"
+AlertWarn = "#ffc14d"
+AlertError = "#ff3b1f"
+Annotation = "#8a3a44"
+Base = "#f2c4c8"
+Guidance = "#b86a72"
+Important = "#ff1f3d"
+Title = "#ff1f3d"
+Muted = "#5e1f25"

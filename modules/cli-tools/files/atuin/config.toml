@@ -1,0 +1,4 @@
+# atuin settings; everything not set here is the default.
+# Colours come from themes/ares.toml (Ares palette).
+[theme]
+name = "ares"

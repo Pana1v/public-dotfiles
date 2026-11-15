@@ -86,48 +86,60 @@ class Sparkline extends St.DrawingArea {
         return out;
     }
 
+    /**
+     * Dot-matrix history, like the conky bars: one column of dots per time
+     * step, lit from the bottom up to the load, unlit dots dim. The newest
+     * column sits at the right edge and is drawn a touch brighter.
+     */
     _draw() {
         const cr = this.get_context();
         const [width, height] = this.get_surface_size();
         const values = this._ordered();
 
-        if (values.length < 2) {
-            cr.$dispose();
-            return;
+        const PITCH = 4;
+        const R = 1.1;
+        const cols = Math.max(1, Math.floor(width / PITCH));
+        const rows = Math.max(1, Math.floor(height / PITCH));
+        const x0 = width - cols * PITCH + PITCH / 2;
+        const y0 = height - (height - rows * PITCH) / 2 - PITCH / 2;
+
+        // Resample the newest samples onto the columns, right-aligned.
+        const sample = c => {
+            const back = cols - 1 - c;
+            const span = this._capacity / cols;
+            const i = values.length - 1 - Math.floor(back * span);
+            return i >= 0 ? values[i] : null;
+        };
+
+        const {r, g, b} = this._colorFn(this.latest);
+        const unlit = palette().select ?? {r: 74, g: 22, b: 27};
+        const dot = (c, row) => {
+            cr.newSubPath();
+            cr.arc(x0 + c * PITCH, y0 - row * PITCH, R, 0, 2 * Math.PI);
+        };
+
+        cr.setSourceRGBA(unlit.r / RGB_MAX, unlit.g / RGB_MAX, unlit.b / RGB_MAX, 0.55);
+        const lit = [];
+        for (let c = 0; c < cols; c++) {
+            const v = sample(c);
+            const n = v === null ? 0 : Math.max(v > 0.01 ? 1 : 0, Math.round(v * rows));
+            lit.push(n);
+            for (let row = n; row < rows; row++)
+                dot(c, row);
         }
-
-        const color = this._colorFn(this.latest);
-        const {r, g, b} = color;
-        const step = width / (this._capacity - 1);
-
-        // The chart is anchored to the right so the newest sample sits at the
-        // leading edge and history scrolls away behind it.
-        const offset = width - (values.length - 1) * step;
-        const pointY = v => height - v * (height - 1) - 0.5;
-
-        cr.moveTo(offset, height);
-        values.forEach((v, i) => cr.lineTo(offset + i * step, pointY(v)));
-        cr.lineTo(offset + (values.length - 1) * step, height);
-        cr.closePath();
-
-        // A vertical gradient rather than a flat wash: dense at the baseline,
-        // fading upward. The graph is the main visual in the panel now, so a
-        // uniform 24% fill would read as a grey smear.
-        const fill = new Cairo.LinearGradient(0, 0, 0, height);
-        fill.addColorStopRGBA(0, r / RGB_MAX, g / RGB_MAX, b / RGB_MAX, 0.04);
-        fill.addColorStopRGBA(1, r / RGB_MAX, g / RGB_MAX, b / RGB_MAX, 0.28);
-
-        cr.setSource(fill);
         cr.fill();
 
-        cr.moveTo(offset, pointY(values[0]));
-        values.forEach((v, i) => cr.lineTo(offset + i * step, pointY(v)));
+        cr.setSourceRGBA(r / RGB_MAX, g / RGB_MAX, b / RGB_MAX, 0.75);
+        for (let c = 0; c < cols - 1; c++) {
+            for (let row = 0; row < lit[c]; row++)
+                dot(c, row);
+        }
+        cr.fill();
 
-        cr.setLineWidth(1.25);
-        cr.setLineJoin(Cairo.LineJoin.MITER);
-        cr.setLineCap(Cairo.LineCap.BUTT);
-        cr.setSourceRGBA(r / RGB_MAX, g / RGB_MAX, b / RGB_MAX, 0.95);
-        cr.stroke();
+        cr.setSourceRGBA(r / RGB_MAX, g / RGB_MAX, b / RGB_MAX, 1);
+        for (let row = 0; row < lit[cols - 1]; row++)
+            dot(cols - 1, row);
+        cr.fill();
 
         cr.$dispose();
     }

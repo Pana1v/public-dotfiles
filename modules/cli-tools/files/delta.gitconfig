@@ -5,5 +5,29 @@
 [delta]
 	navigate = true
 	line-numbers = true
+	# Ares bat theme (cli-tools/files/bat) plus palette diff tints.
+	syntax-theme = Ares
+	minus-style = syntax "#3a0a0e"
+	minus-non-emph-style = syntax "#240709"
+	minus-emph-style = syntax "#6b1219"
+	minus-empty-line-marker-style = normal "#3a0a0e"
+	plus-style = syntax "#08262c"
+	plus-non-emph-style = syntax "#061a1e"
+	plus-emph-style = syntax "#0e4752"
+	plus-empty-line-marker-style = normal "#08262c"
+	line-numbers-minus-style = "#ff3b1f"
+	line-numbers-plus-style = "#52e5ff"
+	line-numbers-zero-style = "#5e1f25"
+	line-numbers-left-style = "#2a1013"
+	line-numbers-right-style = "#2a1013"
+	file-style = bold "#ff1f3d"
+	file-decoration-style = "#ff1f3d" ul
+	hunk-header-style = file line-number syntax
+	hunk-header-decoration-style = "#5e1f25" box
+	hunk-header-file-style = "#ff6b7d"
+	hunk-header-line-number-style = "#ffc14d"
+	commit-decoration-style = "#ff1f3d" box
+	blame-palette = "#0a0506 #1a0b0d #2a1013"
+	whitespace-error-style = "#ff3b1f" reverse
 [merge]
 	conflictStyle = zdiff3

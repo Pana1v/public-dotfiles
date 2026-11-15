@@ -2,6 +2,7 @@ import St from 'gi://St';
 import GObject from 'gi://GObject';
 import Clutter from 'gi://Clutter';
 import * as ModalDialog from 'resource:///org/gnome/shell/ui/modalDialog.js';
+import * as utils from './utils.js';
 let _ = (s) => s;
 export function init(gettextFunc) {
     _ = gettextFunc;
@@ -12,24 +13,24 @@ class ConfirmDialog extends ModalDialog.ModalDialog {
     }
     constructor(title, desc, okLabel, cancelLabel, callback) {
         super();
-        let main_box = new St.BoxLayout({
-            orientation: Clutter.Orientation.HORIZONTAL
+        const main_box = new St.BoxLayout({
+            ...utils.boxOrientation(Clutter.Orientation.HORIZONTAL),
         });
         this.contentLayout.add_child(main_box);
-        let message_box = new St.BoxLayout({
-            orientation: Clutter.Orientation.VERTICAL
+        const message_box = new St.BoxLayout({
+            ...utils.boxOrientation(Clutter.Orientation.VERTICAL),
         });
         main_box.add_child(message_box);
-        let subject_label = new St.Label({
+        const subject_label = new St.Label({
             style: 'font-weight: bold',
             x_align: Clutter.ActorAlign.CENTER,
-            text: title
+            text: title,
         });
         message_box.add_child(subject_label);
-        let desc_label = new St.Label({
+        const desc_label = new St.Label({
             style: 'padding-top: 12px',
             x_align: Clutter.ActorAlign.CENTER,
-            text: desc
+            text: desc,
         });
         message_box.add_child(desc_label);
         this.setButtons([
@@ -38,19 +39,19 @@ class ConfirmDialog extends ModalDialog.ModalDialog {
                 action: () => {
                     this.close();
                 },
-                key: Clutter.KEY_Escape
+                key: Clutter.KEY_Escape,
             },
             {
                 label: okLabel,
                 action: () => {
                     this.close();
                     callback();
-                }
-            }
+                },
+            },
         ]);
     }
 }
-export function openConfirmDialog(title, message, subMessage, callback, okLabel = _("OK"), cancelLabel = _("Cancel")) {
-    let dlg = new ConfirmDialog(title, message + "\n" + subMessage, okLabel, cancelLabel, callback);
+export function openConfirmDialog(title, message, subMessage, callback, okLabel = _('OK'), cancelLabel = _('Cancel')) {
+    const dlg = new ConfirmDialog(title, message + '\n' + subMessage, okLabel, cancelLabel, callback);
     dlg.open();
 }

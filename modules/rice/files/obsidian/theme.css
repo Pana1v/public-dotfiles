@@ -27,8 +27,8 @@
   --background-modifier-border: #2a1013;
   --background-modifier-border-hover: #4a161b;
   --background-modifier-border-focus: #5e1f25;
-  --background-modifier-hover: rgba(230, 232, 235, 0.06);
-  --background-modifier-active-hover: rgba(230, 232, 235, 0.1);
+  --background-modifier-hover: #2a101399;
+  --background-modifier-active-hover: #4a161b99;
   --background-modifier-form-field: #120809;
   --background-modifier-error: #ff3b1f;
   --background-modifier-success: #52e5ff;
@@ -55,15 +55,16 @@
   --text-error: #ff3b1f;
   --text-success: #52e5ff;
   --text-warning: #ff7a29;
-  --text-highlight-bg: rgba(255, 225, 77, 0.22);
-  --text-selection: rgba(230, 232, 235, 0.16);
+  --text-highlight-bg: #ffc14d38;
+  --text-selection: #4a161bcc;
 
-  /* Accent: the palette's accent, drawn as text/lines, not big fills */
-  --accent-h: 220;
-  --accent-s: 10%;
-  --accent-l: 96%;
+  /* Accent: the palette's accent, drawn as text/lines, not big fills.
+     Set as hexes (not --accent-h/s/l) so switch-theme.sh recolours it. */
+  --color-accent: #ff1f3d;
+  --color-accent-1: #ff6b7d;
+  --color-accent-2: #ffa3b0;
   --interactive-accent: #ff1f3d;
-  --interactive-accent-hover: #ffe9eb;
+  --interactive-accent-hover: #e0283f;
   --text-accent: #ff6b7d;
   --text-accent-hover: #ff1f3d;
   --link-color: #ff6b7d;
@@ -124,13 +125,18 @@
   --font-text-theme: "Manrope", sans-serif;
   --font-monospace-theme: "JetBrains Mono", monospace;
 
-  /* Flat, near-square corners like the conky cards */
-  --radius-s: 2px;
-  --radius-m: 4px;
-  --radius-l: 6px;
-  --radius-xl: 8px;
-  --callout-radius: 4px;
-  --tab-radius-active: 4px 4px 0 0;
+  /* Shell shapes: 12px rows, 18px cards and popups, pill buttons */
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 18px;
+  --radius-xl: 18px;
+  --callout-radius: 12px;
+  --modal-radius: 18px;
+  --menu-radius: 18px;
+  --input-radius: 12px;
+  --button-radius: 99px;
+  --tab-radius-active: 12px 12px 0 0;
+  --checkbox-radius: 99px;
 }
 
 /* Active tab and file stand out by a bright edge, not a fill */
@@ -138,5 +144,21 @@
   box-shadow: inset 0 -2px 0 #ff1f3d;
 }
 .nav-file-title.is-active {
-  box-shadow: inset 2px 0 0 #ff1f3d;
+  background-color: #4a161b;
+  color: #ffe9eb;
+}
+
+/* Menus and modals: hairline edge, no drop shadow, like the shell cards */
+.menu,
+.modal,
+.prompt,
+.suggestion-container {
+  border: 1px solid #2a1013;
+  box-shadow: none;
+}
+
+/* Status bar in the shell's label type */
+.status-bar {
+  font-family: "Space Mono", "JetBrains Mono", monospace;
+  font-size: 11px;
 }

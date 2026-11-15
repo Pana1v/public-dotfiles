@@ -6,7 +6,29 @@
 # the short names into ~/.local/bin so scripts (fzf previews, yazi) find them too.
 export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
 export MANROFFOPT="-c"
-export BAT_THEME=ansi   # follows the terminal palette, so it recolors with the rice
+export BAT_THEME=Ares   # bat/themes/Ares.tmTheme, also delta's syntax theme
+
+# Palette hexes as 24-bit SGR codes, so rice/switch-theme.sh can recolour them.
+_rice_sgr() { local h="${2#\#}"; printf '%s;2;%d;%d;%d' "$1" "0x${h:0:2}" "0x${h:2:2}" "0x${h:4:2}"; }
+_rice_fg() { _rice_sgr 38 "$1"; }
+_rice_bg() { _rice_sgr 48 "$1"; }
+
+# File kinds for ls, eza, fd and tree, on top of dircolors' extension colours.
+# eza takes everything else from ~/.config/eza/theme.yml.
+LS_COLORS="${LS_COLORS:+$LS_COLORS:}di=1;$(_rice_fg '#ff1f3d'):ln=$(_rice_fg '#ff6b7d'):ex=1;$(_rice_fg '#52e5ff'):fi=$(_rice_fg '#f2c4c8')"
+LS_COLORS+=":pi=$(_rice_fg '#ffc14d'):so=1;$(_rice_fg '#ff4f8b'):bd=1;$(_rice_fg '#ffc14d'):cd=1;$(_rice_fg '#ffc14d')"
+LS_COLORS+=":or=$(_rice_fg '#ff3b1f');$(_rice_bg '#3a0a0e'):mi=$(_rice_fg '#ff3b1f');$(_rice_bg '#3a0a0e')"
+LS_COLORS+=":su=$(_rice_fg '#050203');$(_rice_bg '#ff3b1f'):sg=$(_rice_fg '#050203');$(_rice_bg '#ffc14d')"
+LS_COLORS+=":tw=$(_rice_fg '#050203');$(_rice_bg '#ff1f3d'):ow=$(_rice_fg '#ff1f3d');$(_rice_bg '#2a1013'):st=$(_rice_fg '#050203');$(_rice_bg '#ff4f8b')"
+export LS_COLORS
+
+# less (man without bat, git help): bold, underline and the status/search bar.
+export LESS_TERMCAP_md=$'\e[1;'"$(_rice_fg '#ff1f3d')m"
+export LESS_TERMCAP_us=$'\e[4;'"$(_rice_fg '#ff6b7d')m"
+export LESS_TERMCAP_so=$'\e['"$(_rice_fg '#ffe9eb');$(_rice_bg '#4a161b')m"
+export LESS_TERMCAP_mb=$'\e[1;'"$(_rice_fg '#ff4f8b')m"
+export LESS_TERMCAP_me=$'\e[0m' LESS_TERMCAP_ue=$'\e[0m' LESS_TERMCAP_se=$'\e[0m'
+unset -f _rice_sgr _rice_fg _rice_bg
 
 alias ls='eza --group-directories-first --icons=auto'
 alias ll='eza -l --git --group-directories-first --icons=auto --time-style=relative'
