@@ -251,24 +251,72 @@
 .ws-number:checked .ws-label { color: #ffe9eb; }
 .ws-number:checked .ws-dot { background-color: #ff1f3d; }
 
-/* ── Clipboard (clipboard-history, Super+V) ────────────────────────── */
-/* A conky card of history rows: taller list, Space Mono rows, pill search
- * that takes keys as soon as the menu opens. */
-#panel .clipboard-indicator-icon.private-mode { color: #8a3a44; }
-.ci-history-menu-section { max-height: 560px; }
-.ci-history-menu-section .popup-menu-item {
-  font-family: "Space Mono", monospace;
-  font-size: 12px;
-  color: #f2c4c8;
-  padding-top: 7px;
-  padding-bottom: 7px;
+/* ── Clipboard (gnome-clipboard, Super+V) ──────────────────────────── */
+/* Restyles the extension's GNOME-blue menu as a conky card: Space Mono
+ * rows, red for the lit (current) item and pins, screenshots shown as
+ * framed thumbnails. !important because extension sheets load after the
+ * theme and win ties. */
+.gnome-clipboard { color: #ffe9eb !important; font-family: "Space Mono", monospace; }
+.gnome-clipboard .scroll-view { width: 440px !important; height: 560px !important; }
+.gnome-clipboard .scroll-view StScrollBar StButton#vhandle { background-color: #4a161b !important; border-radius: 99px !important; }
+.gnome-clipboard .scroll-view StScrollBar StButton#vhandle:hover { background-color: #ff1f3d !important; }
+
+.gnome-clipboard .search-box {
+  border-radius: 99px !important;
+  background-color: #1a0b0d !important;
+  border: 1px solid #2a1013 !important;
+  box-shadow: none !important;
+  caret-color: #ff1f3d;
 }
-.ci-history-menu-section .popup-menu-item:hover,
-.ci-history-menu-section .popup-menu-item:focus { color: #ffe9eb; }
-.popup-menu-item .ci-action-btn { border-radius: 99px; color: #8a3a44; }
-.popup-menu-item .ci-action-btn:hover { color: #ff1f3d; background-color: #2a1013; }
-.popup-menu-item .ci-action-btn:checked { color: #ff1f3d; }
-.ci-history-search-entry { border-radius: 99px; }
+.gnome-clipboard .search-box:focus { border-color: #ff1f3d !important; }
+.gnome-clipboard .search-box-icon { color: #8a3a44 !important; }
+
+.gnome-clipboard .section-header-label {
+  color: #ff1f3d !important;
+  font-family: "Space Mono", monospace;
+  letter-spacing: 0 !important;
+  opacity: 1 !important;
+}
+
+.gnome-clipboard .clipboard-item { border-radius: 12px !important; border-color: transparent !important; }
+.gnome-clipboard .clipboard-item:hover { background-color: #1a0b0d !important; border-color: #2a1013 !important; }
+.gnome-clipboard .clipboard-item.selected {
+  background-color: #1a0b0d !important;
+  border-color: transparent !important;
+  box-shadow: inset 2px 0 0 #ff1f3d;
+}
+.gnome-clipboard .clipboard-item-text { color: #f2c4c8 !important; font-weight: normal !important; }
+.gnome-clipboard .clipboard-item.selected .clipboard-item-text { color: #ffe9eb !important; }
+.gnome-clipboard .clipboard-item-meta { color: #8a3a44 !important; letter-spacing: 0 !important; }
+
+.gnome-clipboard .item-action-btn { border-radius: 99px !important; color: #b86a72; }
+.gnome-clipboard .item-action-btn:hover { background-color: #2a1013 !important; color: #ffe9eb; }
+.gnome-clipboard .item-action-btn.pinned { color: #ff1f3d !important; }
+
+.gnome-clipboard .clipboard-image-preview {
+  border-radius: 8px !important;
+  background-color: #050203 !important;
+  border: 1px solid #2a1013;
+  box-shadow: none !important;
+}
+.gnome-clipboard .clipboard-image-placeholder { color: #8a3a44 !important; }
+
+.gnome-clipboard .action-bar {
+  border-radius: 99px !important;
+  background-color: #1a0b0d !important;
+  border: 1px solid #2a1013 !important;
+}
+.gnome-clipboard .action-btn { border-radius: 99px !important; color: #b86a72 !important; }
+.gnome-clipboard .action-btn:hover { background-color: #2a1013 !important; color: #ffe9eb !important; border-color: transparent !important; }
+.gnome-clipboard .active-btn,
+.gnome-clipboard .active-switch { color: #ff1f3d !important; background-color: #4a161b !important; border-color: transparent !important; }
+.gnome-clipboard .action-btn-danger:hover { color: #ff3b1f !important; background-color: #4a161b !important; }
+.gnome-clipboard .service-label { color: #8a3a44 !important; }
+.gnome-clipboard .service-switch { border-radius: 99px !important; background-color: #1a0b0d !important; color: #8a3a44 !important; border-color: #2a1013 !important; }
+.gnome-clipboard .service-toggle-container { border-left-color: #2a1013 !important; }
+
+.gnome-clipboard .empty-state-icon { color: #ff1f3d !important; }
+.gnome-clipboard .empty-state-label { color: #8a3a44 !important; }
 
 /* Motion: 120ms linear, colour only, hover cells and rows. None on popups. */
 .message,

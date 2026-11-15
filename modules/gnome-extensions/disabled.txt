@@ -1,4 +1,4 @@
 # Extensions to keep off, even when the distro turns them on by default.
 tiling-assistant@ubuntu.com     # Ubuntu's tiler fights pop-shell
 space-bar@luchrioh              # second workspace switcher; ws-numbers covers it
-gnome-clipboard@b00f.github.io  # second clipboard icon; clipboard-history (Super+V) covers it
+clipboard-history@alexsaveau.dev # text only; gnome-clipboard (Super+V) also keeps images

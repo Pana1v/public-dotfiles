@@ -4,7 +4,7 @@ extension-list@tu.berry
 volumeBoosr@octane-laurel
 boostvolume@shaquib.dev
 dynamic-music-pill@andbal
-clipboard-history@alexsaveau.dev
+gnome-clipboard@b00f.github.io
 spotify-deck@pan.local
 sysmon-flair@pan.local
 sp-tray@sp-tray.esenliyim.github.com
