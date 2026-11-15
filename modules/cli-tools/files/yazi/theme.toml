@@ -1,0 +1,121 @@
+# Ares palette for yazi. Colour keys only; glyphs, separators and icons come
+# from the preset. Code previews use the bat theme (cli-tools/files/bat).
+#:schema https://yazi-rs.github.io/schemas/theme.json
+
+[mgr]
+cwd = { fg = "#ff6b7d" }
+
+find_keyword  = { fg = "#ffc14d", bold = true, underline = true }
+find_position = { fg = "#ff4f8b", bg = "reset", bold = true }
+
+symlink_target = { fg = "#b86a72", italic = true }
+
+marker_copied   = { fg = "#52e5ff", bg = "#52e5ff" }
+marker_cut      = { fg = "#ff3b1f", bg = "#ff3b1f" }
+marker_marked   = { fg = "#ff4f8b", bg = "#ff4f8b" }
+marker_selected = { fg = "#ff1f3d", bg = "#ff1f3d" }
+
+count_copied   = { fg = "#050203", bg = "#52e5ff" }
+count_cut      = { fg = "#050203", bg = "#ff3b1f" }
+count_selected = { fg = "#050203", bg = "#ff1f3d" }
+
+border_style = { fg = "#5e1f25" }
+
+syntect_theme = "~/.config/bat/themes/Ares.tmTheme"
+
+[tabs]
+active   = { fg = "#050203", bg = "#ff1f3d", bold = true }
+inactive = { fg = "#b86a72", bg = "#2a1013" }
+
+[mode]
+normal_main = { fg = "#050203", bg = "#ff1f3d", bold = true }
+normal_alt  = { fg = "#ff1f3d", bg = "#2a1013" }
+select_main = { fg = "#050203", bg = "#ff4f8b", bold = true }
+select_alt  = { fg = "#ff4f8b", bg = "#2a1013" }
+unset_main  = { fg = "#050203", bg = "#ffc14d", bold = true }
+unset_alt   = { fg = "#ffc14d", bg = "#2a1013" }
+
+[indicator]
+parent  = { fg = "#ffe9eb", bg = "#4a161b" }
+current = { fg = "#ffe9eb", bg = "#4a161b", bold = true }
+preview = { fg = "#ffe9eb", bg = "#2a1013" }
+
+[status]
+overall    = { fg = "#f2c4c8", bg = "#0a0506" }
+perm_sep   = { fg = "#5e1f25" }
+perm_type  = { fg = "#ff1f3d" }
+perm_read  = { fg = "#ffc14d" }
+perm_write = { fg = "#ff3b1f" }
+perm_exec  = { fg = "#52e5ff" }
+
+progress_label  = { fg = "#ffe9eb", bold = true }
+progress_normal = { fg = "#ff1f3d", bg = "#2a1013" }
+progress_error  = { fg = "#ff3b1f", bg = "#2a1013" }
+
+[which]
+border          = { fg = "#ff1f3d" }
+mask            = { bg = "#1a0b0d" }
+cand            = { fg = "#ff6b7d" }
+rest            = { fg = "#8a3a44" }
+desc            = { fg = "#f2c4c8" }
+separator_style = { fg = "#5e1f25" }
+
+[confirm]
+border  = { fg = "#ff1f3d" }
+title   = { fg = "#ff1f3d", bold = true }
+btn_yes = { fg = "#050203", bg = "#ff1f3d", bold = true }
+btn_no  = { fg = "#b86a72" }
+
+[spot]
+border   = { fg = "#ff1f3d" }
+title    = { fg = "#ff1f3d", bold = true }
+tbl_col  = { fg = "#ff6b7d" }
+tbl_cell = { fg = "#ffe9eb", bg = "#4a161b" }
+
+[notify]
+title_info  = { fg = "#52e5ff" }
+title_warn  = { fg = "#ffc14d" }
+title_error = { fg = "#ff3b1f" }
+
+[pick]
+border   = { fg = "#ff1f3d" }
+active   = { fg = "#ff1f3d", bold = true }
+inactive = { fg = "#b86a72" }
+
+[input]
+border   = { fg = "#ff1f3d" }
+title    = { fg = "#ff1f3d" }
+value    = { fg = "#ffe9eb" }
+selected = { fg = "#ffe9eb", bg = "#4a161b" }
+
+[cmp]
+border   = { fg = "#ff1f3d" }
+active   = { fg = "#ffe9eb", bg = "#4a161b" }
+inactive = { fg = "#b86a72" }
+
+[tasks]
+border  = { fg = "#ff1f3d" }
+title   = { fg = "#ff1f3d" }
+hovered = { fg = "#ff1f3d", bold = true }
+
+[help]
+border  = { fg = "#ff1f3d" }
+chord   = { fg = "#ff6b7d" }
+action  = { fg = "#f2c4c8" }
+hovered = { fg = "#ffe9eb", bg = "#4a161b", bold = true }
+
+[filetype]
+rules = [
+	{ mime = "**/image/*", fg = "#ffc14d" },
+	{ mime = "**/{audio,video}/*", fg = "#ff4f8b" },
+	{ mime = "**/application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#ff7a29" },
+	{ mime = "**/application/{pdf,doc,rtf}", fg = "#ffa3b0" },
+	{ mime = "vfs/{absent,stale}", fg = "#8a3a44" },
+	{ url = "*", is = "orphan", fg = "#ff3b1f", bg = "#3a0a0e" },
+	{ url = "*", is = "exec", fg = "#52e5ff" },
+	{ url = "*", is = "dummy", fg = "#ff3b1f", bg = "#3a0a0e" },
+	{ url = "*/", is = "dummy", fg = "#ff3b1f", bg = "#3a0a0e" },
+	{ url = "*", is = "link", fg = "#ff6b7d" },
+	{ url = "*/", fg = "#ff1f3d", bold = true },
+	{ url = "*", fg = "#f2c4c8" },
+]

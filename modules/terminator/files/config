@@ -1,7 +1,7 @@
 [global_config]
   handle_size = 2
   inactive_color_offset = 0.88
-  enabled_plugins = ActivityWatch, InactivityWatch, TerminalShot, Logger, CustomCommandsMenu, PyTracebackHandler, PathLineHandler, LinearIssueHandler
+  enabled_plugins = ActivityWatch, InactivityWatch, TerminalShot, Logger, CustomCommandsMenu, PyTracebackHandler, PathLineHandler, LinearIssueHandler, RiceSelection
   ask_before_closing = never
   cell_height = 1.1
 [keybindings]
@@ -18,18 +18,19 @@
   broadcast_all = <Shift><Control>b
 [profiles]
   [[default]]
+    background_color = "#0a0506"
     background_darkness = 0.9
     background_type = transparent
     cursor_blink = False
     cursor_shape = ibeam
     cursor_fg_color = "#0a0506"
-    cursor_bg_color = "#ffffff"
+    cursor_bg_color = "#ffe9eb"
     cursor_color_default = False
     font = JetBrains Mono 11
-    foreground_color = "#ffffff"
+    foreground_color = "#ffe9eb"
     scrollbar_position = hidden
     scrollback_lines = 50000
-    palette = "#020101:#ff3b1f:#52e5ff:#ffc14d:#ff1f3d:#ff1f3d:#ff3b1f:#e6e6e6:#5e1f25:#ff3b1f:#52e5ff:#ffc14d:#ff1f3d:#ff1f3d:#ff3b1f:#ffffff"
+    palette = "#020101:#ff3b1f:#52e5ff:#ffc14d:#ff1f3d:#ff4f8b:#ff6b7d:#f2c4c8:#5e1f25:#ff3b1f:#52e5ff:#ffc14d:#ff1f3d:#ff4f8b:#ff6b7d:#ffe9eb"
     use_system_font = False
     copy_on_selection = True
     title_hide_sizetext = True
@@ -40,7 +41,7 @@
     title_inactive_fg_color = "#73303a"
     title_inactive_bg_color = "#2a1013"
     title_use_system_font = False
-    title_font = JetBrains Mono 9
+    title_font = Space Mono 9
 [layouts]
   [[default]]
     [[[window0]]]

@@ -1,11 +1,11 @@
-/* Rice titlebars for GTK3 apps. Square, flat, palette colors; the close
-   button only turns red on hover. switch-theme.sh recolors the hexes. */
+/* Rice for GTK3 apps, on top of the Yaru dark theme. Flat titlebars with
+   a hairline, round window buttons, shell-style popovers and selection.
+   switch-theme.sh recolors the hexes. */
 headerbar,
 .titlebar:not(headerbar),
 .titlebar headerbar {
   background: #050203;
   color: #ffe9eb;
-  border-radius: 0;
   border-bottom: 1px solid #2a1013;
   box-shadow: none;
 }
@@ -21,7 +21,6 @@ headerbar .title {
 }
 
 decoration {
-  border-radius: 0;
   box-shadow: 0 3px 9px 1px rgba(0, 0, 0, 0.5), 0 0 0 1px #2a1013;
 }
 
@@ -31,7 +30,7 @@ decoration:backdrop {
 
 headerbar button.titlebutton,
 .titlebar button.titlebutton {
-  border-radius: 0;
+  border-radius: 99px;
   border: none;
   background: none;
   box-shadow: none;
@@ -53,10 +52,48 @@ headerbar button.titlebutton.close:hover,
   color: #050203;
 }
 
+/* Popovers and menus: dark card, 18px, hairline edge; rows at 12px. */
+popover.background,
+menu,
+.menu,
+.context-menu {
+  background-color: #120809;
+  border: 1px solid #2a1013;
+  box-shadow: none;
+}
+popover.background {
+  border-radius: 18px;
+}
+popover modelbutton,
+menu menuitem {
+  border-radius: 12px;
+}
+popover modelbutton:hover,
+menu menuitem:hover {
+  background-color: #2a1013;
+  color: #ffe9eb;
+}
+
+/* Selection: dark red fill, light text, like the shell's selected rows. */
+selection,
+.view:selected,
+iconview:selected,
+treeview.view:selected,
+row:selected {
+  background-color: #4a161b;
+  color: #ffe9eb;
+}
+
+/* Focused entries get the accent edge. */
+entry:focus {
+  border-color: #ff1f3d;
+  box-shadow: inset 0 0 0 1px #ff1f3d;
+}
+
 /* Terminator. Scoped to its window class so no other GTK app changes.
    USER priority beats Terminator's own APPLICATION-priority CSS. */
 .terminator-terminal-window vte-terminal {
-  padding: 6px 10px;
+  padding: 10px 12px;
 }
 
 .terminator-terminal-window .pane-separator {
@@ -69,6 +106,7 @@ headerbar button.titlebutton.close:hover,
 }
 
 .terminator-terminal-window notebook tab {
+  font-family: "Space Mono";
   padding: 2px 12px;
   color: #8a3a44;
   border: none;

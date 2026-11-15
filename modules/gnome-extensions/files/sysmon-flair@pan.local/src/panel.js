@@ -1,5 +1,6 @@
 import Clutter from 'gi://Clutter';
 import GObject from 'gi://GObject';
+import Pango from 'gi://Pango';
 import St from 'gi://St';
 
 import {Sparkline, loadColor, cssColor, tempFraction} from './graph.js';
@@ -74,11 +75,15 @@ export {percentFmt};
 export function tagged(tag, chip) {
     const box = new St.BoxLayout({style_class: 'sysmon-stat'});
 
-    box.add_child(new St.Label({
+    const label = new St.Label({
         text: tag,
         style_class: 'sysmon-chip-tag',
         y_align: Clutter.ActorAlign.CENTER,
-    }));
+    });
+    // St undercounts letter-spacing in the natural width, which clipped
+    // "CPU" to "CP…". Tags are fixed words, so never ellipsize them.
+    label.clutter_text.ellipsize = Pango.EllipsizeMode.NONE;
+    box.add_child(label);
     box.add_child(chip);
 
     return box;

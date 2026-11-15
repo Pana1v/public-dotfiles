@@ -230,7 +230,10 @@ def firefox(profile, pal_path, pal, start):
   --toolbar-field-focus-border-color: var(--rice-accent) !important;
   --tab-selected-bgcolor: var(--rice-surface) !important;
   --tab-selected-textcolor: var(--rice-fg) !important;
-  --tab-border-radius: 0 !important;
+  --tab-border-radius: 12px !important;
+  --toolbarbutton-border-radius: 99px !important;
+  --arrowpanel-border-radius: 18px !important;
+  --toolbarbutton-active-background: var(--rice-select) !important;
   --arrowpanel-background: var(--rice-bg2) !important;
   --arrowpanel-color: var(--rice-fg) !important;
   --arrowpanel-border-color: var(--rice-surface) !important;
@@ -250,7 +253,9 @@ def firefox(profile, pal_path, pal, start):
   box-shadow: inset 0 -2px 0 var(--rice-accent) !important;
 }}
 .tabbrowser-tab:not([selected]) .tab-label {{ color: var(--rice-dim) !important; }}
-#urlbar-background {{ border-radius: 0 !important; }}
+#urlbar-background {{ border-radius: 99px !important; }}
+#urlbar[open] > #urlbar-background {{ border-radius: 18px !important; }}
+.tab-label {{ font-family: "Space Mono", "JetBrains Mono", monospace !important; }}
 """
     chrome = profile / "chrome"
     name, data = wallpaper(pal_path, pal, newtab=True)
@@ -274,12 +279,12 @@ def firefox(profile, pal_path, pal, start):
     background-color: {c['card']} !important;
     color: {c['fg']} !important;
     border: 1px solid {c['surface']} !important;
-    border-radius: 0 !important;
+    border-radius: 99px !important;
     box-shadow: none !important;
   }}
   .top-site-outer .tile, .top-site-outer .top-site-icon {{
     background-color: {c['card']} !important;
-    border-radius: 0 !important;
+    border-radius: 12px !important;
     box-shadow: none !important;
   }}
   .top-site-outer:hover .tile {{ background-color: {c['surface']} !important; }}
