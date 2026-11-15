@@ -1,20 +1,17 @@
 export const SCHEMA_ID = 'org.gnome.shell.extensions.gnome-clipboard';
-export const HISTORY_SIZE = "history-size";
-export const HISTORY_SORT = "history-sort";
-export const CLIPBOARD_TIMER = "clipboard-timer";
-export const TIMER_INTERVAL = "timer-interval";
-export const SAVE_PINNED = "save-pinned";
-export const SHOW_NOTIFICATIONS = "show-notifications";
-export const PRIVATE_MODE = "private-mode";
-export const BLACKLIST = "blacklist";
-export const SHORTCUT_MENU = "shortcut-menu";
-export const SHORTCUT_CLEAR = "shortcut-clear";
-export const SHORTCUT_PRIVATE_MODE = "shortcut-private-mode";
-export const SHORTCUT_NEXT = "shortcut-next";
-export const SHORTCUT_PREV = "shortcut-prev";
-export const HISTORY_SORT_COPY_TIME = 0;
-export const HISTORY_SORT_RECENT_USAGE = 1;
-export const HISTORY_SORT_MOST_USAGE = 2;
+export const HISTORY_SIZE = 'history-size';
+export const CLIPBOARD_TIMER = 'clipboard-timer';
+export const TIMER_INTERVAL = 'timer-interval';
+export const SAVE_PINNED = 'save-pinned';
+export const SHOW_NOTIFICATIONS = 'show-notifications';
+export const STORE_IMAGES = 'store-images';
+export const MAX_IMAGE_SIZE = 'max-image-size';
+export const BLACKLIST = 'blacklist';
+export const SHORTCUT_MENU = 'shortcut-menu';
+export const SHORTCUT_CLEAR = 'shortcut-clear';
+export const SHORTCUT_NEXT = 'shortcut-next';
+export const SHORTCUT_PREV = 'shortcut-prev';
+export const SHORTCUT_CAPTURE = 'shortcut-capture';
 export class ExtensionSettings {
     _settings;
     constructor(settings) {
@@ -25,9 +22,6 @@ export class ExtensionSettings {
     }
     historySize() {
         return this._settings.get_uint(HISTORY_SIZE);
-    }
-    historySort() {
-        return this._settings.get_uint(HISTORY_SORT);
     }
     clipboardTimer() {
         return this._settings.get_boolean(CLIPBOARD_TIMER);
@@ -41,11 +35,11 @@ export class ExtensionSettings {
     showNotifications() {
         return this._settings.get_boolean(SHOW_NOTIFICATIONS);
     }
-    privateMode() {
-        return this._settings.get_boolean(PRIVATE_MODE);
+    storeImages() {
+        return this._settings.get_boolean(STORE_IMAGES);
     }
-    setPrivateMode(value) {
-        this._settings.set_boolean(PRIVATE_MODE, value);
+    maxImageSizeInBytes() {
+        return this._settings.get_uint(MAX_IMAGE_SIZE) * 1024 * 1024;
     }
     blacklist() {
         return this._settings.get_strv(BLACKLIST);
@@ -56,14 +50,14 @@ export class ExtensionSettings {
     shortcutClear() {
         return this._settings.get_strv(SHORTCUT_CLEAR);
     }
-    shortcutPrivateMode() {
-        return this._settings.get_strv(SHORTCUT_PRIVATE_MODE);
-    }
     shortcutNext() {
         return this._settings.get_strv(SHORTCUT_NEXT);
     }
     shortcutPrev() {
         return this._settings.get_strv(SHORTCUT_PREV);
+    }
+    shortcutToggleCapture() {
+        return this._settings.get_strv(SHORTCUT_CAPTURE);
     }
     getSettings() {
         return this._settings;

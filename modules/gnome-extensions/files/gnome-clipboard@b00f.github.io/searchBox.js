@@ -14,7 +14,7 @@ export class SearchBox extends PopupMenu.PopupBaseMenuItem {
         super({
             reactive: false,
             can_focus: false,
-            style_class: 'search-box-container'
+            style_class: 'search-box-container',
         });
         this.searchEntry = new St.Entry({
             style_class: 'search-box',
@@ -23,13 +23,13 @@ export class SearchBox extends PopupMenu.PopupBaseMenuItem {
             track_hover: true,
             x_expand: true,
         });
-        let searchIcon = new St.Icon({
+        const searchIcon = new St.Icon({
             icon_name: 'edit-find-symbolic',
             style_class: 'search-box-icon',
             icon_size: 16,
         });
         this.searchEntry.set_primary_icon(searchIcon);
-        let clearIcon = new St.Icon({
+        const clearIcon = new St.Icon({
             icon_name: 'edit-clear-symbolic',
             style_class: 'search-box-icon',
             icon_size: 16,

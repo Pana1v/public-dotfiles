@@ -1,4 +1,5 @@
 import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 import Gdk from 'gi://Gdk';
@@ -30,21 +31,6 @@ export default class GnomeClipboardPreferences extends ExtensionPreferences {
         settings.bind(Settings.HISTORY_SIZE, historySizeSpin, 'value', Gio.SettingsBindFlags.DEFAULT);
         historySizeRow.add_suffix(historySizeSpin);
         group.add(historySizeRow);
-        const historySortRow = new Adw.ActionRow({
-            title: this.gettext('Sort history by:'),
-        });
-        const historySortSpin = new Gtk.SpinButton({
-            valign: Gtk.Align.CENTER,
-            css_classes: ['pref-input'],
-            adjustment: new Gtk.Adjustment({
-                lower: 0,
-                upper: 2,
-                step_increment: 1,
-            }),
-        });
-        settings.bind(Settings.HISTORY_SORT, historySortSpin, 'value', Gio.SettingsBindFlags.DEFAULT);
-        historySortRow.add_suffix(historySortSpin);
-        group.add(historySortRow);
         const timerRow = new Adw.ActionRow({
             title: this.gettext('Read clipboard by timer:'),
         });
@@ -90,6 +76,56 @@ export default class GnomeClipboardPreferences extends ExtensionPreferences {
         settings.bind(Settings.SHOW_NOTIFICATIONS, notificationsSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
         notificationsRow.add_suffix(notificationsSwitch);
         group.add(notificationsRow);
+        const dataFolderRow = new Adw.ActionRow({
+            title: this.gettext('Data folder'),
+            subtitle: this.gettext('Open the folder where clipboard history is stored'),
+        });
+        const openDataFolderButton = new Gtk.Button({
+            label: this.gettext('Open'),
+            valign: Gtk.Align.CENTER,
+            css_classes: ['pref-input'],
+        });
+        openDataFolderButton.connect('clicked', () => {
+            const folderPath = GLib.build_filenamev([GLib.get_user_data_dir(), this.uuid]);
+            const folderUri = Gio.File.new_for_path(folderPath).get_uri();
+            Gtk.show_uri(window, folderUri, Gdk.CURRENT_TIME);
+        });
+        dataFolderRow.add_suffix(openDataFolderButton);
+        dataFolderRow.set_activatable_widget(openDataFolderButton);
+        group.add(dataFolderRow);
+        const imagesGroup = new Adw.PreferencesGroup({
+            title: this.gettext('Images'),
+        });
+        page.add(imagesGroup);
+        const storeImagesRow = new Adw.ActionRow({
+            title: this.gettext('Store images:'),
+            subtitle: this.gettext('Save images copied to the clipboard in the history'),
+        });
+        const storeImagesSwitch = new Gtk.Switch({
+            valign: Gtk.Align.CENTER,
+            css_classes: ['service-switch'],
+        });
+        settings.bind(Settings.STORE_IMAGES, storeImagesSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        storeImagesRow.add_suffix(storeImagesSwitch);
+        storeImagesRow.set_activatable_widget(storeImagesSwitch);
+        imagesGroup.add(storeImagesRow);
+        const maxImageSizeRow = new Adw.ActionRow({
+            title: this.gettext('Maximum image size (MB):'),
+            subtitle: this.gettext('Ignore images larger than this size'),
+        });
+        const maxImageSizeSpin = new Gtk.SpinButton({
+            valign: Gtk.Align.CENTER,
+            css_classes: ['pref-input'],
+            adjustment: new Gtk.Adjustment({
+                lower: 1,
+                upper: 1024,
+                step_increment: 1,
+            }),
+        });
+        settings.bind(Settings.MAX_IMAGE_SIZE, maxImageSizeSpin, 'value', Gio.SettingsBindFlags.DEFAULT);
+        maxImageSizeRow.add_suffix(maxImageSizeSpin);
+        maxImageSizeRow.set_activatable_widget(maxImageSizeSpin);
+        imagesGroup.add(maxImageSizeRow);
         const privacyGroup = new Adw.PreferencesGroup({
             title: this.gettext('Privacy'),
         });
@@ -101,7 +137,11 @@ export default class GnomeClipboardPreferences extends ExtensionPreferences {
         const blacklistSettings = settings.get_strv(Settings.BLACKLIST).join(', ');
         blacklistRow.set_text(blacklistSettings);
         blacklistRow.connect('changed', () => {
-            const list = blacklistRow.get_text().split(',').map((s) => s.trim()).filter((s) => s.length > 0);
+            const list = blacklistRow
+                .get_text()
+                .split(',')
+                .map((s) => s.trim())
+                .filter((s) => s.length > 0);
             settings.set_strv(Settings.BLACKLIST, list);
         });
         privacyGroup.add(blacklistRow);
@@ -115,9 +155,9 @@ export default class GnomeClipboardPreferences extends ExtensionPreferences {
         };
         addShortcutRow(Settings.SHORTCUT_MENU, this.gettext('Toggle History Menu'));
         addShortcutRow(Settings.SHORTCUT_CLEAR, this.gettext('Clear History'));
-        addShortcutRow(Settings.SHORTCUT_PRIVATE_MODE, this.gettext('Toggle Private Mode'));
         addShortcutRow(Settings.SHORTCUT_NEXT, this.gettext('Select Next Item'));
         addShortcutRow(Settings.SHORTCUT_PREV, this.gettext('Select Previous Item'));
+        addShortcutRow(Settings.SHORTCUT_CAPTURE, this.gettext('Toggle Capture'));
     }
     _loadPreferencesStyle() {
         try {
@@ -172,11 +212,16 @@ export default class GnomeClipboardPreferences extends ExtensionPreferences {
             }
             const mask = state & Gtk.accelerator_get_default_mod_mask();
             const isModifier = [
-                Gdk.KEY_Shift_L, Gdk.KEY_Shift_R,
-                Gdk.KEY_Control_L, Gdk.KEY_Control_R,
-                Gdk.KEY_Alt_L, Gdk.KEY_Alt_R,
-                Gdk.KEY_Meta_L, Gdk.KEY_Meta_R,
-                Gdk.KEY_Super_L, Gdk.KEY_Super_R
+                Gdk.KEY_Shift_L,
+                Gdk.KEY_Shift_R,
+                Gdk.KEY_Control_L,
+                Gdk.KEY_Control_R,
+                Gdk.KEY_Alt_L,
+                Gdk.KEY_Alt_R,
+                Gdk.KEY_Meta_L,
+                Gdk.KEY_Meta_R,
+                Gdk.KEY_Super_L,
+                Gdk.KEY_Super_R,
             ].includes(keyval);
             if (isModifier)
                 return true;
