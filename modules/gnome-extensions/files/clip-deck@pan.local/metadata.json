@@ -1,0 +1,8 @@
+{
+  "uuid": "clip-deck@pan.local",
+  "name": "Clip Deck",
+  "description": "Clipboard history for text, links, colours, images and screenshots. Super+V opens a keyboard-first card; Enter pastes into the window you came from.",
+  "shell-version": ["48", "49", "50"],
+  "settings-schema": "org.gnome.shell.extensions.clip-deck",
+  "version": 1
+}

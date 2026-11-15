@@ -1,9 +1,9 @@
 /* Rice shell theme: the distro's dark shell theme (base.css, written by
  * apply.sh: ZorinGrey-Dark or Yaru-dark) with the "Nothing cards" look:
- * translucent tinted cards, 18px popovers, 12px rows, 99px pills for
+ * dark tinted cards, 18px popovers, 12px rows, 99px pills for
  * toggles and buttons, hairline edges, Space Mono labels, accent red for
- * state, no shadows. Hexes are palette roles; 2 trailing digits are alpha,
- * so switch-theme.sh still recolours them. */
+ * state, no shadows. Hexes are palette roles. St ignores 8-digit (alpha) hex, so
+ * every colour is plain 6-digit, which switch-theme.sh recolours. */
 @import url("base.css");
 
 /* ── Cards: banners, the drawer, menus, quick settings, OSD ────────── */
@@ -17,7 +17,7 @@
 .osd-window,
 .unlock-dialog .notification-banner,
 .unlock-dialog .message {
-  background-color: #120809b8 !important;
+  background-color: #120809 !important;
   border-radius: 18px !important;
   border: 1px solid #2a1013 !important;
   border-image: none !important;
@@ -26,7 +26,7 @@
 .popup-menu-content,
 .candidate-popup-content,
 .quick-settings,
-.datemenu-popover { background-color: #120809e6 !important; }
+.datemenu-popover { background-color: #120809 !important; }
 
 /* Menu rows */
 .popup-menu-item { border-radius: 12px; }
@@ -38,7 +38,7 @@
 /* ── Messages (banner body and list entries) ───────────────────────── */
 .message {
   border-radius: 12px !important;
-  background-color: #1a0b0d99;
+  background-color: #1a0b0d;
 }
 .message:hover { background-color: #2a1013; }
 .message:active, .message:focus { background-color: #4a161b; }
@@ -74,7 +74,7 @@
 
 .events-button,
 .world-clocks-button,
-.weather-button { background-color: #1a0b0db8; }
+.weather-button { background-color: #1a0b0d; }
 
 .events-button:hover,
 .world-clocks-button:hover,
@@ -280,8 +280,8 @@
   font-feature-settings: "tnum";
   letter-spacing: 4px;
   color: #ffe9eb;
-  /* program glow; 8-digit hex so switch-theme.sh still recolours it */
-  text-shadow: 0 0 24px #ff1f3daa;
+  /* program glow */
+  text-shadow: 0 0 24px #ff1f3d;
 }
 .unlock-dialog-clock .unlock-dialog-clock-date {
   font-family: "Space Mono", sans-serif;
@@ -290,7 +290,7 @@
   letter-spacing: 6px;
   text-transform: uppercase;
   color: #ff1f3d;
-  text-shadow: 0 0 10px #ff1f3d88;
+  text-shadow: 0 0 10px #ff1f3d;
 }
 .unlock-dialog-clock .unlock-dialog-clock-hint {
   font-family: "Space Mono", monospace;
@@ -313,7 +313,7 @@
   border-radius: 0;
   border: 1px solid #ff1f3d;
   /* the X avatar runs out of its frame; the glow carries it past the edge */
-  box-shadow: 0 0 28px #ff1f3d77;
+  box-shadow: 0 0 28px #ff1f3d;
   background-color: #0a0506;
 }
 .unlock-dialog .user-widget.vertical,
@@ -339,7 +339,7 @@
   font-size: 13px;
   letter-spacing: 3px;
   border-radius: 99px;
-  background-color: #1a0b0dcc;
+  background-color: #1a0b0d;
   color: #ffe9eb;
   border: 1px solid #2a1013;
   box-shadow: none;
@@ -539,7 +539,7 @@
 /* Open folder: a popup card with a mono title. */
 .app-folder-dialog {
   border-radius: 18px;
-  background-color: #120809e6;
+  background-color: #120809;
   border: 1px solid #2a1013;
   border-image: none;
   box-shadow: none;
@@ -572,7 +572,7 @@
 /* Search entry: pill with a hairline, accent edge when focused. */
 .search-entry {
   border-radius: 99px;
-  background-color: #1a0b0dcc;
+  background-color: #1a0b0d;
   color: #ffe9eb;
   border: 1px solid #2a1013;
   box-shadow: none;
@@ -581,7 +581,7 @@
   selected-color: #ffe9eb;
   font-family: "Space Mono", monospace;
 }
-.search-entry:hover { background-color: #2a1013cc; }
+.search-entry:hover { background-color: #2a1013; }
 .search-entry:focus {
   border-color: #ff1f3d;
   box-shadow: none;
@@ -592,7 +592,7 @@
 /* Search results: a card of 12px rows, mono status text. */
 .search-section-content {
   border-radius: 18px;
-  background-color: #120809e6;
+  background-color: #120809;
   border: 1px solid #2a1013;
   border-image: none;
 }
@@ -623,7 +623,7 @@
 .window-caption,
 .dash-label {
   border-radius: 99px !important;
-  background-color: #120809e6;
+  background-color: #120809;
   color: #ffe9eb;
   font-family: "Space Mono", monospace;
   font-size: 11px;

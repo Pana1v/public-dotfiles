@@ -44,7 +44,7 @@ if [ "$TARGET" != "$CURRENT" ]; then
         "$MOD"/files/ptyxis/rice.palette
         "$DOTFILES"/modules/gnome-extensions/files/sysmon-flair@pan.local/stylesheet.css
         "$DOTFILES"/modules/gnome-extensions/files/sysmon-flair@pan.local/brackets-sm.svg
-        "$DOTFILES"/modules/gnome-extensions/files/gnome-clipboard@b00f.github.io/stylesheet.css
+        "$DOTFILES"/modules/gnome-extensions/files/clip-deck@pan.local/stylesheet.css
         "$DOTFILES"/modules/cli-tools/files/yazi/theme.toml
         "$DOTFILES"/modules/cli-tools/files/bat/themes/Ares.tmTheme
         "$DOTFILES"/modules/cli-tools/files/delta.gitconfig
