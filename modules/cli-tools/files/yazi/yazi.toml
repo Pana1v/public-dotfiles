@@ -1,5 +1,5 @@
-# yazi 26.x. Only overrides; everything else is the preset. No theme.toml: the
-# preset theme uses ANSI colour names, so it already follows the rice palette.
+# yazi 26.x. Only overrides; everything else is the preset. Colours live in
+# theme.toml (Ares palette hexes).
 #:schema https://yazi-rs.github.io/schemas/yazi.json
 
 [mgr]
@@ -18,5 +18,5 @@ max_height = 1600
 # command and shows its ANSI output; CLICOLOR_FORCE keeps colour on through the pipe.
 [plugin]
 prepend_previewers = [
-    { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
+    { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s="$HOME/.config/glow/ares.json" "$1"' },
 ]

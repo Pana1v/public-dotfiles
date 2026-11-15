@@ -1,5 +1,6 @@
 import * as ClipboardItem from './clipboardItem.js';
-import * as Settings from './settings.js';
+import './clipboardItemText.js';
+import './clipboardItemImage.js';
 export class History {
     _history;
     constructor() {
@@ -11,37 +12,39 @@ export class History {
     delete(id) {
         this._history.delete(id);
     }
+    contains(id) {
+        return this._history.has(id);
+    }
     get(id) {
         return this._history.get(id);
     }
-    set(item) {
-        return this._history.set(item.id(), item);
-    }
     add(item) {
-        if (this._history.has(item.id())) {
-            let existing = this._history.get(item.id());
-            existing.usage++;
-            existing.usedAt = Date.now();
-            return true;
+        if (this._history.has(item.id)) {
+            const existing = this._history.get(item.id);
+            existing.updateLastUsed();
+            return false;
         }
-        this._history.set(item.id(), item);
+        this._history.set(item.id, item);
         return true;
     }
     trim(total) {
+        const removed = [];
         if (total <= 0) {
-            return;
+            return removed;
         }
-        let arr = this.getSorted(Settings.HISTORY_SORT_COPY_TIME);
+        const arr = this.getSorted('usedAt');
         for (let i = total; i < arr.length; ++i) {
-            let item = arr[i];
+            const item = arr[i];
             if (item.pinned) {
                 continue;
             }
-            this._history.delete(item.id());
+            this._history.delete(item.id);
+            removed.push(item);
         }
+        return removed;
     }
     items(only_pinned) {
-        let items = [];
+        const items = [];
         this._history.forEach((item, _) => {
             if (only_pinned) {
                 if (item.pinned) {
@@ -59,13 +62,13 @@ export class History {
     }
     setItems(items) {
         this._history.clear();
-        items.forEach(i => {
-            let item = new ClipboardItem.ClipboardItem(i.text, i.usage, i.pinned, i.copiedAt, i.usedAt, i.type, i.imagePath);
-            this._history.set(item.id(), item);
+        items.forEach((i) => {
+            const item = ClipboardItem.ClipboardItem.fromJSON(i);
+            this._history.set(item.id, item);
         });
     }
-    getSorted(sort_by) {
-        let arr = Array.from(this._history.values());
+    getSorted(by = 'copiedAt') {
+        const arr = Array.from(this._history.values());
         arr.sort((l, r) => {
             if (r.pinned && !l.pinned) {
                 return 1;
@@ -73,18 +76,7 @@ export class History {
             if (!r.pinned && l.pinned) {
                 return -1;
             }
-            switch (sort_by) {
-                case Settings.HISTORY_SORT_RECENT_USAGE:
-                    return r.usedAt - l.usedAt;
-                case Settings.HISTORY_SORT_COPY_TIME:
-                    return r.copiedAt - l.copiedAt;
-                case Settings.HISTORY_SORT_MOST_USAGE:
-                default:
-                    if (r.usage == l.usage) {
-                        return r.copiedAt - l.copiedAt;
-                    }
-                    return r.usage - l.usage;
-            }
+            return r[by] - l[by];
         });
         return arr;
     }

@@ -1,2 +1,5 @@
 # Extensions to keep off, even when the distro turns them on by default.
 tiling-assistant@ubuntu.com     # Ubuntu's tiler fights pop-shell
+space-bar@luchrioh              # second workspace switcher; ws-numbers covers it
+clipboard-history@alexsaveau.dev # clip-deck@pan.local (Super+V) replaces it
+gnome-clipboard@b00f.github.io   # clip-deck@pan.local (Super+V) replaces it

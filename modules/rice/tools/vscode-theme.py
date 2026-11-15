@@ -24,6 +24,23 @@ TEMPLATE = ROOT / "modules/vscode/files/tron-rice-theme/themes/tron-rice-color-t
 TEMPLATE_PALETTE = ROOT / "modules/rice/themes/tron.palette"
 HEX = re.compile(r"#([0-9a-fA-F]{6})([0-9a-fA-F]{2})?\b")
 
+# Keys pinned to a palette role after mapping, so the editor matches the
+# shell: accent for focus and state, hairline (surface) edges, selected rows
+# as a select fill with light text.
+OVERRIDES = {
+    "focusBorder": "accent",
+    "list.focusOutline": "accent",
+    "inputOption.activeBorder": "accent",
+    "sash.hoverBorder": "accent",
+    "commandCenter.activeBorder": "accent",
+    "badge.background": "accent",
+    "badge.foreground": "bg2",
+    "widget.border": "surface",
+    "list.activeSelectionForeground": "fg",
+    "menu.selectionForeground": "fg",
+    "quickInputList.focusForeground": "fg",
+}
+
 
 def palette(path):
     roles = {}
@@ -89,6 +106,9 @@ def main():
         return cache[base] + (m.group(2) or "")
 
     theme = json.loads(HEX.sub(swap, TEMPLATE.read_text()))
+    for key, role in OVERRIDES.items():
+        if role in dst:
+            theme["colors"][key] = dst[role]
     theme["name"] = "Rice"
     header = open(target_path).readline()
     blurb = re.sub(r"^#\s*role\s+hex\s*", "", header).strip()

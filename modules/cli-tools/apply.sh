@@ -25,6 +25,35 @@ link_file "$F/delta.gitconfig" "$HOME/.config/git/delta.gitconfig"
 link_file "$F/lazygit.yml" "$HOME/.config/lazygit/config.yml"
 link_file "$F/yazi/yazi.toml" "$HOME/.config/yazi/yazi.toml"
 link_file "$F/yazi/package.toml" "$HOME/.config/yazi/package.toml"
+link_file "$F/yazi/theme.toml" "$HOME/.config/yazi/theme.toml"
+
+# Ares palette for the TUIs. Hex colours, recoloured by rice/switch-theme.sh.
+link_file "$F/atuin/config.toml" "$HOME/.config/atuin/config.toml"
+link_file "$F/atuin/themes/ares.toml" "$HOME/.config/atuin/themes/ares.toml"
+link_file "$F/eza/theme.yml" "$HOME/.config/eza/theme.yml"
+link_file "$F/bat/themes/Ares.tmTheme" "$HOME/.config/bat/themes/Ares.tmTheme"
+link_file "$F/glow/ares.json" "$HOME/.config/glow/ares.json"
+
+# glow.yml stays a local file: glow does not expand ~ in its style path,
+# so only the style line is set, to the absolute path.
+GLOW_CONF="$HOME/.config/glow/glow.yml"
+GLOW_STYLE="style: \"$HOME/.config/glow/ares.json\""
+if [ -f "$GLOW_CONF" ] && grep -qxF "$GLOW_STYLE" "$GLOW_CONF"; then
+    log "ok      glow style"
+elif [ -f "$GLOW_CONF" ] && grep -q '^style:' "$GLOW_CONF"; then
+    run sed -i "s|^style:.*|$GLOW_STYLE|" "$GLOW_CONF"
+    log "set     glow style"
+else
+    run sh -c "printf '%s\n' '$GLOW_STYLE' >> '$GLOW_CONF'"
+    log "set     glow style"
+fi
+
+# mpv has no module of its own; its files live with the rice.
+MPV="$DOTFILES/modules/rice/files/mpv"
+link_file "$MPV/mpv.conf" "$HOME/.config/mpv/mpv.conf"
+for f in osc console context_menu; do
+    link_file "$MPV/script-opts/$f.conf" "$HOME/.config/mpv/script-opts/$f.conf"
+done
 
 # Plugins pinned in package.toml (piper: glow-rendered markdown preview).
 command -v ya >/dev/null && run ya pkg install
@@ -35,6 +64,10 @@ for pair in batcat:bat fdfind:fd; do
     real="/usr/bin/${pair%%:*}"
     [ -x "$real" ] && link_file "$real" "$HOME/.local/bin/${pair##*:}"
 done
+
+# bat (and delta, which reads bat's cache) only see Ares.tmTheme once cached.
+# Rerun after a palette switch.
+command -v batcat >/dev/null && run batcat cache --build >/dev/null
 
 # watchexec is in neither apt nor snap: built from crates.io with rustup.
 # --locked uses the versions the authors tested, not the newest resolvable.
