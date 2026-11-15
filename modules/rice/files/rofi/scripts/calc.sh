@@ -3,7 +3,7 @@
 # so the flow is: type an expression, Enter shows the answer, Enter on the
 # answer copies it. Units and conversions work too ("5 ft to m", "0x1f to dec").
 
-printf '\0prompt\x1fCalc\n'
+printf '\0prompt\x1fCALC\n'
 printf '\0markup-rows\x1ffalse\n'
 
 if ! command -v qalc >/dev/null; then

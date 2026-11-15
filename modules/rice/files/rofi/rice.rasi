@@ -12,7 +12,7 @@
      APPS  WINDOWS  RUN  CALC  FILES  KEYS  POWER    ESC
 */
 * {
-    card:      #120809e0;
+    card:      #120809ff;
     plate:     #1a0b0d;
     unlit:     #4a161b;
     fg:        #ffe9eb;
@@ -139,11 +139,11 @@ listview {
 /* Unlit rows are plain text; the lit row gets a plate, white text and a
    red edge like the selected conky row. */
 element {
-    padding:       7px 12px;
+    padding:       8px 14px;
     spacing:       14px;
-    border:        0 0 0 2px;
+    border:        1px;
     border-color:  transparent;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 element-icon {
     size:           24px;

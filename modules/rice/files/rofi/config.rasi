@@ -14,9 +14,9 @@ configuration {
     display-power: "POWER";
     display-ssh: "SSH";
     display-filebrowser: "FILES";
-    /* Generic name on a second, smaller line ("Web Browser" under "Brave");
-       [] drops the line for apps that don't set one. */
-    drun-display-format: "{name}[<span size='small' alpha='55%'>&#10;{generic}</span>]";
+    /* Generic name dimmed on the same line ("Brave  Web Browser"). A second
+       line overflowed the one-line row height and got clipped by the pill. */
+    drun-display-format: "{name}[<span alpha='45%'>  {generic}</span>]";
 
     /* Fuzzy matching ranked by fzf's scorer. With an empty query drun still
        lists by launch history, so frequent apps stay on top. */
