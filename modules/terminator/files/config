@@ -16,6 +16,11 @@
   switch_to_tab_9 = <Alt>9
   broadcast_off = <Shift><Control>m
   broadcast_all = <Shift><Control>b
+  go_left = <Alt>h
+  go_down = <Alt>j
+  go_up = <Alt>k
+  go_right = <Alt>l
+  layout_launcher = ""
 [profiles]
   [[default]]
     background_color = "#0a0506"
