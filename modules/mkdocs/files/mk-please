@@ -1,0 +1,238 @@
+#!/usr/bin/env bash
+# mk-please [DIR=.] [PORT=auto from 8765] [TITLE=dir name]
+# Serve any folder of markdown as a live MkDocs site in the current kitty rice.
+# Colors are read from ~/.config/kitty/current-theme.conf at start, so restart after switch-theme.sh.
+# shortcut: ignores a mkdocs.yml in DIR (nav, plugins); point DIR at the docs folder itself.
+set -euo pipefail
+
+dir=$(realpath "${1:-.}")
+title=${3:-$(basename "$dir")}
+theme=~/.config/kitty/current-theme.conf
+[[ -d "$dir" ]] || { echo "mk-please: no such folder: $dir" >&2; exit 1; }
+[[ -f "$theme" ]] || { echo "mk-please: missing $theme" >&2; exit 1; }
+
+# first free port from 8765 so several folders can be served at once
+port=${2:-$(python3 -c '
+import socket
+for p in range(8765, 8865):
+    with socket.socket() as s:
+        if s.connect_ex(("127.0.0.1", p)): print(p); break')}
+
+kc() { awk -v k="$1" '$1==k {print $2; exit}' "$theme"; }
+bg=$(kc background); fg=$(kc foreground); sel=$(kc selection_background)
+bar=$(kc tab_bar_background); panel=$(kc inactive_tab_background); border=$(kc inactive_border_color)
+red=$(kc color1); soft=$(kc color2); gold=$(kc color3); primary=$(kc color4)
+link=$(kc color6); dim=$(kc color8); pale=$(kc color7)
+
+# config and theme override live outside DIR so nothing is written into the served folder
+work=${XDG_RUNTIME_DIR:-/tmp}/mk-please/$(printf '%s' "$dir" | md5sum | cut -c1-12)
+mkdir -p "$work/overrides"
+
+cat > "$work/overrides/main.html" <<EOF
+{% extends "base.html" %}
+{% block extrahead %}
+<style>
+:root, [data-md-color-scheme="slate"] {
+  --md-default-bg-color: $bg;
+  --md-default-fg-color: $fg;
+  --md-default-fg-color--light: $pale;
+  --md-default-fg-color--lighter: $dim;
+  --md-default-fg-color--lightest: $border;
+  --md-primary-fg-color: $bar;
+  --md-primary-bg-color: $fg;
+  --md-accent-fg-color: $red;
+  --md-typeset-color: $fg;
+  --md-typeset-a-color: $link;
+  --md-typeset-mark-color: $sel;
+  --md-typeset-table-color: $border;
+  --md-code-bg-color: $panel;
+  --md-code-fg-color: $pale;
+  --md-code-hl-color: $sel;
+  --md-footer-bg-color: $bar;
+  --md-footer-bg-color--dark: $bar;
+  --md-mermaid-node-bg-color: $panel;
+  --md-mermaid-node-fg-color: $fg;
+  --md-mermaid-edge-color: $primary;
+  --md-mermaid-label-bg-color: $bg;
+  --md-mermaid-label-fg-color: $pale;
+  --md-admonition-bg-color: $panel;
+  --md-text-font: "JetBrains Mono";
+  --md-code-font: "JetBrains Mono";
+}
+body, .md-typeset { font-family: "JetBrains Mono", monospace; }
+.md-header, .md-tabs { background: $bar; border-bottom: 1px solid $primary; }
+.md-typeset h1, .md-typeset h2 { color: $red; }
+.md-typeset h3, .md-typeset h4 { color: $soft; }
+.md-typeset code { color: $gold; }
+.md-typeset table:not([class]) th { background: $panel; color: $red; }
+.md-nav__link--active, .md-nav__link:hover { color: $red !important; }
+::selection { background: $sel; color: $fg; }
+* { border-radius: 0 !important; }
+.mk-author { float: left; font-size: .65rem; padding: 0 .5em; margin: .5em 0; border: 1px solid $soft; color: $soft; }
+.mk-author--human { border-color: $red; color: $red; }
+.mermaid { cursor: zoom-in; }
+.mk-zoom { position: fixed; inset: 0; z-index: 10; background: $bg; overflow: hidden; cursor: grab; display: flex; align-items: center; justify-content: center; }
+.mk-zoom .mermaid { width: 95vw; cursor: grab; transform-origin: 0 0; }
+</style>
+EOF
+
+cat >> "$work/overrides/main.html" <<'EOF'
+<style>
+/* pdf-mode is set by the PDF buttons: hide chrome, keep rice colors in the PDF */
+html.pdf-mode .md-header, html.pdf-mode .md-tabs, html.pdf-mode .md-sidebar, html.pdf-mode .md-footer,
+html.pdf-mode .md-content__button, html.pdf-mode .mk-author, html.pdf-mode .md-top, html.pdf-mode .headerlink { display: none !important; }
+html.pdf-mode .md-main__inner { margin: 0; padding: 0 }
+html.pdf-mode .md-content__inner { margin: 0; padding: 1.2rem 1.6rem; }
+html.pdf-continuous body { width: 900px; }
+html.pdf-continuous .md-grid { max-width: none; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { background: var(--md-default-bg-color) !important; }
+  /* never split a table, diagram, code block or callout across pages */
+  .md-typeset table:not([class]) { display: table; }
+  table, tr, pre, .highlight, .mermaid, .admonition, details, blockquote, figure, img { break-inside: avoid; }
+  h1, h2, h3, h4, h5 { break-after: avoid; }
+  thead { display: table-header-group; }
+}
+</style>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+// shortcut: Chrome caps one PDF page near 200 inches, so very long continuous exports still split; fine for plan-sized pages.
+function mkPdf(mode) {
+  const html = document.documentElement, page = document.createElement("style");
+  html.classList.add("pdf-mode");
+  if (mode === "continuous") {
+    html.classList.add("pdf-continuous");
+    page.textContent = `@page { size: 900px ${document.body.scrollHeight + 4}px; margin: 0 }`;
+  } else {
+    page.textContent = "@page { size: A4; margin: 0 }";
+  }
+  document.head.appendChild(page);
+  addEventListener("afterprint", () => { html.classList.remove("pdf-mode", "pdf-continuous"); page.remove(); }, { once: true });
+  print();
+}
+
+function mkCopy(btn) {
+  const md = JSON.parse(document.getElementById("mk-md").textContent);
+  navigator.clipboard.writeText(md).then(() => { btn.style.color = "var(--md-accent-fg-color)"; setTimeout(() => btn.style.color = "", 800); });
+}
+
+// Material renders Mermaid in a closed shadow root, so zoom moves the whole host into an overlay; Esc closes
+function mkZoom(el) {
+  const home = el.nextSibling, parent = el.parentNode, box = document.createElement("div");
+  let s = 1, x = 0, y = 0, drag = null;
+  const apply = () => el.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+  box.className = "mk-zoom";
+  parent.insertBefore(box, el); box.appendChild(el);
+  box.addEventListener("wheel", e => {
+    e.preventDefault();
+    const k = e.deltaY < 0 ? 1.15 : 1 / 1.15, r0 = el.getBoundingClientRect();
+    const px = e.clientX - r0.left, py = e.clientY - r0.top;
+    x -= px * (k - 1); y -= py * (k - 1); s *= k; apply();
+  }, { passive: false });
+  box.addEventListener("pointerdown", e => { drag = [e.clientX - x, e.clientY - y]; box.setPointerCapture(e.pointerId); });
+  box.addEventListener("pointermove", e => { if (!drag) { return; } x = e.clientX - drag[0]; y = e.clientY - drag[1]; apply(); });
+  box.addEventListener("pointerup", () => drag = null);
+  document.addEventListener("keydown", function done(e) {
+    if (e.key !== "Escape") { return; }
+    el.style.transform = ""; parent.insertBefore(el, home); box.remove();
+    document.removeEventListener("keydown", done);
+  });
+}
+
+// delegated so it survives navigation.instant page swaps
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-mk], .mermaid");
+  if (!t || t.closest(".mk-zoom")) { return; }
+  if (t.classList.contains("mermaid")) { mkZoom(t); return; }
+  e.preventDefault();
+  if (t.dataset.mk === "copy") { mkCopy(t); } else { mkPdf(t.dataset.mk); }
+});
+</script>
+{% endblock %}
+EOF
+
+mkdir -p "$work/overrides/partials"
+cat > "$work/overrides/partials/actions.html" <<'EOF'
+{% if page.meta.author %}<span class="mk-author mk-author--{{ page.meta.author }}">{{ page.meta.author }}</span>{% endif %}
+{% if config.extra.obsidian_root and page.file.abs_src_path %}
+<a href="obsidian://open?path={{ (config.extra.obsidian_root ~ '/' ~ page.file.src_uri) | urlencode }}" title="Edit in Obsidian" class="md-content__button md-icon">{% include ".icons/material/pencil.svg" %}</a>
+{% endif %}
+<a href="#" data-mk="continuous" title="PDF, one continuous page" class="md-content__button md-icon">{% include ".icons/material/arrow-expand-vertical.svg" %}</a>
+<a href="#" data-mk="pages" title="PDF, A4 pages (tables and diagrams kept whole)" class="md-content__button md-icon">{% include ".icons/material/file-pdf-box.svg" %}</a>
+<a href="#" data-mk="copy" title="Copy page markdown" class="md-content__button md-icon">{% include ".icons/material/content-copy.svg" %}</a>
+<script type="application/json" id="mk-md">{{ page.markdown | tojson }}</script>
+EOF
+
+# Edit button opens Obsidian when DIR is inside a vault or linked into one (e.g. vault/MkDocs -> DIR)
+obsidian_root=$(python3 - "$dir" <<'EOF'
+import json, os, sys
+target, cfg = sys.argv[1], os.path.expanduser("~/.config/obsidian/obsidian.json")
+vaults = [v["path"] for v in json.load(open(cfg))["vaults"].values()] if os.path.exists(cfg) else []
+for v in vaults:
+    if target == v or target.startswith(v + "/"):
+        print(target); sys.exit()
+    for root, dirs, _ in os.walk(v):
+        if root.count(os.sep) - v.count(os.sep) >= 2:
+            dirs[:] = []
+        for d in dirs:
+            p = os.path.join(root, d)
+            if os.path.islink(p) and os.path.realpath(p) == target:
+                print(p); sys.exit()
+EOF
+)
+
+# the reloader does not follow symlinks, so watch their targets too
+watch=$(find "$dir" -type l -xtype d -exec realpath {} \; | sort -u | sed 's/.*/"&"/' | paste -sd,)
+
+# generated pages: tags.md lists pages per front matter tag; index.md lists every page when DIR has none
+cat > "$work/index_hook.py" <<'EOF'
+from mkdocs.structure.files import File
+
+def on_files(files, config):
+    if not files.get_file_from_path("tags.md"):
+        files.append(File.generated(config, "tags.md", content="# Tags\n\n<!-- material/tags -->\n"))
+    if files.get_file_from_path("index.md") or files.get_file_from_path("README.md"):
+        return files
+    pages = sorted(f.src_uri for f in files.documentation_pages())
+    body = "# " + config.site_name + "\n\n" + "\n".join(f"- [{p[:-3]}]({p})" for p in pages)
+    files.append(File.generated(config, "index.md", content=body))
+    return files
+EOF
+
+cat > "$work/mkdocs.yml" <<EOF
+site_name: "$title"
+docs_dir: "$dir"
+site_dir: "$work/site"
+hooks: ["$work/index_hook.py"]
+plugins: [search, tags]
+extra: {obsidian_root: "$obsidian_root"}
+watch: [$watch]
+theme:
+  name: material
+  custom_dir: "$work/overrides"
+  font: false
+  palette: {scheme: slate}
+  features: [navigation.instant, navigation.sections, navigation.indexes, toc.follow, search.highlight, content.code.copy]
+markdown_extensions:
+  - tables
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.tasklist: {custom_checkbox: true}
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - toc: {permalink: true}
+  - pymdownx.snippets: {base_path: ["$dir"], check_paths: true}
+EOF
+
+echo "mk-please: $dir -> http://127.0.0.1:$port"
+open_flag=(); [[ -t 1 ]] && open_flag=(--open)
+NO_MKDOCS_2_WARNING=1 exec uvx --with mkdocs-material mkdocs serve -f "$work/mkdocs.yml" -a "127.0.0.1:$port" "${open_flag[@]}"
