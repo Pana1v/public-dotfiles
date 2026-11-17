@@ -2,94 +2,94 @@
 colourful: true
 
 filekinds:
-  normal: {foreground: "#f2c4c8"}
-  directory: {foreground: "#ff1f3d", is_bold: true}
-  symlink: {foreground: "#ff6b7d"}
-  pipe: {foreground: "#ffc14d"}
-  block_device: {foreground: "#ffc14d", is_bold: true}
-  char_device: {foreground: "#ffc14d", is_bold: true}
-  socket: {foreground: "#ff4f8b", is_bold: true}
-  special: {foreground: "#ff4f8b"}
-  executable: {foreground: "#52e5ff", is_bold: true}
-  mount_point: {foreground: "#ff1f3d", is_bold: true, is_underline: true}
+  normal: {foreground: "#f5c6c6"}
+  directory: {foreground: "#d10a10", is_bold: true}
+  symlink: {foreground: "#ff3b3b"}
+  pipe: {foreground: "#ffb84a"}
+  block_device: {foreground: "#ffb84a", is_bold: true}
+  char_device: {foreground: "#ffb84a", is_bold: true}
+  socket: {foreground: "#ff3d6b", is_bold: true}
+  special: {foreground: "#ff3d6b"}
+  executable: {foreground: "#ff7070", is_bold: true}
+  mount_point: {foreground: "#d10a10", is_bold: true, is_underline: true}
 
 perms:
-  user_read: {foreground: "#ffc14d"}
-  user_write: {foreground: "#ff3b1f"}
-  user_execute_file: {foreground: "#52e5ff"}
-  user_execute_other: {foreground: "#52e5ff"}
-  group_read: {foreground: "#b86a72"}
-  group_write: {foreground: "#b86a72"}
-  group_execute: {foreground: "#b86a72"}
-  other_read: {foreground: "#8a3a44"}
-  other_write: {foreground: "#8a3a44"}
-  other_execute: {foreground: "#8a3a44"}
-  special_user_file: {foreground: "#ff4f8b"}
-  special_other: {foreground: "#ff4f8b"}
-  attribute: {foreground: "#8a3a44"}
+  user_read: {foreground: "#ffb84a"}
+  user_write: {foreground: "#ff1a1a"}
+  user_execute_file: {foreground: "#ff7070"}
+  user_execute_other: {foreground: "#ff7070"}
+  group_read: {foreground: "#c8454a"}
+  group_write: {foreground: "#c8454a"}
+  group_execute: {foreground: "#c8454a"}
+  other_read: {foreground: "#9e2228"}
+  other_write: {foreground: "#9e2228"}
+  other_execute: {foreground: "#9e2228"}
+  special_user_file: {foreground: "#ff3d6b"}
+  special_other: {foreground: "#ff3d6b"}
+  attribute: {foreground: "#9e2228"}
 
 size:
-  major: {foreground: "#b86a72"}
-  minor: {foreground: "#b86a72"}
-  number_byte: {foreground: "#f2c4c8"}
-  number_kilo: {foreground: "#f2c4c8"}
-  number_mega: {foreground: "#ffa3b0"}
-  number_giga: {foreground: "#ff6b7d"}
-  number_huge: {foreground: "#ff1f3d"}
-  unit_byte: {foreground: "#8a3a44"}
-  unit_kilo: {foreground: "#8a3a44"}
-  unit_mega: {foreground: "#b86a72"}
-  unit_giga: {foreground: "#ff6b7d"}
-  unit_huge: {foreground: "#ff1f3d"}
+  major: {foreground: "#c8454a"}
+  minor: {foreground: "#c8454a"}
+  number_byte: {foreground: "#f5c6c6"}
+  number_kilo: {foreground: "#f5c6c6"}
+  number_mega: {foreground: "#ff9a9a"}
+  number_giga: {foreground: "#ff3b3b"}
+  number_huge: {foreground: "#d10a10"}
+  unit_byte: {foreground: "#9e2228"}
+  unit_kilo: {foreground: "#9e2228"}
+  unit_mega: {foreground: "#c8454a"}
+  unit_giga: {foreground: "#ff3b3b"}
+  unit_huge: {foreground: "#d10a10"}
 
 users:
-  user_you: {foreground: "#f2c4c8"}
-  user_root: {foreground: "#ff3b1f"}
-  user_other: {foreground: "#ffc14d"}
-  group_yours: {foreground: "#b86a72"}
-  group_other: {foreground: "#8a3a44"}
-  group_root: {foreground: "#ff3b1f"}
+  user_you: {foreground: "#f5c6c6"}
+  user_root: {foreground: "#ff1a1a"}
+  user_other: {foreground: "#ffb84a"}
+  group_yours: {foreground: "#c8454a"}
+  group_other: {foreground: "#9e2228"}
+  group_root: {foreground: "#ff1a1a"}
 
 links:
-  normal: {foreground: "#b86a72"}
-  multi_link_file: {foreground: "#ffc14d"}
+  normal: {foreground: "#c8454a"}
+  multi_link_file: {foreground: "#ffb84a"}
 
 git:
-  new: {foreground: "#52e5ff"}
-  modified: {foreground: "#ffc14d"}
-  deleted: {foreground: "#ff3b1f"}
-  renamed: {foreground: "#ff6b7d"}
-  typechange: {foreground: "#ff4f8b"}
-  ignored: {foreground: "#5e1f25"}
-  conflicted: {foreground: "#ff3b1f", is_bold: true}
+  new: {foreground: "#ff7070"}
+  modified: {foreground: "#ffb84a"}
+  deleted: {foreground: "#ff1a1a"}
+  renamed: {foreground: "#ff3b3b"}
+  typechange: {foreground: "#ff3d6b"}
+  ignored: {foreground: "#641418"}
+  conflicted: {foreground: "#ff1a1a", is_bold: true}
 
 git_repo:
-  branch_main: {foreground: "#ff1f3d"}
-  branch_other: {foreground: "#ff4f8b"}
-  git_clean: {foreground: "#52e5ff"}
-  git_dirty: {foreground: "#ffc14d"}
+  branch_main: {foreground: "#d10a10"}
+  branch_other: {foreground: "#ff3d6b"}
+  git_clean: {foreground: "#ff7070"}
+  git_dirty: {foreground: "#ffb84a"}
 
 file_type:
-  image: {foreground: "#ffc14d"}
-  video: {foreground: "#ff4f8b"}
-  music: {foreground: "#ff4f8b"}
-  lossless: {foreground: "#ff4f8b"}
-  crypto: {foreground: "#ff3b1f"}
-  document: {foreground: "#ffa3b0"}
-  compressed: {foreground: "#ff7a29"}
-  temp: {foreground: "#5e1f25"}
-  compiled: {foreground: "#8a3a44"}
-  build: {foreground: "#ffc14d", is_underline: true}
-  source: {foreground: "#ffe9eb"}
+  image: {foreground: "#ffb84a"}
+  video: {foreground: "#ff3d6b"}
+  music: {foreground: "#ff3d6b"}
+  lossless: {foreground: "#ff3d6b"}
+  crypto: {foreground: "#ff1a1a"}
+  document: {foreground: "#ff9a9a"}
+  compressed: {foreground: "#ff7a3d"}
+  temp: {foreground: "#641418"}
+  compiled: {foreground: "#9e2228"}
+  build: {foreground: "#ffb84a", is_underline: true}
+  source: {foreground: "#ffe9e9"}
 
-punctuation: {foreground: "#5e1f25"}
-date: {foreground: "#b86a72"}
-inode: {foreground: "#8a3a44"}
-blocks: {foreground: "#8a3a44"}
-header: {foreground: "#ff1f3d", is_underline: true}
-octal: {foreground: "#ff6b7d"}
-flags: {foreground: "#8a3a44"}
-symlink_path: {foreground: "#ff6b7d"}
-control_char: {foreground: "#ff3b1f"}
-broken_symlink: {foreground: "#ff3b1f"}
+punctuation: {foreground: "#641418"}
+date: {foreground: "#c8454a"}
+inode: {foreground: "#9e2228"}
+blocks: {foreground: "#9e2228"}
+header: {foreground: "#d10a10", is_underline: true}
+octal: {foreground: "#ff3b3b"}
+flags: {foreground: "#9e2228"}
+symlink_path: {foreground: "#ff3b3b"}
+control_char: {foreground: "#ff1a1a"}
+broken_symlink: {foreground: "#ff1a1a"}
 broken_path_overlay: {is_underline: true}

@@ -12,16 +12,16 @@
      APPS  WINDOWS  RUN  CALC  FILES  KEYS  POWER    ESC
 */
 * {
-    card:      #120809ff;
-    plate:     #1a0b0d;
-    unlit:     #4a161b;
-    fg:        #ffe9eb;
+    card:      #120506ff;
+    plate:     #180708;
+    unlit:     #4a0f12;
+    fg:        #ffe9e9;
     soft:      #fff4f5;
-    faint:     #ffa3b0;
-    dim:       #8a3a44;
-    accent:    #ff1f3d;
-    ok:        #52e5ff;
-    bad:       #ff3b1f;
+    faint:     #ff9a9a;
+    dim:       #9e2228;
+    accent:    #d10a10;
+    ok:        #ff7070;
+    bad:       #ff1a1a;
 
     background-color: transparent;
     text-color:       @fg;
@@ -36,7 +36,7 @@ window {
     width:            680px;
     background-color: @card;
     border:           1px;
-    border-color:     #2a1013;
+    border-color:     #2a0c0e;
     border-radius:    18px;
     padding:          18px 20px 14px 20px;
 }
@@ -151,7 +151,7 @@ element-icon {
 }
 element-text {
     vertical-align: 0.5;
-    highlight:      bold #ff1f3d;
+    highlight:      bold #d10a10;
     text-color:     inherit;
 }
 element normal.normal,

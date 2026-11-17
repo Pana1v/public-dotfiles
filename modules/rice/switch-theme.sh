@@ -165,6 +165,12 @@ if [ -d "$PILL_SCHEMAS" ]; then
     pill show-pill-border false
 fi
 
+# Pop-shell's focus outline is a gsettings colour too; the shell CSS only sets its width.
+POP_SCHEMAS="$HOME/.local/share/gnome-shell/extensions/pop-shell@system76.com/schemas"
+if [ -d "$POP_SCHEMAS" ]; then
+    gsettings --schemadir "$POP_SCHEMAS" set org.gnome.shell.extensions.pop-shell hint-color-rgba "rgb($(rgb accent))"
+fi
+
 WP="$(setting wallpaper)"
 # The black hole backdrop (RICE_BACKDROP=ember) brings its own still, the
 # frame blackhole-live animates.

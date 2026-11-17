@@ -12,6 +12,7 @@ live-lockscreen@nick-redwill
 rofi-focus@pan.local
 pop-shell@system76.com
 ws-numbers@pan.local
+cet-clock@pan.local
 grid-live@pan.local
 conky-glass@pan.local
 power-extras@pan.local

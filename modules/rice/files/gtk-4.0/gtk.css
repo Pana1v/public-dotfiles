@@ -1,64 +1,64 @@
 /* Rice palette for libadwaita apps. These named colors are libadwaita's
    public recoloring API; libadwaita ignores the gtk-theme setting. */
-@define-color accent_color #ff1f3d;
-@define-color accent_bg_color #ff1f3d;
-@define-color accent_fg_color #050203;
-@define-color destructive_color #ff3b1f;
-@define-color destructive_bg_color #ff3b1f;
-@define-color destructive_fg_color #050203;
-@define-color success_color #52e5ff;
-@define-color success_bg_color #52e5ff;
-@define-color success_fg_color #050203;
-@define-color warning_color #ffc14d;
-@define-color warning_bg_color #ffc14d;
-@define-color warning_fg_color #050203;
-@define-color error_color #ff3b1f;
-@define-color error_bg_color #ff3b1f;
-@define-color error_fg_color #050203;
+@define-color accent_color #d10a10;
+@define-color accent_bg_color #d10a10;
+@define-color accent_fg_color #060101;
+@define-color destructive_color #ff1a1a;
+@define-color destructive_bg_color #ff1a1a;
+@define-color destructive_fg_color #060101;
+@define-color success_color #ff7070;
+@define-color success_bg_color #ff7070;
+@define-color success_fg_color #060101;
+@define-color warning_color #ffb84a;
+@define-color warning_bg_color #ffb84a;
+@define-color warning_fg_color #060101;
+@define-color error_color #ff1a1a;
+@define-color error_bg_color #ff1a1a;
+@define-color error_fg_color #060101;
 
 /* Frosted glass: the window itself is the only tinted layer, near black at
    80% (cc), and Blur my Shell blurs what is behind it. View, header bar and
    sidebar are transparent so the layers don't stack into an opaque block.
    Apps get the blur only if their window class is in Blur my Shell's
    application whitelist (gnome module, shell.ini). */
-@define-color window_bg_color #050203cc;
-@define-color window_fg_color #ffe9eb;
+@define-color window_bg_color #060101cc;
+@define-color window_fg_color #ffe9e9;
 @define-color view_bg_color transparent;
-@define-color view_fg_color #ffe9eb;
+@define-color view_fg_color #ffe9e9;
 @define-color headerbar_bg_color transparent;
-@define-color headerbar_fg_color #ffe9eb;
-@define-color headerbar_border_color #2a1013;
+@define-color headerbar_fg_color #ffe9e9;
+@define-color headerbar_border_color #2a0c0e;
 @define-color headerbar_backdrop_color transparent;
 @define-color headerbar_shade_color rgba(0, 0, 0, 0.36);
 @define-color sidebar_bg_color transparent;
-@define-color sidebar_fg_color #f2c4c8;
+@define-color sidebar_fg_color #f5c6c6;
 @define-color sidebar_backdrop_color transparent;
 @define-color sidebar_shade_color rgba(0, 0, 0, 0.36);
 @define-color secondary_sidebar_bg_color transparent;
 @define-color secondary_sidebar_backdrop_color transparent;
-@define-color card_bg_color #1a0b0d;
-@define-color card_fg_color #ffe9eb;
+@define-color card_bg_color #180708;
+@define-color card_fg_color #ffe9e9;
 @define-color card_shade_color rgba(0, 0, 0, 0.36);
-@define-color dialog_bg_color #050203ee;
-@define-color dialog_fg_color #ffe9eb;
-@define-color popover_bg_color #120809e6;
-@define-color popover_fg_color #ffe9eb;
+@define-color dialog_bg_color #060101ee;
+@define-color dialog_fg_color #ffe9e9;
+@define-color popover_bg_color #120506e6;
+@define-color popover_fg_color #ffe9e9;
 @define-color shade_color rgba(0, 0, 0, 0.36);
 @define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
-@define-color thumbnail_bg_color #1a0b0d;
-@define-color thumbnail_fg_color #ffe9eb;
+@define-color thumbnail_bg_color #180708;
+@define-color thumbnail_fg_color #ffe9e9;
 
 /* Titlebars: flat with a hairline under them. Window corners stay at
    libadwaita's default so they match the shell's rounded cards. Also
    styles the frames mutter draws for X11 apps (VS Code, Brave). */
 headerbar,
 .titlebar {
-  box-shadow: inset 0 -1px #2a1013;
+  box-shadow: inset 0 -1px #2a0c0e;
 }
 
 /* Window controls: round, dim until hovered, close turns red. */
 windowcontrols > button {
-  color: #b86a72;
+  color: #c8454a;
 }
 windowcontrols > button > image {
   border-radius: 99px;
@@ -66,14 +66,14 @@ windowcontrols > button > image {
   box-shadow: none;
 }
 windowcontrols > button:hover {
-  color: #ffe9eb;
+  color: #ffe9e9;
 }
 windowcontrols > button:hover > image {
-  background: #2a1013;
+  background: #2a0c0e;
 }
 windowcontrols > button.close:hover > image {
-  background: #ff3b1f;
-  color: #050203;
+  background: #ff1a1a;
+  color: #060101;
 }
 
 /* ── Files (Nautilus) and other sidebars ─────────────────────────────
@@ -84,24 +84,24 @@ windowcontrols > button.close:hover > image {
   border-radius: 12px;
 }
 .navigation-sidebar > row:hover {
-  background-color: #2a1013;
+  background-color: #2a0c0e;
 }
 .navigation-sidebar > row:selected {
-  background-color: #4a161b;
-  color: #ffe9eb;
+  background-color: #4a0f12;
+  color: #ffe9e9;
 }
 .navigation-sidebar > row:selected image {
-  color: #ff1f3d;
+  color: #d10a10;
 }
 .navigation-sidebar .disk-space-used {
-  color: #ff1f3d;
+  color: #d10a10;
 }
 
 /* Path bar: a pill with a hairline, mono path, current folder in the accent. */
 .nautilus-pathbar {
   border-radius: 99px;
-  background-color: #1a0b0d;
-  box-shadow: inset 0 0 0 1px #2a1013;
+  background-color: #180708;
+  box-shadow: inset 0 0 0 1px #2a0c0e;
 }
 .nautilus-pathbar > scrolledwindow undershoot.left,
 .nautilus-pathbar > scrolledwindow undershoot.right {
@@ -112,10 +112,10 @@ windowcontrols > button.close:hover > image {
   font-family: "Space Mono";
 }
 .nautilus-path-button:hover {
-  background-color: #2a1013;
+  background-color: #2a0c0e;
 }
 .nautilus-path-button.current-dir label {
-  color: #ff1f3d;
+  color: #d10a10;
   font-weight: bold;
 }
 
@@ -125,7 +125,7 @@ windowcontrols > button.close:hover > image {
   border-radius: 99px;
 }
 .nautilus-query-editor:focus-within {
-  box-shadow: inset 0 0 0 1px #ff1f3d;
+  box-shadow: inset 0 0 0 1px #d10a10;
 }
 
 /* Grid and list views. */
@@ -136,41 +136,41 @@ windowcontrols > button.close:hover > image {
 }
 .nautilus-grid-view gridview > child:hover,
 .nautilus-list-view columnview > listview > row:hover {
-  background-color: #1a0b0d;
+  background-color: #180708;
 }
 .nautilus-grid-view gridview > child:selected,
 .nautilus-list-view columnview > listview > row:selected {
-  background-color: #4a161b;
-  color: #ffe9eb;
-  box-shadow: inset 0 0 0 1px #ff1f3d;
+  background-color: #4a0f12;
+  color: #ffe9e9;
+  box-shadow: inset 0 0 0 1px #d10a10;
 }
 .nautilus-list-view columnview > header > button {
   font-family: "Space Mono";
-  color: #b86a72;
+  color: #c8454a;
 }
 gridview > rubberband,
 columnview > listview > rubberband,
 listview > rubberband {
   border-radius: 12px;
-  border: 1px solid #ff1f3d;
-  background-color: #ff1f3d33;
+  border: 1px solid #d10a10;
+  background-color: #d10a1033;
 }
 
 /* Status bar that floats over the bottom right of the view. */
 .floating-bar {
   border-radius: 99px;
   font-family: "Space Mono";
-  background-color: #120809e6;
-  box-shadow: inset 0 0 0 1px #2a1013;
+  background-color: #120506e6;
+  box-shadow: inset 0 0 0 1px #2a0c0e;
 }
 
 /* Starred marker and the free/used disk bars in Properties. */
 .nautilus-view-cell .star.starred,
 .star.starred {
-  color: #ff1f3d;
+  color: #d10a10;
 }
 .disk-space-used {
-  color: #ff1f3d;
+  color: #d10a10;
 }
 
 /* ── Popovers, menus, tabs, toasts ───────────────────────────────────
@@ -178,10 +178,10 @@ listview > rubberband {
    rows inside at 12px. */
 popover > contents {
   border-radius: 18px;
-  box-shadow: 0 0 0 1px #2a1013;
+  box-shadow: 0 0 0 1px #2a0c0e;
 }
 popover > arrow {
-  border: 1px solid #2a1013;
+  border: 1px solid #2a0c0e;
 }
 popover.menu modelbutton,
 popover.menu > contents row {
@@ -189,45 +189,45 @@ popover.menu > contents row {
 }
 popover.menu modelbutton:hover,
 popover.menu modelbutton:selected {
-  background-color: #2a1013;
+  background-color: #2a0c0e;
 }
 tabbar tab {
   border-radius: 12px;
 }
 tabbar tab:selected {
-  box-shadow: inset 0 -2px #ff1f3d;
+  box-shadow: inset 0 -2px #d10a10;
 }
 toast {
   border-radius: 99px;
-  background-color: #120809e6;
-  color: #ffe9eb;
-  box-shadow: 0 0 0 1px #2a1013;
+  background-color: #120506e6;
+  color: #ffe9e9;
+  box-shadow: 0 0 0 1px #2a0c0e;
 }
 
 /* Selection: dark red fill, light text, like the shell's selected rows. */
 selection,
 text selection,
 label > selection {
-  background-color: #4a161b;
-  color: #ffe9eb;
+  background-color: #4a0f12;
+  color: #ffe9e9;
 }
 
 /* Scrollbars: thin round thumbs in the dim role, accent while dragged. */
 scrollbar > range > trough > slider {
-  background-color: #5e1f25;
+  background-color: #641418;
 }
 scrollbar > range > trough > slider:hover {
-  background-color: #8a3a44;
+  background-color: #9e2228;
 }
 scrollbar > range > trough > slider:active {
-  background-color: #ff1f3d;
+  background-color: #d10a10;
 }
 
 /* ── Glass windows ───────────────────────────────────────────────────
    libadwaita 1.9 reads CSS variables first; set them too so Ubuntu's
    patched stylesheet can't put its grey sidebar back. */
 :root {
-  --window-bg-color: #050203cc;
+  --window-bg-color: #060101cc;
   --view-bg-color: transparent;
   --headerbar-bg-color: transparent;
   --headerbar-backdrop-color: transparent;
@@ -235,12 +235,12 @@ scrollbar > range > trough > slider:active {
   --sidebar-backdrop-color: transparent;
   --secondary-sidebar-bg-color: transparent;
   --secondary-sidebar-backdrop-color: transparent;
-  --dialog-bg-color: #050203ee;
-  --popover-bg-color: #120809e6;
+  --dialog-bg-color: #060101ee;
+  --popover-bg-color: #120506e6;
 }
 window.background,
 window.view {
-  background-color: #050203cc;
+  background-color: #060101cc;
 }
 .sidebar-pane,
 .sidebar-pane:backdrop,
@@ -260,20 +260,20 @@ columnview {
 }
 /* A hairline instead of a fill marks the sidebar edge. */
 .sidebar-pane:dir(ltr) {
-  border-right: 1px solid #2a1013;
+  border-right: 1px solid #2a0c0e;
 }
 .sidebar-pane:dir(rtl) {
-  border-left: 1px solid #2a1013;
+  border-left: 1px solid #2a0c0e;
 }
 /* Preference rows and cards: a faint red-black tint so they still read as
    groups on glass. */
 .boxed-list,
 .card,
 list.boxed-list > row {
-  background-color: #1a0b0d99;
+  background-color: #18070899;
 }
 /* Hairline edge instead of the drop shadow, like the shell cards. */
 .boxed-list,
 .card {
-  box-shadow: 0 0 0 1px #2a1013;
+  box-shadow: 0 0 0 1px #2a0c0e;
 }

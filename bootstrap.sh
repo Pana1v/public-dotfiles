@@ -372,6 +372,8 @@ if [ -n "$CHOSEN_PRESET" ]; then
         local_env_set PRESET "$CHOSEN_PRESET"
         local_env_set PROFILE "$(preset_field "$CHOSEN_PRESET" PROFILE)"
         local_env_set CONKY_WIDGETS "$(preset_field "$CHOSEN_PRESET" CONKY_WIDGETS)"
+        # A preset may name its palette (RICE_THEME); --theme still wins.
+        [ -n "$THEME_ARG" ] || THEME_ARG="$(preset_field "$CHOSEN_PRESET" RICE_THEME)"
     fi
 fi
 

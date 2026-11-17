@@ -14,6 +14,13 @@ tab_size  = 4
 max_width  = 1200             # bigger image previews
 max_height = 1600
 
+# Enter on text, json and empty files opens Fresh. block hands it the terminal;
+# the preset rules all use "edit", so this replaces $EDITOR (unset here, was vi).
+[opener]
+edit = [
+    { run = "fresh %s", desc = "fresh", block = true },
+]
+
 # Markdown: glow renders it with highlighted fenced code blocks. piper runs the
 # command and shows its ANSI output; CLICOLOR_FORCE keeps colour on through the pipe.
 [plugin]

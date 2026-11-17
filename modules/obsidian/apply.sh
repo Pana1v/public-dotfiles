@@ -5,8 +5,7 @@ MOD="$DOTFILES/modules/obsidian"
 REPO="$(conf_get OBSIDIAN_REPO)"
 VAULT="${OBSIDIAN_VAULT:-$HOME/Documents/ObsidianNotes}"
 
-command -v flatpak >/dev/null || run sudo apt-get install -y flatpak
-flatpak_install "$MOD/packages.flatpak"
+snap_install "$MOD/packages.snap"
 
 # The vault itself is a private repo (OBSIDIAN_REPO in private.env or
 # local.env). Without one, an empty vault folder gets the config below.

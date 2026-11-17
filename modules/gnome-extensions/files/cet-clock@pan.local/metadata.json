@@ -1,0 +1,6 @@
+{
+  "uuid": "cet-clock@pan.local",
+  "name": "CET Clock",
+  "description": "Central European time in the top panel, next to the date.",
+  "shell-version": ["46", "47", "48", "49", "50"]
+}

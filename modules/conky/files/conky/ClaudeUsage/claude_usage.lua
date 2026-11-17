@@ -13,14 +13,14 @@ local flat = dofile(os.getenv("HOME") .. "/.config/conky/Common/flat.lua")
 -- =====================================================
 
 local theme = {
-    bg     = "#0a0506",
-    bar_bg = "#4a161b",
-    text   = "#ffe9eb",
-    red    = "#ff3b1f",
-    green  = "#ffe9eb",   -- fine is plain fg
-    orange = "#ffc14d",   -- warn state, clear yellow despite the name
+    bg     = "#0a0303",
+    bar_bg = "#4a0f12",
+    text   = "#ffe9e9",
+    red    = "#ff1a1a",
+    green  = "#ffe9e9",   -- fine is plain fg
+    orange = "#ffb84a",   -- warn state, clear yellow despite the name
     dim    = "#fff4f5",
-    faint  = "#ffa3b0",
+    faint  = "#ff9a9a",
 }
 
 local function rgb(colour, alpha)

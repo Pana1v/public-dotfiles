@@ -9,7 +9,8 @@ MOD="$DOTFILES/modules/browsers"
 RICE="$DOTFILES/modules/rice"
 PY="$MOD/files/rice_browsers.py"
 
-apt_install "$MOD/packages.apt"
+# Skip apt when present: sudo has no tty when switch-theme.sh re-runs this.
+dpkg -s $(grep -v '^\s*#' "$MOD/packages.apt" | awk 'NF{print $1}') >/dev/null 2>&1 || apt_install "$MOD/packages.apt"
 
 # Active palette: the runtime copy switch-theme.sh writes, else the saved or
 # current theme.

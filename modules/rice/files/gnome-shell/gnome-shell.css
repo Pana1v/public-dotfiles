@@ -17,42 +17,42 @@
 .osd-window,
 .unlock-dialog .notification-banner,
 .unlock-dialog .message {
-  background-color: #120809 !important;
+  background-color: #120506 !important;
   border-radius: 18px !important;
-  border: 1px solid #2a1013 !important;
+  border: 1px solid #2a0c0e !important;
   border-image: none !important;
   box-shadow: none !important;
 }
 .popup-menu-content,
 .candidate-popup-content,
 .quick-settings,
-.datemenu-popover { background-color: #120809 !important; }
+.datemenu-popover { background-color: #120506 !important; }
 
 /* Menu rows */
 .popup-menu-item { border-radius: 12px; }
 .popup-menu-item:hover,
 .popup-menu-item:focus,
-.popup-menu-item:selected { background-color: #2a1013; }
-.popup-separator-menu-item { height: 1px; background-color: #2a1013; }
+.popup-menu-item:selected { background-color: #2a0c0e; }
+.popup-separator-menu-item { height: 1px; background-color: #2a0c0e; }
 
 /* ── Messages (banner body and list entries) ───────────────────────── */
 .message {
   border-radius: 12px !important;
-  background-color: #1a0b0d;
+  background-color: #180708;
 }
-.message:hover { background-color: #2a1013; }
-.message:active, .message:focus { background-color: #4a161b; }
+.message:hover { background-color: #2a0c0e; }
+.message:active, .message:focus { background-color: #4a0f12; }
 
 .notification-banner .message { background-color: transparent; }
-.notification-banner .message:hover { background-color: #2a1013; }
+.notification-banner .message:hover { background-color: #2a0c0e; }
 
-.message .message-header { color: #b86a72; }
+.message .message-header { color: #c8454a; }
 .message .message-header .message-header-content .event-time {
   font-family: "Space Mono";
-  color: #8a3a44;
+  color: #9e2228;
 }
-.message .message-box .message-content .message-title { color: #ffe9eb; }
-.message .message-box .message-content .message-body { color: #f2c4c8; }
+.message .message-box .message-content .message-title { color: #ffe9e9; }
+.message .message-box .message-content .message-body { color: #f5c6c6; }
 .message .message-box .message-icon.message-themed-icon { border-radius: 99px; }
 
 /* Round buttons inside messages and the list controls. */
@@ -63,8 +63,8 @@
 .message-media-control { border-radius: 99px !important; }
 
 /* ── Message list chrome ───────────────────────────────────────────── */
-.message-list { border-color: #2a1013; }
-.message-list .message-list-placeholder { color: #8a3a44; }
+.message-list { border-color: #2a0c0e; }
+.message-list .message-list-placeholder { color: #9e2228; }
 
 /* ── Calendar column ───────────────────────────────────────────────── */
 .datemenu-today-button,
@@ -74,17 +74,17 @@
 
 .events-button,
 .world-clocks-button,
-.weather-button { background-color: #1a0b0d; }
+.weather-button { background-color: #180708; }
 
 .events-button:hover,
 .world-clocks-button:hover,
 .weather-button:hover,
-.datemenu-today-button:hover { background-color: #2a1013; }
+.datemenu-today-button:hover { background-color: #2a0c0e; }
 
 .datemenu-today-button .date-label {
   font-family: "Space Mono";
   font-weight: 600;
-  color: #ffe9eb;
+  color: #ffe9e9;
 }
 
 /* Section headers: Space Mono 11px bold in the accent. */
@@ -97,12 +97,12 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #ff1f3d;
+  color: #d10a10;
 }
 .events-button .events-box .events-title,
 .world-clocks-button .world-clocks-header,
 .weather-button .weather-box .weather-header-box .weather-header {
-  border-bottom: 1px solid #4a161b;
+  border-bottom: 1px solid #4a0f12;
   padding-bottom: 8px;
 }
 
@@ -120,17 +120,17 @@
 }
 .calendar .calendar-month-header .pager-button,
 .calendar .calendar-day { border-radius: 99px; }
-.calendar .calendar-day-heading { color: #8a3a44; }
+.calendar .calendar-day-heading { color: #9e2228; }
 .calendar .calendar-day {
   font-family: "Space Mono";
   font-weight: normal;
 }
-.calendar .calendar-day.calendar-weekend { color: #b86a72; }
-.calendar .calendar-day.calendar-other-month { color: #5e1f25; }
+.calendar .calendar-day.calendar-weekend { color: #c8454a; }
+.calendar .calendar-day.calendar-other-month { color: #641418; }
 .calendar .calendar-day.calendar-today,
 .calendar .calendar-day.calendar-today:hover {
-  background-color: #ff1f3d !important;
-  color: #ffe9eb !important;
+  background-color: #d10a10 !important;
+  color: #ffe9e9 !important;
   font-weight: bold;
 }
 
@@ -141,8 +141,8 @@
  * dot-matrix clock, then tray icons and the system menu. Buttons have no
  * box; hover lays a card behind them, an open menu lights red. */
 #panel {
-  background-color: #0a0506;
-  box-shadow: inset 0 -1px 0 #1a0b0d;
+  background-color: #0a0303;
+  box-shadow: inset 0 -1px 0 #180708;
   font-family: "Space Mono", monospace;
   font-weight: normal;
 }
@@ -162,20 +162,20 @@
   font-family: "Doto", "Space Mono", monospace;
   font-weight: 900;
   font-size: 15px;
-  color: #ffe9eb;
+  color: #ffe9e9;
   border-radius: 12px;
   background-color: transparent;
 }
-#panel .panel-button.clock-display .messages-indicator { color: #ff1f3d; }
+#panel .panel-button.clock-display .messages-indicator { color: #d10a10; }
 
 /* Tray icons in the conky "faint" tone so the clock and numbers lead. */
-#panel #panelRight .panel-button { color: #ffa3b0; }
-#panel #panelRight .panel-button:hover { color: #ffe9eb; }
+#panel #panelRight .panel-button { color: #ff9a9a; }
+#panel #panelRight .panel-button:hover { color: #ffe9e9; }
 
 /* Music strip: a small conky card. */
 #panel .spotify-deck-indicator {
-  background-color: #120809;
-  border: 1px solid #1a0b0d;
+  background-color: #120506;
+  border: 1px solid #180708;
   border-image: none;
   border-radius: 12px;
   box-shadow: none;
@@ -188,15 +188,15 @@
 #panel .panel-button:focus,
 #panel .panel-button.clock-display:hover .clock {
   box-shadow: none;
-  background-color: #120809;
+  background-color: #120506;
 }
 #panel .panel-button:active,
 #panel .panel-button:checked,
 #panel .panel-button:active:hover,
 #panel .panel-button:checked:hover {
-  background-color: #1a0b0d;
-  box-shadow: inset 0 -2px 0 #ff1f3d;
-  color: #ffe9eb;
+  background-color: #180708;
+  box-shadow: inset 0 -2px 0 #d10a10;
+  color: #ffe9e9;
 }
 #panel .panel-button.clock-display:checked .clock,
 #panel .panel-button.clock-display:checked .clock:hover {
@@ -208,7 +208,7 @@
 /* Fill, alpha and round corners come from zorin-dash gsettings (inline
  * style); a hairline edge like the cards. */
 #dashtodockContainer #dash .dash-background {
-  border: 1px solid #2a1013;
+  border: 1px solid #2a0c0e;
   border-image: none;
 }
 
@@ -238,7 +238,7 @@
   font-family: "Doto", "Space Mono", monospace;
   font-weight: 900;
   font-size: 15px;
-  color: #8a3a44;
+  color: #9e2228;
 }
 .ws-dot {
   width: 5px;
@@ -246,10 +246,10 @@
   border-radius: 99px;
   background-color: transparent;
 }
-.ws-number:hover { background-color: #120809; }
-.ws-number:hover .ws-label { color: #ffe9eb; }
-.ws-number:checked .ws-label { color: #ffe9eb; }
-.ws-number:checked .ws-dot { background-color: #ff1f3d; }
+.ws-number:hover { background-color: #120506; }
+.ws-number:hover .ws-label { color: #ffe9e9; }
+.ws-number:checked .ws-label { color: #ffe9e9; }
+.ws-number:checked .ws-dot { background-color: #d10a10; }
 
 /* Clipboard menu: styled in gnome-clipboard@b00f.github.io/stylesheet.css
  * (gnome-extensions module); extension sheets beat the theme. */
@@ -279,9 +279,9 @@
   font-weight: 700;
   font-feature-settings: "tnum";
   letter-spacing: 4px;
-  color: #ffe9eb;
+  color: #ffe9e9;
   /* program glow */
-  text-shadow: 0 0 24px #ff1f3d;
+  text-shadow: 0 0 24px #d10a10;
 }
 .unlock-dialog-clock .unlock-dialog-clock-date {
   font-family: "Space Mono", sans-serif;
@@ -289,13 +289,13 @@
   font-weight: 700;
   letter-spacing: 6px;
   text-transform: uppercase;
-  color: #ff1f3d;
-  text-shadow: 0 0 10px #ff1f3d;
+  color: #d10a10;
+  text-shadow: 0 0 10px #d10a10;
 }
 .unlock-dialog-clock .unlock-dialog-clock-hint {
   font-family: "Space Mono", monospace;
   font-size: 11px;
-  color: #8a3a44;
+  color: #9e2228;
 }
 
 /* Name above the entry, avatar squared off */
@@ -306,15 +306,15 @@
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #ffe9eb;
+  color: #ffe9e9;
 }
 .unlock-dialog .user-icon,
 .login-dialog .user-icon {
   border-radius: 0;
-  border: 1px solid #ff1f3d;
+  border: 1px solid #d10a10;
   /* the X avatar runs out of its frame; the glow carries it past the edge */
-  box-shadow: 0 0 28px #ff1f3d;
-  background-color: #0a0506;
+  box-shadow: 0 0 28px #d10a10;
+  background-color: #0a0303;
 }
 .unlock-dialog .user-widget.vertical,
 .login-dialog .user-widget.vertical {
@@ -339,35 +339,35 @@
   font-size: 13px;
   letter-spacing: 3px;
   border-radius: 99px;
-  background-color: #1a0b0d;
-  color: #ffe9eb;
-  border: 1px solid #2a1013;
+  background-color: #180708;
+  color: #ffe9e9;
+  border: 1px solid #2a0c0e;
   box-shadow: none;
   padding: 8px 16px;
-  caret-color: #ff1f3d;
-  selection-background-color: #4a161b;
-  selected-color: #ffe9eb;
+  caret-color: #d10a10;
+  selection-background-color: #4a0f12;
+  selected-color: #ffe9e9;
 }
 .unlock-dialog .login-dialog-prompt-entry:focus,
 .login-dialog .login-dialog-prompt-entry:focus {
-  border-color: #ff1f3d;
+  border-color: #d10a10;
 }
 .unlock-dialog .login-dialog-prompt-label,
 .login-dialog .login-dialog-prompt-label {
   font-family: "Space Mono", sans-serif;
-  color: #b86a72;
+  color: #c8454a;
 }
 
 /* Status line: wrong password is an error, so red; the rest stays grey */
 .login-dialog-message {
   font-family: "Space Mono", sans-serif;
-  color: #b86a72;
+  color: #c8454a;
 }
 .login-dialog-message-warning,
 .login-dialog-message.login-dialog-message-warning {
-  color: #ffc14d;
+  color: #ffb84a;
 }
-.login-dialog-message-error { color: #ff3b1f; }
+.login-dialog-message-error { color: #ff1a1a; }
 
 /* Buttons on the lock screen */
 .unlock-dialog .button,
@@ -375,8 +375,8 @@
 .login-dialog-button.cancel-button,
 .login-dialog-button.switch-user-button {
   border-radius: 99px;
-  background-color: #2a1013;
-  color: #ffe9eb;
+  background-color: #2a0c0e;
+  color: #ffe9e9;
   box-shadow: none;
   transition-duration: 120ms;
 }
@@ -384,24 +384,24 @@
 .unlock-dialog .icon-button:hover,
 .login-dialog-button.cancel-button:hover,
 .login-dialog-button.switch-user-button:hover {
-  background-color: #4a161b;
+  background-color: #4a0f12;
 }
 
 /* ── OSD (brightness, volume, keyboard light) and sliders ──────────── */
 /* Card shape comes from the Cards block at the top. */
 .osd-window {
-  color: #ffe9eb;
+  color: #ffe9e9;
   padding: 14px 18px;
   spacing: 12px;
 }
 .osd-window StIcon,
-.osd-window .osd-monitor-label { color: #ff1f3d; }
+.osd-window .osd-monitor-label { color: #d10a10; }
 .osd-window .number-label,
 .osd-window StLabel {
   font-family: "Space Mono", sans-serif;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #ffe9eb;
+  color: #ffe9e9;
 }
 
 /* OSD bar and quick settings sliders: round ends, accent fill, dark track. */
@@ -410,9 +410,9 @@
 .osd-window .level {
   -barlevel-height: 4px;
   -barlevel-border-radius: 99px;
-  -barlevel-background-color: #4a161b;
-  -barlevel-active-background-color: #ff1f3d;
-  -barlevel-overdrive-color: #ffc14d;
+  -barlevel-background-color: #4a0f12;
+  -barlevel-active-background-color: #d10a10;
+  -barlevel-overdrive-color: #ffb84a;
   -barlevel-overdrive-separator-width: 2px;
   box-shadow: none;
 }
@@ -420,45 +420,45 @@
 .quick-slider .slider {
   -slider-handle-radius: 7px;
   -slider-handle-border-width: 2px;
-  -slider-handle-border-color: #ff1f3d;
-  color: #0a0506;
+  -slider-handle-border-color: #d10a10;
+  color: #0a0303;
 }
 .slider:hover,
-.slider:focus { -slider-handle-border-color: #ffe9eb; }
+.slider:focus { -slider-handle-border-color: #ffe9e9; }
 
 /* ── Quick settings ────────────────────────────────────────────────── */
 /* Pill toggles (shape from base.css, so split toggles keep their halves).
  * On = deeper fill, light text, accent icon. */
 .quick-toggle,
 .quick-toggle-has-menu .quick-toggle-menu-button {
-  background-color: #1a0b0d;
-  color: #f2c4c8;
+  background-color: #180708;
+  color: #f5c6c6;
   border: none;
   box-shadow: none;
 }
 .quick-toggle:hover,
-.quick-toggle-has-menu .quick-toggle-menu-button:hover { background-color: #2a1013; }
+.quick-toggle-has-menu .quick-toggle-menu-button:hover { background-color: #2a0c0e; }
 .quick-toggle:checked,
 .quick-toggle:checked:hover,
 .quick-toggle:checked:focus,
 .quick-toggle-has-menu .quick-toggle-menu-button:checked,
 .quick-toggle-has-menu .quick-toggle-menu-button:checked:hover {
-  background-color: #4a161b !important;
-  color: #ffe9eb !important;
+  background-color: #4a0f12 !important;
+  color: #ffe9e9 !important;
 }
-.quick-toggle:checked .quick-toggle-icon { color: #ff1f3d; }
-.quick-toggle-has-menu .quick-toggle-separator { background-color: #2a1013; }
-.quick-toggle-has-menu:checked .quick-toggle-separator { background-color: #5e1f25; }
+.quick-toggle:checked .quick-toggle-icon { color: #d10a10; }
+.quick-toggle-has-menu .quick-toggle-separator { background-color: #2a0c0e; }
+.quick-toggle-has-menu:checked .quick-toggle-separator { background-color: #641418; }
 
 /* Expanded toggle menu: an inner card, round header icon. */
 .quick-toggle-menu {
-  background-color: #120809 !important;
+  background-color: #120506 !important;
   border-radius: 18px !important;
 }
 .quick-toggle-menu .header .icon {
   border-radius: 99px !important;
-  background-color: #ff1f3d;
-  color: #0a0506;
+  background-color: #d10a10;
+  color: #0a0303;
 }
 .quick-settings-system-item .icon-button,
 .quick-settings .icon-button { border-radius: 99px !important; }
@@ -467,7 +467,7 @@
 .power-item .quick-toggle-subtitle {
   font-family: "Space Mono", monospace;
   font-size: 10px;
-  color: #b86a72;
+  color: #c8454a;
 }
 
 /* ── App grid, overview and search (the app menu) ──────────────────── */
@@ -478,31 +478,31 @@
 .app-folder-dialog .overview-tile,
 .app-folder-dialog .grid-search-result {
   border-radius: 18px;
-  color: #f2c4c8;
+  color: #f5c6c6;
   transition-duration: 120ms;
 }
 .overview-tile:hover,
 .grid-search-result:hover {
-  background-color: #2a1013;
-  color: #ffe9eb;
+  background-color: #2a0c0e;
+  color: #ffe9e9;
 }
 .overview-tile:active,
 .grid-search-result:active {
-  background-color: #4a161b;
+  background-color: #4a0f12;
 }
 .overview-tile:focus,
 .overview-tile:selected,
 .overview-tile:highlighted,
 .grid-search-result:focus,
 .grid-search-result:selected {
-  background-color: #4a161b !important;
-  color: #ffe9eb;
-  box-shadow: inset 0 0 0 1px #ff1f3d !important;
+  background-color: #4a0f12 !important;
+  color: #ffe9e9;
+  box-shadow: inset 0 0 0 1px #d10a10 !important;
 }
 .overview-tile:drop,
 .app-folder:drop {
-  background-color: #4a161b;
-  box-shadow: inset 0 0 0 1px #ff1f3d;
+  background-color: #4a0f12;
+  box-shadow: inset 0 0 0 1px #d10a10;
 }
 
 .overview-tile .overview-icon.overview-icon-with-label StLabel,
@@ -518,39 +518,39 @@
   width: 10px;
   height: 2px;
   border-radius: 99px;
-  background-color: #ff1f3d;
+  background-color: #d10a10;
 }
 
 /* Folder icon in the grid: a card with a hairline. */
 .app-folder {
   border-radius: 18px;
-  background-color: #1a0b0d;
-  border: 1px solid #2a1013;
+  background-color: #180708;
+  border: 1px solid #2a0c0e;
   border-image: none;
-  color: #f2c4c8;
+  color: #f5c6c6;
 }
-.app-folder:hover { background-color: #2a1013; }
+.app-folder:hover { background-color: #2a0c0e; }
 .app-folder:focus,
 .app-folder:selected {
-  background-color: #4a161b !important;
-  box-shadow: inset 0 0 0 1px #ff1f3d !important;
+  background-color: #4a0f12 !important;
+  box-shadow: inset 0 0 0 1px #d10a10 !important;
 }
 
 /* Open folder: a popup card with a mono title. */
 .app-folder-dialog {
   border-radius: 18px;
-  background-color: #120809;
-  border: 1px solid #2a1013;
+  background-color: #120506;
+  border: 1px solid #2a0c0e;
   border-image: none;
   box-shadow: none;
-  color: #ffe9eb;
+  color: #ffe9e9;
 }
 .app-folder-dialog .folder-name-container .folder-name-label,
 .app-folder-dialog .folder-name-container .folder-name-entry {
   font-family: "Space Mono", sans-serif;
   font-weight: 700;
   letter-spacing: 3px;
-  color: #ffe9eb;
+  color: #ffe9e9;
 }
 .app-folder-dialog .folder-name-container .folder-name-entry,
 .app-folder-dialog .icon-button,
@@ -561,73 +561,73 @@
   width: 18px;
   height: 3px;
   border-radius: 99px;
-  background-color: #ff1f3d;
+  background-color: #d10a10;
 }
 .page-navigation-arrow {
-  background-color: #1a0b0d;
-  color: #f2c4c8;
+  background-color: #180708;
+  color: #f5c6c6;
 }
-.page-navigation-arrow:hover { background-color: #2a1013; color: #ffe9eb; }
+.page-navigation-arrow:hover { background-color: #2a0c0e; color: #ffe9e9; }
 
 /* Search entry: pill with a hairline, accent edge when focused. */
 .search-entry {
   border-radius: 99px;
-  background-color: #1a0b0d;
-  color: #ffe9eb;
-  border: 1px solid #2a1013;
+  background-color: #180708;
+  color: #ffe9e9;
+  border: 1px solid #2a0c0e;
   box-shadow: none;
-  caret-color: #ff1f3d;
-  selection-background-color: #4a161b;
-  selected-color: #ffe9eb;
+  caret-color: #d10a10;
+  selection-background-color: #4a0f12;
+  selected-color: #ffe9e9;
   font-family: "Space Mono", monospace;
 }
-.search-entry:hover { background-color: #2a1013; }
+.search-entry:hover { background-color: #2a0c0e; }
 .search-entry:focus {
-  border-color: #ff1f3d;
+  border-color: #d10a10;
   box-shadow: none;
 }
-.search-entry StIcon { color: #b86a72; }
-.search-entry StLabel.hint-text { color: #8a3a44; }
+.search-entry StIcon { color: #c8454a; }
+.search-entry StLabel.hint-text { color: #9e2228; }
 
 /* Search results: a card of 12px rows, mono status text. */
 .search-section-content {
   border-radius: 18px;
-  background-color: #120809;
-  border: 1px solid #2a1013;
+  background-color: #120506;
+  border: 1px solid #2a0c0e;
   border-image: none;
 }
 .list-search-result,
-.search-provider-icon { border-radius: 12px; color: #f2c4c8; }
+.search-provider-icon { border-radius: 12px; color: #f5c6c6; }
 .list-search-result:hover,
-.search-provider-icon:hover { background-color: #2a1013; }
+.search-provider-icon:hover { background-color: #2a0c0e; }
 .list-search-result:focus,
 .list-search-result:selected,
 .search-provider-icon:focus,
 .search-provider-icon:selected {
-  background-color: #4a161b !important;
-  box-shadow: inset 0 0 0 1px #ff1f3d !important;
-  color: #ffe9eb;
+  background-color: #4a0f12 !important;
+  box-shadow: inset 0 0 0 1px #d10a10 !important;
+  color: #ffe9e9;
 }
-.list-search-result .list-search-result-title { color: #ffe9eb; }
-.list-search-result .list-search-result-description { color: #b86a72; }
+.list-search-result .list-search-result-title { color: #ffe9e9; }
+.list-search-result .list-search-result-description { color: #c8454a; }
 .search-statustext {
   font-family: "Space Mono", monospace;
-  color: #8a3a44;
+  color: #9e2228;
 }
 
 /* Workspace previews and window labels in the overview. */
 .workspace-thumbnail-indicator {
-  border: 2px solid #ff1f3d;
+  border: 2px solid #d10a10;
   border-radius: 12px;
 }
 .window-caption,
 .dash-label {
   border-radius: 99px !important;
-  background-color: #120809;
-  color: #ffe9eb;
+  background-color: #120506;
+  color: #ffe9e9;
   font-family: "Space Mono", monospace;
   font-size: 11px;
-  border: 1px solid #2a1013;
+  border: 1px solid #2a0c0e;
 }
 
 /* Dock tiles and the Show Apps button: rounded, accent underline when open. */
@@ -639,9 +639,9 @@
 }
 #dash .dash-item-container .show-apps:checked .overview-icon,
 #dashtodockContainer .dash-item-container .show-apps:checked .overview-icon {
-  background-color: #4a161b;
-  box-shadow: inset 0 -2px 0 #ff1f3d;
+  background-color: #4a0f12;
+  box-shadow: inset 0 -2px 0 #d10a10;
 }
 
 /* Unread dot in the accent. */
-#panel .panel-button.clock-display .messages-indicator { color: #ff1f3d; }
+#panel .panel-button.clock-display .messages-indicator { color: #d10a10; }

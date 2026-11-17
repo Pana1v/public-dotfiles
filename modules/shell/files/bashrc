@@ -183,6 +183,17 @@ fi
 
 [[ ! ${BLE_VERSION-} ]] || ble-attach
 
+# >>> amr-docker (added by setup.sh) >>>
+# The dev container through the Isaac ROS CLI (scripts/start_docker.sh).
+alias start_docker='bash /home/panav/amr-docker-lyrical/scripts/start_docker.sh'
+alias start_docker_build='bash /home/panav/amr-docker-lyrical/scripts/start_docker.sh --build'
+# Status banner: system stats + launch sessions. Set AMR_BANNER=0 to suppress it. Host only:
+# the dev container reads this file too, and has no amr-docker checkout.
+alias amr-status='bash /home/panav/amr-docker-lyrical/scripts/amr_status.sh'
+[ -f /home/panav/amr-docker-lyrical/scripts/amr_status.sh ] && bash /home/panav/amr-docker-lyrical/scripts/amr_status.sh --banner
+[ -f /home/panav/lyrical-ws/bash_functions.sh ] && . /home/panav/lyrical-ws/bash_functions.sh
+[ -f /home/panav/lyrical-ws/bash_aliases.sh ] && . /home/panav/lyrical-ws/bash_aliases.sh
+# <<< amr-docker <<<
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"

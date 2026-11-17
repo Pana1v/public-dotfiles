@@ -17,7 +17,25 @@ const SCROLL_HOLD_MS = 1400;
 const PROGRESS_TICK_MS = 500;
 const PROGRESS_HEIGHT = 2;
 
-const FALLBACK_ACCENT = {r: 128, g: 222, b: 156};
+// Tracks without cover art take the rice accent (switch-theme.sh keeps this
+// file current); a cover's own colour still wins.
+const PALETTE_PATH = GLib.build_filenamev([GLib.get_user_config_dir(), 'rice', 'palette']);
+
+function riceAccent() {
+    try {
+        const [, bytes] = GLib.file_get_contents(PALETTE_PATH);
+        const hex = new TextDecoder().decode(bytes).match(/^accent\s+#([0-9a-f]{6})/im)?.[1];
+        if (hex) {
+            const n = parseInt(hex, 16);
+            return {r: n >> 16, g: (n >> 8) & 255, b: n & 255};
+        }
+    } catch {
+        // no rice installed: keep the original mint
+    }
+    return {r: 128, g: 222, b: 156};
+}
+
+const FALLBACK_ACCENT = riceAccent();
 
 /** Clipped label that scrolls horizontally only when its text overflows. */
 const Marquee = GObject.registerClass(
