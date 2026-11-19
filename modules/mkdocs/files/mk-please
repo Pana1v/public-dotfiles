@@ -85,7 +85,11 @@ html.pdf-mode .md-main__inner { margin: 0; padding: 0 }
 html.pdf-mode .md-content__inner { margin: 0; padding: 1.2rem 1.6rem; }
 html.pdf-continuous body { width: 900px; }
 html.pdf-continuous .md-grid { max-width: none; }
+/* print root font is 20px, so Material's 16rem card column fits only one per A4 row; 11rem gives 2 on A4, 3 on continuous */
+html.pdf-mode .md-typeset .grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); }
 @media print {
+  .md-typeset .grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); }
+  .md-typeset .grid.cards > ul > li { break-inside: avoid; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   html, body { background: var(--md-default-bg-color) !important; }
   /* never split a table, diagram, code block or callout across pages */
@@ -235,4 +239,5 @@ EOF
 
 echo "mk-please: $dir -> http://127.0.0.1:$port"
 open_flag=(); [[ -t 1 ]] && open_flag=(--open)
-NO_MKDOCS_2_WARNING=1 exec uvx --with mkdocs-material mkdocs serve -f "$work/mkdocs.yml" -a "127.0.0.1:$port" "${open_flag[@]}"
+# Pinned: unpinned uvx takes the newest release, and the theme override depends on Material internals, so bump both together.
+NO_MKDOCS_2_WARNING=1 exec uvx --from mkdocs==1.6.1 --with mkdocs-material==9.8.1 mkdocs serve -f "$work/mkdocs.yml" -a "127.0.0.1:$port" "${open_flag[@]}"
