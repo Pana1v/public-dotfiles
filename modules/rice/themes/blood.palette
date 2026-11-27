@@ -21,6 +21,9 @@ green            #e8e8e8
 yellow           #ffb84a
 orange           #ff7a3d
 red              #ff1a1a
+ansi_green       #5fd38d
+ansi_blue        #5aa9e6
+ansi_cyan        #3ccfcf
 diff_add         #2a1c08
 diff_del         #3a0a0e
 diff_add_dim     #1c1205

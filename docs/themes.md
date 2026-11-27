@@ -19,7 +19,7 @@ Files live in `modules/rice/themes/<name>.palette`.
 
 ## Roles
 
-Every palette defines the same 28 roles. The table covers the roles most
+Every palette defines the same 31 roles. The table covers the roles most
 themed files use.
 
 | Role | Used for |
@@ -39,6 +39,7 @@ themed files use.
 | `red` | Errors and destructive state |
 | `yellow` | Warnings |
 | `green` | Success and good state |
+| `ansi_green`, `ansi_blue`, `ansi_cyan` | Terminal ANSI slots 2, 4, 6, so prompts, `ls` and git get distinct hues |
 
 Colour rules for every palette:
 
@@ -98,7 +99,7 @@ Restart these to see new colours: Terminator, Files, Claude Code and browsers.
 ## Adding a palette
 
 1. Create `modules/rice/themes/<name>.palette`.
-2. Copy the 28 role lines from an existing palette. Keep the same role names.
+2. Copy the 31 role lines from an existing palette. Keep the same role names.
 3. Give every role a unique hex inside the palette.
 4. Add `@gtk`, `@vscode`, `@btop`, `@wallpaper` and `@cursor`, copied from a palette that sets them.
 5. Add `@shell`, `@accent`, `@conky_accent` and `@taskbar_border` as needed.
