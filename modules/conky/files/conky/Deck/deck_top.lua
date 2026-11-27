@@ -4,10 +4,11 @@ pcall(require, 'cairo_xlib')
 -- Reads ~/.cache/conky/fleet.tsv (fleet-ping.service); no subprocess here.
 local CONKY = os.getenv("HOME") .. "/.config/conky/"
 local flat = dofile(CONKY .. "Common/flat.lua")
-local deck = dofile(CONKY .. "Deck/deck.lua")
 local theme = flat.theme
 
 local fleet = flat.snapshot("fleet")
+-- Numbered between the wings: left 01-06, deck 07-08, right 09 on.
+flat.section = 7
 local STALE_SECONDS = 45
 local SLOW_MS = 1000
 local CHIP_MIN_W = 190   -- columns follow the strip width (any resolution)
@@ -27,13 +28,11 @@ end
 local function chip(cr, x, y, w, h, host)
     local state = not host.up and theme.red or (host.ms and host.ms > SLOW_MS and theme.yellow) or theme.green
 
-    -- glass tile with a status rail on the left
-    flat.set_color(cr, theme.bar_bg, host.up and 0.55 or 0.35)
-    cairo_rectangle(cr, x, y, w, h)
-    cairo_fill(cr)
-    flat.set_color(cr, state, host.up and 1 or 0.8)
-    cairo_rectangle(cr, x, y, 3, h)
-    cairo_fill(cr)
+    -- state pip, as in the Linear strip: filled = up, ring = down
+    flat.set_color(cr, state)
+    cairo_new_path(cr)
+    cairo_arc(cr, x + 4, y + 12, 3.5, 0, 2 * math.pi)
+    if host.up then cairo_fill(cr) else cairo_set_line_width(cr, 1.2); cairo_stroke(cr) end
 
     flat.font(cr, "Exo 2", 13, true)
     flat.text(cr, x + 14, y + 16, flat.fit(cr, host.label, w - 90), host.up and theme.text or theme.dim)
@@ -46,7 +45,7 @@ local function chip(cr, x, y, w, h, host)
 end
 
 local function draw(cr, w, h)
-    deck.frame(cr, w, h, "top")
+    flat.card(cr, w, h)
     local list = hosts()
     local up = 0
     for _, hst in ipairs(list) do if hst.up then up = up + 1 end end
@@ -66,7 +65,7 @@ local function draw(cr, w, h)
     local shown = math.min(#list, cols * fit_rows)
     if shown < #list then cols = math.max(1, cols); shown = cols * fit_rows - 1 end
     local cw = (inner - (cols - 1) * GAP) / cols
-    -- fewer rows than fit (wide screens): centre them between the rule and the notch
+    -- fewer rows than fit (wide screens): centre them between the rule and the bottom
     local used_rows = math.ceil(math.min(#list, shown + (shown < #list and 1 or 0)) / cols)
     top = top + math.max(0, ((h - 14 - top) - (used_rows * CHIP_H + (used_rows - 1) * GAP)) / 2 - 2)
     for i = 1, shown do

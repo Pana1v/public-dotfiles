@@ -4,10 +4,10 @@ pcall(require, 'cairo_xlib')
 -- Reads ~/.cache/conky/linear.tsv (conky-feeds.service runs fetch_issues.py).
 local CONKY = os.getenv("HOME") .. "/.config/conky/"
 local flat = dofile(CONKY .. "Common/flat.lua")
-local deck = dofile(CONKY .. "Deck/deck.lua")
 local theme = flat.theme
 
 local linear = flat.snapshot("linear")
+flat.section = 8
 local COL_MIN_W = 380   -- columns follow the strip width (any resolution)
 local ROW_H = 26
 local GAP = 24
@@ -42,7 +42,7 @@ local function row(cr, x, y, w, it)
 end
 
 local function draw(cr, w, h)
-    deck.frame(cr, w, h, "bottom")
+    flat.card(cr, w, h)
     local list = issues()
     local status = "setup . LINEAR_API_KEY in ~/.config/secrets/linear.env"
     local colour = theme.yellow

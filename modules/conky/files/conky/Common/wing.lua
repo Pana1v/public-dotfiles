@@ -1,5 +1,6 @@
 -- Shared layout for the two wings: a column of separate matte cards, one per
--- widget, numbered 01, 02 ... down the left wing and on down the right one.
+-- widget, numbered 01, 02 ... down the left wing, across the deck (07-08)
+-- and on down the right one.
 -- Nothing-style: no glass, no frame around the column, each card stands alone.
 local HOME = os.getenv("HOME")
 local flat = dofile(HOME .. "/.config/conky/Common/flat.lua")
