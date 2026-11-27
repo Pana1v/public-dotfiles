@@ -5,7 +5,9 @@ import GObject from 'gi://GObject';
 import Pango from 'gi://Pango';
 import St from 'gi://St';
 
-const ART_SIZE = 26;
+// The panel is 2.2em (about 29px) tall; art plus the 2px progress must fit.
+const ART_SIZE = 20;
+const ARTIST_ALPHA = '58%';
 const BAR_COUNT = 24;
 const VIZ_WIDTH = 70;
 
@@ -75,12 +77,12 @@ class Marquee extends St.BoxLayout {
         });
     }
 
-    setText(text) {
-        if (text === this._text)
+    setMarkup(markup) {
+        if (markup === this._text)
             return;
 
-        this._text = text;
-        this._label.text = text;
+        this._text = markup;
+        this._label.clutter_text.set_markup(markup);
         this._restart();
     }
 
@@ -275,19 +277,11 @@ export const DeckStrip = GObject.registerClass({
         this._row.add_child(this._art);
     }
 
+    // One line, title then dimmed artist: two stacked lines need ~35px and
+    // spill out of the panel.
     _buildText() {
-        this._textBox = new St.BoxLayout({
-            style_class: 'spotify-deck-text',
-            vertical: true,
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-
         this._title = new Marquee('spotify-deck-title');
-        this._artist = new Marquee('spotify-deck-artist');
-
-        this._textBox.add_child(this._title);
-        this._textBox.add_child(this._artist);
-        this._row.add_child(this._textBox);
+        this._row.add_child(this._title);
     }
 
     _buildSpectrum() {
@@ -386,9 +380,12 @@ export const DeckStrip = GObject.registerClass({
     // --- public API --------------------------------------------------------
 
     setTrack({title, artist}) {
-        this._title.setText(title || 'Nothing playing');
-        this._artist.setText(artist || '');
-        this._artist.visible = !!artist;
+        const esc = s => GLib.markup_escape_text(s, -1);
+        let markup = `<b>${esc(title || 'Nothing playing')}</b>`;
+        if (artist) {
+            markup += `  <span alpha="${ARTIST_ALPHA}">${esc(artist)}</span>`;
+        }
+        this._title.setMarkup(markup);
     }
 
     setArtPath(path) {

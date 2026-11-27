@@ -30,25 +30,11 @@
 }
 
 /* Fixed width is what makes the marquee meaningful: without a bound the label
-   would simply grow and push the rest of the taskbar around on every track. */
-.spotify-deck-text {
-  width: 140px;
-  spacing: 0;
-}
-
+   would simply grow and push the rest of the taskbar around on every track.
+   Title and artist share this one line; the artist is dimmed in markup. */
 .spotify-deck-title {
-  width: 140px;
+  width: 180px;
   font-size: 12px;
-  font-weight: 600;
-}
-
-/* Deliberate hierarchy rather than a mismatch: the title is what you read,
-   the artist is context. Two steps apart is enough to rank them without the
-   smaller line becoming unreadable. */
-.spotify-deck-artist {
-  width: 140px;
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.58);
 }
 
 .spotify-deck-spectrum {

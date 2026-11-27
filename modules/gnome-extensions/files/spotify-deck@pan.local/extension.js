@@ -12,9 +12,10 @@ import {DeckStrip} from './src/strip.js';
 const SPOTIFY_BUS = 'org.mpris.MediaPlayer2.spotify';
 const PANEL_ROLE = 'spotify-deck';
 
-// Left end of the panel, right after the menu button.
-const PANEL_BOX = 'left';
-const MENU_ROLE = 'zorin-menu';
+// Right end of the panel: on the laptop screen the left box already overflows
+// into the clock. A negative index appends.
+const PANEL_BOX = 'right';
+const PANEL_INDEX = -1;
 
 const DeckIndicator = GObject.registerClass(
 class DeckIndicator extends PanelMenu.Button {
@@ -49,22 +50,9 @@ export default class SpotifyDeckExtension extends Extension {
         this._wireWatcher();
 
         Main.panel.addToStatusArea(
-            PANEL_ROLE, this._indicator, this._panelIndex(), PANEL_BOX);
+            PANEL_ROLE, this._indicator, PANEL_INDEX, PANEL_BOX);
 
         this._sync();
-    }
-
-    /**
-     * Extensions enable in no fixed order. If the menu is already in the box,
-     * go right after it; if not, index 0 still ends up after it, because the
-     * menu inserts itself at 0 when it arrives.
-     */
-    _panelIndex() {
-        const menu = Main.panel.statusArea[MENU_ROLE];
-        if (!menu)
-            return 0;
-
-        return Main.panel._leftBox.get_children().indexOf(menu.container) + 1;
     }
 
     _wireStrip() {
