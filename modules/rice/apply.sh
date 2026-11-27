@@ -22,7 +22,7 @@ GTK_REPO="https://github.com/Fausto-Korpsvart/Tokyonight-GTK-Theme.git"
 GTK_SRC="$HOME/.cache/dotfiles/Tokyonight-GTK-Theme"
 
 # Skip apt when present: sudo has no tty when re-run from scripts.
-dpkg -s sassc papirus-icon-theme rofi qalc xclip qt5ct node-typescript make python3-numpy >/dev/null 2>&1 || apt_install "$MOD/packages.apt"
+dpkg -s sassc papirus-icon-theme rofi qalc xclip unicode-cldr-core qt5ct qt5-style-kvantum qt6-style-kvantum node-typescript make python3-numpy >/dev/null 2>&1 || apt_install "$MOD/packages.apt"
 
 # Set a gsettings key only when it differs, so re-runs print ok.
 gset() {
@@ -284,6 +284,11 @@ link_file "$F/environment.d/qt-theme.conf" "$HOME/.config/environment.d/qt-theme
 run mkdir -p "$HOME/.config/qt5ct" "$HOME/.local/share/applications"
 # qt5ct rewrites its config on save, so it is generated rather than symlinked.
 [ "$DRY_RUN" = 1 ] || sed "s#@HOME@#$HOME#g" "$F/qt5ct/qt5ct.conf" > "$HOME/.config/qt5ct/qt5ct.conf"
+# qt5ct's style=kvantum draws widgets with the "Rice" Kvantum theme, which
+# switch-theme.sh builds from the palette. Kvantum Manager rewrites this file,
+# so it is generated rather than symlinked.
+run mkdir -p "$HOME/.config/Kvantum"
+[ "$DRY_RUN" = 1 ] || printf '[General]\ntheme=Rice\n' > "$HOME/.config/Kvantum/kvantum.kvconfig"
 # environment.d only applies at next login; the launcher override covers Dolphin now.
 DOLPHIN=/usr/share/applications/org.kde.dolphin.desktop
 if [ -f "$DOLPHIN" ] && [ "$DRY_RUN" != 1 ]; then

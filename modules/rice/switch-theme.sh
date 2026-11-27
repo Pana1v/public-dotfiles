@@ -201,6 +201,13 @@ else
     echo "    skip    Rice icons: Papirus-Dark not installed"
 fi
 
+# Qt: the "Rice" Kvantum theme, KvFlat recoloured to the palette.
+if [ -d /usr/share/Kvantum/KvFlat ]; then
+    python3 -I "$MOD/tools/kvantum-theme.py" "$MOD/themes/$TARGET.palette" /usr/share/Kvantum/KvFlat
+else
+    echo "    skip    Rice Kvantum theme: Kvantum not installed"
+fi
+
 mkdir -p "$HOME/.config/btop/themes"
 for t in "$MOD"/files/btop/*.theme; do
     ln -sf "$t" "$HOME/.config/btop/themes/$(basename "$t")"
@@ -245,46 +252,6 @@ CONKY_ACCENT="$(setting conky_accent)"
 sed -i "s/^M\.theme\.accent = .*/M.theme.accent = \"$(sed -n "s/^${CONKY_ACCENT:-green}[[:space:]]\+//p" "$MOD/themes/$TARGET.palette")\"/" \
     "$DOTFILES"/modules/conky/files/conky/Common/flat.lua
 
-# Chrome: the unpacked "Rice" theme carries its colours as RGB lists, so it is
-# rebuilt from the palette. Reload it in chrome://extensions (or restart Chrome).
-CHROME_THEME="$HOME/.config/chrome-rice-theme"
-if [ -f "$CHROME_THEME/manifest.json" ]; then
-    python3 - "$MOD/themes/$TARGET.palette" "$CHROME_THEME/manifest.json" <<'PY'
-import json, sys
-roles = {}
-for line in open(sys.argv[1]):
-    p = line.split()
-    if len(p) > 1 and not p[0].startswith(("#", "@")):
-        roles[p[0]] = [int(p[1][i:i + 2], 16) for i in (1, 3, 5)]
-r = roles
-conf = json.load(open(sys.argv[2]))
-conf["description"] = "Matches the desktop rice palette."
-# Every key Chrome themes accept; anything left out falls back to stock grey
-# (inactive tabs, toolbar text, new tab header), which reads as un-riced.
-conf["theme"]["colors"] = {
-    "frame": r["black"], "frame_inactive": r["bg2"],
-    "frame_incognito": r["black"], "frame_incognito_inactive": r["bg2"],
-    "background_tab": r["black"], "background_tab_inactive": r["bg2"],
-    "background_tab_incognito": r["black"], "background_tab_incognito_inactive": r["bg2"],
-    "toolbar": r["bg"], "toolbar_text": r["fg"], "toolbar_button_icon": r["fg2"],
-    "tab_text": r["fg"], "tab_background_text": r["dim2"],
-    "tab_background_text_inactive": r["dim"],
-    "tab_background_text_incognito": r["dim2"],
-    "tab_background_text_incognito_inactive": r["dim"],
-    "bookmark_text": r["fg2"],
-    "ntp_background": r["bg"], "ntp_text": r["fg"], "ntp_link": r["accent"],
-    "ntp_header": r["accent"], "ntp_section": r["card"],
-    "ntp_section_text": r["fg"], "ntp_section_link": r["accent"],
-    "button_background": r["surface"],
-    "omnibox_background": r["surface"], "omnibox_text": r["fg"],
-}
-conf["theme"]["tints"] = {"buttons": [-1, -1, -1]}
-conf["theme"]["properties"] = {"ntp_logo_alternate": 1}
-json.dump(conf, open(sys.argv[2], "w"), indent=2)
-PY
-    rm -f "$CHROME_THEME/Cached Theme.pak"
-fi
-
 # ---- Reload what can reload live ---------------------------------------
 # Every running conky widget; the monitor watcher only restarts the others.
 mapfile -t CONKYS < <(systemctl --user list-units --type=service --state=active --plain --no-legend '*conky*' | awk '{print $1}' | grep -v monitor-watch)
@@ -296,6 +263,10 @@ tmux source-file "$HOME/.tmux.conf" 2>/dev/null || true
 # once the browsers module has been applied on this machine.
 if [ -e "$HOME/.local/share/rice/startpage" ]; then
     DOTFILES="$DOTFILES" bash "$DOTFILES/modules/browsers/apply.sh" || true
+fi
+# Spotify's Spicetify theme, once the spotify module has installed Spicetify.
+if [ -x "$HOME/.spicetify/spicetify" ]; then
+    DOTFILES="$DOTFILES" bash "$DOTFILES/modules/spotify/apply.sh" || true
 fi
 
 echo "now on $TARGET. Restart Terminator, Files, Claude Code and your browsers to see their new colors."

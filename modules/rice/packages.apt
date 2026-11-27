@@ -3,6 +3,8 @@ papirus-icon-theme
 rofi
 qalc     # rofi calc mode
 xclip    # rofi calc copies results
+unicode-cldr-core   # rofi emoji mode names and keywords
 qt5ct
+qt5-style-kvantum qt6-style-kvantum   # Qt widget style, recoloured by tools/kvantum-theme.py
 node-typescript make   # pop-shell is built from source (no noble package)
 python3-numpy   # tools/blackhole.py (ember lock-screen video)
