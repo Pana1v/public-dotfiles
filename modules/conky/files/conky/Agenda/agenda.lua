@@ -154,11 +154,15 @@ local function draw(cr, w, h)
     if status == "error" and #list == 0 then
         return notice(cr, w, h, "alert", theme.red, "calendar unavailable", { flat.fit(cr, message, w - 2 * PAD) })
     end
+    -- Two left-aligned lines: the wing shrinks this card while idle (see idle()).
     if status == "setup" and #list == 0 then
-        local lines = message:find("gir1.2", 1, true)
-            and { "install the calendar library:", "sudo apt install gir1.2-ecal-2.0" }
-            or { "Settings > Online Accounts > Google", "turn Calendar on" }
-        return notice(cr, w, h, "calendar", theme.dim, "no calendar connected", lines)
+        local hint = message:find("gir1.2", 1, true)
+            and "sudo apt install gir1.2-ecal-2.0"
+            or "Settings > Online Accounts > Google > Calendar on"
+        flat.font(cr, "Exo 2", 13)
+        flat.text(cr, PAD, HEADER_H + 18, "no calendar connected", theme.text)
+        flat.font(cr, "Exo 2", 11)
+        return flat.text(cr, PAD, HEADER_H + 38, flat.fit(cr, hint, w - 2 * PAD), theme.dim)
     end
     if #list == 0 then
         return notice(cr, w, h, "check", theme.green, "nothing coming up", { "the next 3 days are clear" })
@@ -199,9 +203,18 @@ local function draw(cr, w, h)
     end
 end
 
+-- No calendar set up yet: nothing to list, so the wing gives the space away.
+local function idle()
+    if not events.rows then
+        return false
+    end
+    local status, _, list = parse(events.rows)
+    return status == "setup" and #list == 0
+end
+
 -- Loaded by a wing window: hand over update/draw instead of becoming conky_main.
 if WING then
-    return { update = function() events.update() end, draw = draw }
+    return { update = function() events.update() end, draw = draw, idle = idle }
 end
 
 function conky_main()

@@ -33,6 +33,7 @@ SOURCES = {
     "devices": (["python3", f"{CONKY}/Devices/fetch_devices.py"], 5),
     "events": (["python3", f"{CONKY}/Agenda/fetch_events.py"], 60),
     "tasks": (["python3", f"{CONKY}/Tasks/fetch_tasks.py"], 60),
+    "docker": (["python3", f"{CONKY}/Docker/fetch_docker.py"], 10),
     "sysmon": (["python3", f"{CONKY}/Systems/fetch_system.py"], 1),
 }
 

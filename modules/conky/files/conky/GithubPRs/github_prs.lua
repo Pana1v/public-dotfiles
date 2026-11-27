@@ -90,6 +90,13 @@ local function draw(cr, w, h)
     local hidden = 0
     for _, s in ipairs(sections) do
         local label, list = s[1], s[2]
+
+        -- No room for one row: the label alone would land on the footer text.
+        if y + SECTION_H + ROW_H > h - FOOTER_H then
+            hidden = hidden + #list
+            goto continue
+        end
+
         flat.font(cr, "Exo 2", 10)
         flat.text(cr, PAD, y + 12, label, theme.faint)
         y = y + SECTION_H
@@ -103,6 +110,7 @@ local function draw(cr, w, h)
             end
         end
         y = y + 4
+        ::continue::
     end
 
     if hidden > 0 then
