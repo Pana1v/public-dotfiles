@@ -1,0 +1,39 @@
+site_name: public-dotfiles
+site_description: Modular Ubuntu GNOME rice and terminal setup
+site_url: https://pana1v.github.io/public-dotfiles/
+repo_url: https://github.com/Pana1v/public-dotfiles
+edit_uri: edit/main/docs/
+docs_dir: docs
+
+# Same pins as mk-please: the theme CSS leans on Material internals, bump together.
+# Local preview: uvx --from mkdocs==1.6.1 --with mkdocs-material==9.8.1 mkdocs serve
+theme:
+  name: material
+  palette: {scheme: slate}
+  font: {text: Manrope, code: JetBrains Mono}
+  features: [navigation.instant, navigation.sections, navigation.top, toc.follow, search.highlight, content.code.copy]
+
+extra_css: [stylesheets/rice.css]
+
+nav:
+  - Home: index.md
+  - Modules: modules.md
+  - Themes: themes.md
+  - Conky widgets: conky.md
+  - Rofi: rofi.md
+  - GNOME extensions: gnome-extensions.md
+  - Terminal: terminal.md
+  - Browsers and apps: browsers-apps.md
+  - Docs site: docs-site.md
+
+plugins: [search]
+
+markdown_extensions:
+  - tables
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - toc: {permalink: true}
