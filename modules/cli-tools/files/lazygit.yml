@@ -11,7 +11,7 @@ gui:
       - blue
       - bold
     inactiveBorderColor:
-      - "#641418"
+      - "#af232a"
     searchingActiveBorderColor:
       - yellow
       - bold

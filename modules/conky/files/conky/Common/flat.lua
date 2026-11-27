@@ -22,18 +22,18 @@ M.theme = {
     card   = "#120506",
     bar_bg = "#4a0f12",   -- unlit dots
     grid   = "#180708",   -- dot-matrix background grid
-    text   = "#ffe9e9",
+    text   = "#f5f5f5",
     red    = "#ff1a1a",
-    green  = "#ffe9e9",   -- "good" is plain fg, colour is kept for state
+    green  = "#f5f5f5",   -- "good" is plain fg, colour is kept for state
     yellow = "#ffb84a",
     -- Secondary tones stay light: over a red wallpaper through a red tint,
     -- mid pinks vanish. Hierarchy comes from size and weight instead.
     dim    = "#fff4f5",   -- secondary text, near white
-    faint  = "#ff9a9a",   -- tertiary text (palette purple2, a light pink)
+    faint  = "#b6b6b6",   -- tertiary text (palette purple2, a light pink)
 }
 -- Highlight colour for chrome (section icons, dividers, glow). switch-theme.sh
 -- rewrites this line from the palette's @conky_accent (green for most palettes).
-M.theme.accent = "#d10a10"
+M.theme.accent = "#ec0b12"
 
 -- "personal" (default) or "professional". Set PROFILE=professional in
 -- ~/.config/dotfiles/local.env (or CONKY_PROFILE in the environment); it is read

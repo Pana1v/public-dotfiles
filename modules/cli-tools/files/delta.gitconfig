@@ -16,17 +16,17 @@
 	plus-emph-style = syntax "#57390f"
 	plus-empty-line-marker-style = normal "#2a1c08"
 	line-numbers-minus-style = "#ff1a1a"
-	line-numbers-plus-style = "#ff7070"
-	line-numbers-zero-style = "#641418"
+	line-numbers-plus-style = "#e8e8e8"
+	line-numbers-zero-style = "#af232a"
 	line-numbers-left-style = "#2a0c0e"
 	line-numbers-right-style = "#2a0c0e"
-	file-style = bold "#d10a10"
-	file-decoration-style = "#d10a10" ul
+	file-style = bold "#ec0b12"
+	file-decoration-style = "#ec0b12" ul
 	hunk-header-style = file line-number syntax
-	hunk-header-decoration-style = "#641418" box
+	hunk-header-decoration-style = "#af232a" box
 	hunk-header-file-style = "#ff3b3b"
 	hunk-header-line-number-style = "#ffb84a"
-	commit-decoration-style = "#d10a10" box
+	commit-decoration-style = "#ec0b12" box
 	blame-palette = "#0a0303 #180708 #2a0c0e"
 	whitespace-error-style = "#ff1a1a" reverse
 [merge]

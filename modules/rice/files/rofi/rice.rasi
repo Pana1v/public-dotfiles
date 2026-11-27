@@ -15,12 +15,12 @@
     card:      #120506ff;
     plate:     #180708;
     unlit:     #4a0f12;
-    fg:        #ffe9e9;
+    fg:        #f5f5f5;
     soft:      #fff4f5;
-    faint:     #ff9a9a;
-    dim:       #9e2228;
-    accent:    #d10a10;
-    ok:        #ff7070;
+    faint:     #b6b6b6;
+    dim:       #8e8e8e;
+    accent:    #ec0b12;
+    ok:        #e8e8e8;
     bad:       #ff1a1a;
 
     background-color: transparent;
@@ -151,7 +151,7 @@ element-icon {
 }
 element-text {
     vertical-align: 0.5;
-    highlight:      bold #d10a10;
+    highlight:      bold #ec0b12;
     text-color:     inherit;
 }
 element normal.normal,

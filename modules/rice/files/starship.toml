@@ -4,7 +4,7 @@
 format = "$character"
 
 [directory]
-style = "fg:#060101 bg:#d10a10"
+style = "fg:#060101 bg:#ec0b12"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -12,16 +12,16 @@ truncation_symbol = "…/"
 [git_branch]
 symbol = ""
 style = "bg:#2a0c0e"
-format = '[[ $symbol $branch ](fg:#d10a10 bg:#2a0c0e)]($style)'
+format = '[[ $symbol $branch ](fg:#ec0b12 bg:#2a0c0e)]($style)'
 
 [git_status]
 style = "bg:#2a0c0e"
-format = '[[($all_status$ahead_behind )](fg:#d10a10 bg:#2a0c0e)]($style)'
+format = '[[($all_status$ahead_behind )](fg:#ec0b12 bg:#2a0c0e)]($style)'
 
 [python]
 symbol = ""
 style = "bg:#120506"
-format = '[[ $symbol ($version) (\($virtualenv\)) ](fg:#f5c6c6 bg:#120506)]($style)'
+format = '[[ $symbol ($version) (\($virtualenv\)) ](fg:#d4d4d4 bg:#120506)]($style)'
 
 [cmd_duration]
 min_time = 2000

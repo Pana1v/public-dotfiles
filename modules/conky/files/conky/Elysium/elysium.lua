@@ -13,12 +13,12 @@ local BASE = os.getenv("HOME") .. "/.config/conky/Elysium/modules/"
 local theme = {
     bg     = "#0a0303",  -- flat panel fill
     bar_bg = "#2a0c0e",  -- tracks, hairlines, empty graph area
-    text   = "#ffe9e9",  -- primary text, values, bar fills, hands
-    dim    = "#c8454a",  -- labels, headers, units
-    faint  = "#9e2228",  -- tertiary: other-month days, ticks
+    text   = "#f5f5f5",  -- primary text, values, bar fills, hands
+    dim    = "#a0a0a0",  -- labels, headers, units
+    faint  = "#8e8e8e",  -- tertiary: other-month days, ticks
     red    = "#ff1a1a",  -- bad state
-    green  = "#ff7070",  -- highlight: bar fills, today, live states
-    blue   = "#ffe9e9",  -- same as text so legacy blue usages go greyscale
+    green  = "#e8e8e8",  -- highlight: bar fills, today, live states
+    blue   = "#f5f5f5",  -- same as text so legacy blue usages go greyscale
     orange = "#ffb84a",  -- warn state (yellow despite key name)
 }
 -- CALD module calls theme.get_color("name") as a function

@@ -15,17 +15,17 @@ _rice_bg() { _rice_sgr 48 "$1"; }
 
 # File kinds for ls, eza, fd and tree, on top of dircolors' extension colours.
 # eza takes everything else from ~/.config/eza/theme.yml.
-LS_COLORS="${LS_COLORS:+$LS_COLORS:}di=1;$(_rice_fg '#d10a10'):ln=$(_rice_fg '#ff3b3b'):ex=1;$(_rice_fg '#ff7070'):fi=$(_rice_fg '#f5c6c6')"
+LS_COLORS="${LS_COLORS:+$LS_COLORS:}di=1;$(_rice_fg '#ec0b12'):ln=$(_rice_fg '#ff3b3b'):ex=1;$(_rice_fg '#e8e8e8'):fi=$(_rice_fg '#d4d4d4')"
 LS_COLORS+=":pi=$(_rice_fg '#ffb84a'):so=1;$(_rice_fg '#ff3d6b'):bd=1;$(_rice_fg '#ffb84a'):cd=1;$(_rice_fg '#ffb84a')"
 LS_COLORS+=":or=$(_rice_fg '#ff1a1a');$(_rice_bg '#3a0a0e'):mi=$(_rice_fg '#ff1a1a');$(_rice_bg '#3a0a0e')"
 LS_COLORS+=":su=$(_rice_fg '#060101');$(_rice_bg '#ff1a1a'):sg=$(_rice_fg '#060101');$(_rice_bg '#ffb84a')"
-LS_COLORS+=":tw=$(_rice_fg '#060101');$(_rice_bg '#d10a10'):ow=$(_rice_fg '#d10a10');$(_rice_bg '#2a0c0e'):st=$(_rice_fg '#060101');$(_rice_bg '#ff3d6b')"
+LS_COLORS+=":tw=$(_rice_fg '#060101');$(_rice_bg '#ec0b12'):ow=$(_rice_fg '#ec0b12');$(_rice_bg '#2a0c0e'):st=$(_rice_fg '#060101');$(_rice_bg '#ff3d6b')"
 export LS_COLORS
 
 # less (man without bat, git help): bold, underline and the status/search bar.
-export LESS_TERMCAP_md=$'\e[1;'"$(_rice_fg '#d10a10')m"
+export LESS_TERMCAP_md=$'\e[1;'"$(_rice_fg '#ec0b12')m"
 export LESS_TERMCAP_us=$'\e[4;'"$(_rice_fg '#ff3b3b')m"
-export LESS_TERMCAP_so=$'\e['"$(_rice_fg '#ffe9e9');$(_rice_bg '#4a0f12')m"
+export LESS_TERMCAP_so=$'\e['"$(_rice_fg '#f5f5f5');$(_rice_bg '#4a0f12')m"
 export LESS_TERMCAP_mb=$'\e[1;'"$(_rice_fg '#ff3d6b')m"
 export LESS_TERMCAP_me=$'\e[0m' LESS_TERMCAP_ue=$'\e[0m' LESS_TERMCAP_se=$'\e[0m'
 unset -f _rice_sgr _rice_fg _rice_bg

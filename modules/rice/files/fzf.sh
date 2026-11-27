@@ -1,5 +1,5 @@
 # Tokyo Night colors for fzf; sourced from ~/.bashrc.
-export FZF_DEFAULT_OPTS="--color=bg+:#2a0c0e,bg:-1,spinner:#ff3b3b,hl:#ff3d6b,fg:#f5c6c6,header:#d10a10,info:#ffb84a,pointer:#ff3b3b,marker:#ff7070,fg+:#ffe9e9,prompt:#d10a10,hl+:#ff3d6b,border:#2a0c0e --border=rounded"
+export FZF_DEFAULT_OPTS="--color=bg+:#2a0c0e,bg:-1,spinner:#ff3b3b,hl:#ff3d6b,fg:#d4d4d4,header:#ec0b12,info:#ffb84a,pointer:#ff3b3b,marker:#e8e8e8,fg+:#f5f5f5,prompt:#ec0b12,hl+:#ff3d6b,border:#2a0c0e --border=rounded"
 
 # fd respects .gitignore and is much faster than find on ROS workspaces.
 export FZF_DEFAULT_COMMAND="fdfind --type f --hidden --exclude .git"

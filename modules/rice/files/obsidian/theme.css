@@ -14,11 +14,11 @@
   --color-base-25: #120506;
   --color-base-30: #2a0c0e;
   --color-base-35: #4a0f12;
-  --color-base-40: #641418;
-  --color-base-50: #9e2228;
-  --color-base-60: #c8454a;
-  --color-base-70: #f5c6c6;
-  --color-base-100: #ffe9e9;
+  --color-base-40: #af232a;
+  --color-base-50: #8e8e8e;
+  --color-base-60: #a0a0a0;
+  --color-base-70: #d4d4d4;
+  --color-base-100: #f5f5f5;
 
   --background-primary: #060101;
   --background-primary-alt: #0a0303;
@@ -26,12 +26,12 @@
   --background-secondary-alt: #020000;
   --background-modifier-border: #2a0c0e;
   --background-modifier-border-hover: #4a0f12;
-  --background-modifier-border-focus: #641418;
+  --background-modifier-border-focus: #af232a;
   --background-modifier-hover: #2a0c0e99;
   --background-modifier-active-hover: #4a0f1299;
   --background-modifier-form-field: #120506;
   --background-modifier-error: #ff1a1a;
-  --background-modifier-success: #ff7070;
+  --background-modifier-success: #e8e8e8;
   --titlebar-background: #020000;
   --titlebar-background-focused: #020000;
   --tab-container-background: #020000;
@@ -48,76 +48,76 @@
   --table-header-background-hover: #120506;
 
   /* Text */
-  --text-normal: #ffe9e9;
-  --text-muted: #c8454a;
-  --text-faint: #9e2228;
+  --text-normal: #f5f5f5;
+  --text-muted: #a0a0a0;
+  --text-faint: #8e8e8e;
   --text-on-accent: #060101;
   --text-error: #ff1a1a;
-  --text-success: #ff7070;
+  --text-success: #e8e8e8;
   --text-warning: #ff7a3d;
   --text-highlight-bg: #ffb84a38;
   --text-selection: #4a0f12cc;
 
   /* Accent: the palette's accent, drawn as text/lines, not big fills.
      Set as hexes (not --accent-h/s/l) so switch-theme.sh recolours it. */
-  --color-accent: #d10a10;
+  --color-accent: #ec0b12;
   --color-accent-1: #ff3b3b;
-  --color-accent-2: #ff9a9a;
-  --interactive-accent: #d10a10;
+  --color-accent-2: #b6b6b6;
+  --interactive-accent: #ec0b12;
   --interactive-accent-hover: #b00008;
   --text-accent: #ff3b3b;
-  --text-accent-hover: #d10a10;
+  --text-accent-hover: #ec0b12;
   --link-color: #ff3b3b;
-  --link-color-hover: #d10a10;
+  --link-color-hover: #ec0b12;
   --link-external-color: #b00008;
-  --link-unresolved-color: #c8454a;
+  --link-unresolved-color: #a0a0a0;
   --link-unresolved-opacity: 1;
-  --checkbox-color: #ff7070;
-  --checkbox-border-color: #9e2228;
-  --tag-color: #f5c6c6;
+  --checkbox-color: #e8e8e8;
+  --checkbox-border-color: #8e8e8e;
+  --tag-color: #d4d4d4;
   --tag-background: #180708;
   --tag-background-hover: #2a0c0e;
-  --nav-item-color-active: #d10a10;
+  --nav-item-color-active: #ec0b12;
   --nav-item-background-active: #2a0c0e;
 
   /* Headings: brightness steps, colour stays for state */
-  --h1-color: #d10a10;
-  --h2-color: #ffe9e9;
+  --h1-color: #ec0b12;
+  --h2-color: #f5f5f5;
   --h3-color: #ff3d6b;
   --h4-color: #ff3b3b;
-  --h5-color: #ff9a9a;
+  --h5-color: #b6b6b6;
   --h6-color: #b00008;
 
   /* Code */
-  --code-normal: #ffe9e9;
-  --code-comment: #9e2228;
-  --code-function: #d10a10;
+  --code-normal: #f5f5f5;
+  --code-comment: #8e8e8e;
+  --code-function: #ec0b12;
   --code-keyword: #ff3d6b;
-  --code-string: #ff7070;
+  --code-string: #e8e8e8;
   --code-value: #ff7a3d;
   --code-property: #ff3b3b;
   --code-tag: #ff1a1a;
-  --code-punctuation: #c8454a;
-  --code-operator: #f5c6c6;
+  --code-punctuation: #a0a0a0;
+  --code-operator: #d4d4d4;
   --code-important: #ffb84a;
 
   /* Graph view */
   --graph-line: #2a0c0e;
-  --graph-node: #c8454a;
-  --graph-node-focused: #d10a10;
-  --graph-node-tag: #ff7070;
+  --graph-node: #a0a0a0;
+  --graph-node-focused: #ec0b12;
+  --graph-node-tag: #e8e8e8;
   --graph-node-attachment: #ff7a3d;
-  --graph-node-unresolved: #641418;
-  --graph-text: #f5c6c6;
+  --graph-node-unresolved: #af232a;
+  --graph-text: #d4d4d4;
 
   /* Status colours used by callouts, tasks and plugins */
   --color-red: #ff1a1a;
   --color-orange: #ff7a3d;
   --color-yellow: #ffb84a;
-  --color-green: #ff7070;
+  --color-green: #e8e8e8;
   --color-cyan: #ff3b3b;
   --color-blue: #b00008;
-  --color-purple: #ff9a9a;
+  --color-purple: #b6b6b6;
   --color-pink: #ff3d6b;
 
   /* Same type as the rest of the rice */
@@ -141,11 +141,11 @@
 
 /* Active tab and file stand out by a bright edge, not a fill */
 .workspace-tab-header.is-active {
-  box-shadow: inset 0 -2px 0 #d10a10;
+  box-shadow: inset 0 -2px 0 #ec0b12;
 }
 .nav-file-title.is-active {
   background-color: #4a0f12;
-  color: #ffe9e9;
+  color: #f5f5f5;
 }
 
 /* Menus and modals: hairline edge, no drop shadow, like the shell cards */
