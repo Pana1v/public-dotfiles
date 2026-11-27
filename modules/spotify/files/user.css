@@ -1,0 +1,9 @@
+/* Rice: colours come from color.ini (--spice-*); this only covers what
+   color.ini has no key for. */
+::selection {
+    background: var(--spice-highlight-elevated);
+    color: var(--spice-text);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--spice-button-disabled) !important;
+}
