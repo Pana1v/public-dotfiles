@@ -40,4 +40,5 @@ Choices are saved to `~/.config/dotfiles/local.env`, so later runs do not ask ag
 | [GNOME extensions](gnome-extensions.md) | Top bar, music pill, clipboard, system monitor |
 | [Terminal](terminal.md) | Terminator, kitty, tmux, prompt, CLI tools |
 | [Browsers and apps](browsers-apps.md) | Chrome, Edge, Firefox, VS Code, Spotify, Qt |
+| [mk-please](mk-please.md) | Serve any markdown folder as a live site in the rice palette |
 | [Docs site](docs-site.md) | Reading and editing these docs locally |

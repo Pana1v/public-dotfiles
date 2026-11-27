@@ -2,6 +2,7 @@ site_name: public-dotfiles
 site_description: Modular Ubuntu GNOME rice and terminal setup
 site_url: https://pana1v.github.io/public-dotfiles/
 repo_url: https://github.com/Pana1v/public-dotfiles
+repo_name: Pana1v/public-dotfiles
 edit_uri: edit/main/docs/
 docs_dir: docs
 
@@ -10,6 +11,7 @@ docs_dir: docs
 theme:
   name: material
   palette: {scheme: slate}
+  icon: {repo: fontawesome/brands/github}
   font: {text: Manrope, code: JetBrains Mono}
   features: [navigation.instant, navigation.sections, navigation.top, toc.follow, search.highlight, content.code.copy]
 
@@ -24,6 +26,7 @@ nav:
   - GNOME extensions: gnome-extensions.md
   - Terminal: terminal.md
   - Browsers and apps: browsers-apps.md
+  - mk-please: mk-please.md
   - Docs site: docs-site.md
 
 plugins: [search]

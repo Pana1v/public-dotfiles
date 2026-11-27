@@ -61,6 +61,8 @@ cat > "$work/overrides/main.html" <<EOF
 }
 body, .md-typeset { font-family: "JetBrains Mono", monospace; }
 .md-header, .md-tabs { background: $bar; border-bottom: 1px solid $primary; }
+/* GitHub link stays in the title bar at every width (Material hides it below 60em) */
+.md-header__source { display: block !important; width: auto; max-width: 11.7rem; margin-left: .6rem; }
 .md-typeset h1, .md-typeset h2 { color: $red; }
 .md-typeset h3, .md-typeset h4 { color: $soft; }
 .md-typeset code { color: $gold; }
@@ -170,6 +172,13 @@ cat > "$work/overrides/partials/actions.html" <<'EOF'
 <script type="application/json" id="mk-md">{{ page.markdown | tojson }}</script>
 EOF
 
+# GitHub link in the title bar when DIR sits in a repo with a GitHub remote (ssh or https)
+repo_url=""
+remote=$(git -C "$dir" remote get-url origin 2>/dev/null || true)
+if [[ $remote =~ github\.com[:/](.+)$ ]]; then
+    repo_url="https://github.com/${BASH_REMATCH[1]%.git}"
+fi
+
 # Edit button opens Obsidian when DIR is inside a vault or linked into one (e.g. vault/MkDocs -> DIR)
 obsidian_root=$(python3 - "$dir" <<'EOF'
 import json, os, sys
@@ -213,12 +222,14 @@ site_dir: "$work/site"
 hooks: ["$work/index_hook.py"]
 plugins: [search, tags]
 extra: {obsidian_root: "$obsidian_root"}
+${repo_url:+repo_url: $repo_url}
 watch: [$watch]
 theme:
   name: material
   custom_dir: "$work/overrides"
   font: false
   palette: {scheme: slate}
+  icon: {repo: fontawesome/brands/github}
   features: [navigation.instant, navigation.sections, navigation.indexes, toc.follow, search.highlight, content.code.copy]
 markdown_extensions:
   - tables

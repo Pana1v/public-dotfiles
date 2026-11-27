@@ -16,6 +16,8 @@
   --md-typeset-table-color: #2a0c0e;
 }
 .md-header, .md-tabs { background-color: #120506; border-bottom: 1px solid #2a0c0e; }
+/* GitHub link stays in the title bar at every width (Material hides it below 60em). */
+.md-header__source { display: block !important; width: auto; max-width: 11.7rem; margin-left: .6rem; }
 .md-typeset h1, .md-typeset h2 { color: #f5f5f5; }
 .md-typeset h2 { border-bottom: 1px solid #2a0c0e; padding-bottom: .2em; }
 .md-typeset code { color: #f5f5f5; }
