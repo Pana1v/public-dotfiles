@@ -1,6 +1,6 @@
 configuration {
     /* Script modes live in scripts/, linked to ~/.config/rofi/scripts */
-    modes: "drun,windows:~/.config/rofi/scripts/windows.py,run,calc:~/.config/rofi/scripts/calc.sh,ssh,filebrowser,cheatsheet:~/.config/rofi/scripts/keys.sh,power:~/.config/rofi/scripts/power.sh";
+    modes: "drun,windows:~/.config/rofi/scripts/windows.py,run,calc:~/.config/rofi/scripts/calc.sh,ssh,filebrowser,cheatsheet:~/.config/rofi/scripts/keys.sh,power:~/.config/rofi/scripts/power.sh,bots:~/.config/rofi/scripts/bots.sh,emoji:~/.config/rofi/scripts/emoji.py,time:~/.config/rofi/scripts/tz.sh,grab:~/.config/rofi/scripts/grab.py";
     font: "Space Mono 10";
     show-icons: true;
     icon-theme: "Rice";
@@ -12,6 +12,10 @@ configuration {
     display-calc: "CALC";
     display-cheatsheet: "KEYS";
     display-power: "POWER";
+    display-bots: "BOTS";
+    display-emoji: "EMOJI";
+    display-time: "TIME";
+    display-grab: "GRAB";
     display-ssh: "SSH";
     display-filebrowser: "FILES";
     /* Generic name dimmed on the same line ("Brave  Web Browser"). A second
